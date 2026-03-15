@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fichly — Fiches de révision</title>
+  <meta name="description" content="Des fiches de révision structurées pour réussir tes examens. Une initiative WindJos Digital."/>
+
+  <!-- ── Polices Google Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- ── Feuilles de style (ordre obligatoire) ── -->
+  <link rel="stylesheet" href="assets/css/variables.css"/>  <!-- 1. Tokens design       -->
+  <link rel="stylesheet" href="assets/css/base.css"/>       <!-- 2. Reset & fondations  -->
+  <link rel="stylesheet" href="assets/css/components.css"/> <!-- 3. Composants partagés -->
+  <link rel="stylesheet" href="assets/css/index.css"/>      <!-- 4. Styles page accueil -->
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER — Navigation principale
+  ════════════════════════════════════════════ -->
+  <header class="site-header">
+    <a class="site-header__logo" href="index.html">
+      Fich<span>ly</span>
+    </a>
+    <nav class="site-header__nav">
+      <a href="admin.html">Admin ↗</a>
+    </nav>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO — Accroche et barre de recherche
+  ════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__inner">
+
+      <div class="hero__tag">Fiches de révision · IBAM</div>
+
+      <h1 class="hero__title">
+        Révise <em>intelligemment</em>,<br/>réussis brillamment.
+      </h1>
+
+      <p class="hero__subtitle">
+        Des fiches structurées et vérifiées, gratuites pour tous les étudiants.
+      </p>
+
+      <!-- Barre de recherche -->
+      <div class="search-bar">
+        <input
+          class="search-bar__input"
+          type="text"
+          id="searchInput"
+          placeholder="Matière, cours, mot-clé…"
+          aria-label="Rechercher une fiche"
+        />
+        <button
+          class="search-bar__btn"
+          onclick="effectuerRecherche()"
+          aria-label="Lancer la recherche"
+        >
+          Chercher
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CONTENU PRINCIPAL
+  ════════════════════════════════════════════ -->
+  <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+
+    <!-- ── Filtres par niveau académique ── -->
+    <div class="filters fade-up">
+      <span class="filters__label">Niveau :</span>
+
+      <!-- Le premier bouton est actif par défaut -->
+      <button
+        class="filter-btn filter-btn--active"
+        data-niveau="all"
+        onclick="filtrerParNiveau(this)"
+      >Tous</button>
+
+      <button class="filter-btn" data-niveau="L1"     onclick="filtrerParNiveau(this)">L1</button>
+      <button class="filter-btn" data-niveau="L2"     onclick="filtrerParNiveau(this)">L2</button>
+      <button class="filter-btn" data-niveau="L3"     onclick="filtrerParNiveau(this)">L3</button>
+      <button class="filter-btn" data-niveau="Master" onclick="filtrerParNiveau(this)">Master</button>
+      <button class="filter-btn" data-niveau="BTS"    onclick="filtrerParNiveau(this)">BTS</button>
+    </div>
+
+    <!-- ── En-tête de section avec compteur ── -->
+    <div class="section-head fade-up">
+      <h2 class="section-head__title">Fiches disponibles</h2>
+      <!-- Rempli dynamiquement par index.js -->
+      <span class="count-badge" id="countBadge">…</span>
+    </div>
+
+    <!-- ── Grille des fiches ── -->
+    <!-- Remplie dynamiquement par index.js après chargement Supabase -->
+    <div class="fiches-grid fade-up" id="fichesGrid">
+      <div class="state-empty">
+        <div class="spinner"></div>
+        <p>Chargement des fiches…</p>
+      </div>
+    </div>
+
+
+    <!-- ── Section : demande d'une nouvelle fiche ── -->
+    <section class="request-section fade-up" id="demande">
+
+      <div class="request-section__tag">Tu ne trouves pas ton cours ?</div>
+
+      <h2 class="request-section__title">Demande une fiche</h2>
+
+      <p class="request-section__desc">
+        Notre équipe WindJos prépare la fiche et la publie en priorité pour toi.
+      </p>
+
+      <!-- novalidate : la validation est gérée par index.js -->
+      <form id="reqForm" novalidate>
+
+        <div class="form-row">
+
+          <div class="form-group form-group--dark">
+            <label for="r_nom">Ton nom *</label>
+            <input
+              type="text"
+              id="r_nom"
+              placeholder="Ex : Aminata Traoré"
+              required
+            />
+          </div>
+
+          <div class="form-group form-group--dark">
+            <label for="r_email">Email (optionnel)</label>
+            <input
+              type="email"
+              id="r_email"
+              placeholder="ton@email.com"
+            />
+          </div>
+
+        </div><!-- /.form-row -->
+
+        <div class="form-row">
+
+          <div class="form-group form-group--dark">
+            <label for="r_matiere">Matière *</label>
+            <input
+              type="text"
+              id="r_matiere"
+              placeholder="Ex : Droit des affaires"
+              required
+            />
+          </div>
+
+          <div class="form-group form-group--dark">
+            <label for="r_niveau">Niveau</label>
+            <select id="r_niveau">
+              <option value="">Choisir…</option>
+              <option>L1</option>
+              <option>L2</option>
+              <option>L3</option>
+              <option>Master</option>
+              <option>BTS</option>
+              <option>Autre</option>
+            </select>
+          </div>
+
+        </div><!-- /.form-row -->
+
+        <div class="form-group form-group--dark">
+          <label for="r_desc">Précisions (optionnel)</label>
+          <textarea
+            id="r_desc"
+            rows="3"
+            placeholder="Chapitre précis, enseignant, date d'examen…"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--gold" id="submitBtn">
+          <span id="btnLabel">Envoyer la demande</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <!-- Message de retour — affiché/masqué par index.js -->
+        <div
+          class="feedback"
+          id="fMsg"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+      </form>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="site-footer__logo">Fichly</div>
+    <p>Une initiative de <strong>WindJos Digital</strong></p>
+    <p>CEO : <strong>Josué ILBOUDO</strong> · Ouagadougou, Burkina Faso · 2025–2026</p>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS — Chargés en fin de body
+       Ordre impératif :
+         1. Librairie Supabase  (CDN externe)
+         2. supabase-client.js  (initialise window.FichlyDB)
+         3. index.js            (logique de la page)
+  ════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/index.js"></script>
+
+</body>
+</html>

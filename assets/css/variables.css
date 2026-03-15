@@ -1,0 +1,204 @@
+/* ============================================================
+   FICHLY — variables.css
+   Fichier central des propriétés CSS personnalisées (tokens).
+   
+   ⚠️  NE PAS mettre de styles ici, uniquement des variables.
+   
+   Organisation :
+   1. Palette de couleurs
+   2. Typographie
+   3. Espacements
+   4. Bordures & Rayons
+   5. Ombres
+   6. Transitions
+   7. Z-index
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────
+   1. PALETTE DE COULEURS
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  /* — Bleu marine (couleur dominante) — */
+  --color-navy-dark:    #0B1F3A;   /* Fond principal, header, footer         */
+  --color-navy:         #122A50;   /* Fond secondaire, topbar, cartes admin   */
+  --color-navy-light:   #1B3A6B;   /* Dégradés, accents de fond               */
+
+  /* — Beige (couleur de fond public) — */
+  --color-beige-bg:     #F5EDE0;   /* Fond de la page publique (index)        */
+  --color-beige-card:   #FBF5EC;   /* Fond des cartes de fiches               */
+  --color-beige-border: #E8D9C5;   /* Séparateurs, bordures légères           */
+
+  /* — Or (couleur d'accent principale) — */
+  --color-gold:         #C9A84C;   /* Accent principal : titres, icônes, CTA  */
+  --color-gold-light:   #DFC070;   /* Hover sur les éléments dorés            */
+  --color-gold-pale:    #F5E9C4;   /* Fond subtle sur éléments actifs/hover   */
+
+  /* — Texte — */
+  --color-text-primary:   #0B1F3A; /* Titres et corps principal               */
+  --color-text-secondary: #2E3F5C; /* Corps de texte standard                 */
+  --color-text-muted:     #6B7A96; /* Métadonnées, labels secondaires         */
+
+  /* — Blanc — */
+  --color-white:          #FFFFFF;
+
+  /* — Statuts fonctionnels — */
+  --color-success-bg:   rgba(46, 125, 50, 0.25);
+  --color-success-text: #A5D6A7;
+  --color-success-bdr:  #4CAF50;
+
+  --color-error-bg:     rgba(198, 40, 40, 0.25);
+  --color-error-text:   #EF9A9A;
+  --color-error-bdr:    #F44336;
+
+  --color-warning-bg:   rgba(201, 168, 76, 0.2);
+  --color-warning-text: #C9A84C;
+
+  /* — Superpositions (overlays) — */
+  --color-overlay-light: rgba(255, 255, 255, 0.06);
+  --color-overlay-bdr:   rgba(255, 255, 255, 0.12);
+  --color-gold-overlay:  rgba(201, 168, 76, 0.15);
+}
+
+
+/* ────────────────────────────────────────────────
+   2. TYPOGRAPHIE
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  /* — Familles de polices — */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+    /* Utilisée pour les titres, logos, accents visuels */
+
+  --font-body:    'Jost', 'Helvetica Neue', Arial, sans-serif;
+    /* Utilisée pour tout le texte courant */
+
+  /* — Tailles (échelle modulaire) — */
+  --text-xs:   10px;   /* Labels, badges, uppercase tags     */
+  --text-sm:   11px;   /* Métadonnées, dates, hints          */
+  --text-base: 13px;   /* Corps de texte standard            */
+  --text-md:   14px;   /* Corps légèrement mis en valeur     */
+  --text-lg:   18px;   /* Titres de cartes                   */
+  --text-xl:   22px;   /* Titres de sections                 */
+  --text-2xl:  28px;   /* Titres de pages secondaires        */
+  --text-hero: clamp(30px, 6vw, 52px); /* Titre principal (hero) */
+
+  /* — Graisses — */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+
+  /* — Interlignage — */
+  --leading-tight:  1.2;
+  --leading-snug:   1.4;
+  --leading-normal: 1.7;
+  --leading-loose:  2.0;
+
+  /* — Espacement des lettres — */
+  --tracking-tight:  0.01em;
+  --tracking-normal: 0.06em;
+  --tracking-wide:   0.12em;
+  --tracking-wider:  0.18em;
+  --tracking-widest: 0.22em;
+}
+
+
+/* ────────────────────────────────────────────────
+   3. ESPACEMENTS
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  /* Basé sur une grille de 4px */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-18: 72px;
+  --space-20: 80px;
+
+  /* Padding des conteneurs principaux */
+  --container-max:     1060px;
+  --container-padding: var(--space-6);
+}
+
+
+/* ────────────────────────────────────────────────
+   4. BORDURES & RAYONS
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  /* Rayons de bordure */
+  --radius-sm:   2px;   /* Badges, tags                    */
+  --radius-md:   4px;   /* Boutons, inputs, petits blocs   */
+  --radius-lg:   6px;   /* Accordéons, quiz                */
+  --radius-xl:   8px;   /* Cartes, blocs principaux        */
+  --radius-2xl:  10px;  /* Sections, panneaux larges       */
+  --radius-full: 50%;   /* Cercles (logo, spinner)         */
+  --radius-pill: 20px;  /* Filtres, pills de statut        */
+
+  /* Bordures standards */
+  --border-subtle:  1px solid var(--color-beige-border);
+  --border-gold:    1px solid var(--color-gold);
+  --border-overlay: 1px solid var(--color-overlay-bdr);
+  --border-gold-dim: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+
+/* ────────────────────────────────────────────────
+   5. OMBRES
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  --shadow-sm:  0 4px 12px rgba(11, 31, 58, 0.08);
+  --shadow-md:  0 10px 28px rgba(11, 31, 58, 0.10);
+  --shadow-lg:  0 12px 32px rgba(11, 31, 58, 0.18);
+}
+
+
+/* ────────────────────────────────────────────────
+   6. TRANSITIONS
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.20s ease;
+  --transition-slow:   0.35s ease;
+
+  /* Transition multi-propriétés fréquente */
+  --transition-card:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+
+/* ────────────────────────────────────────────────
+   7. Z-INDEX (couches d'empilement)
+   ──────────────────────────────────────────────── */
+
+:root {
+
+  --z-base:    0;     /* Flux normal                   */
+  --z-raised:  10;    /* Éléments légèrement surélevés */
+  --z-sticky:  40;    /* Barres de navigation sticky   */
+  --z-nav:     50;    /* Header principal              */
+  --z-overlay: 90;    /* Overlays de fond              */
+  --z-modal:   100;   /* Modals, gate de connexion     */
+}

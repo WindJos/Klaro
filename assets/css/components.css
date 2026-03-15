@@ -1,0 +1,817 @@
+/* ============================================================
+   FICHLY — components.css
+   Bibliothèque des composants UI réutilisables.
+   
+   Ces styles s'appliquent sur toutes les pages du projet.
+   Chaque composant est autonome : ses styles ne dépendent
+   pas du contexte dans lequel il est utilisé.
+   
+   Organisation :
+   1.  Boutons
+   2.  Badges & Pills
+   3.  Champs de formulaire (inputs, select, textarea)
+   4.  Messages de retour (feedback)
+   5.  Cartes de fiches
+   6.  Accordéon
+   7.  Bloc de quiz
+   8.  Bloc "À retenir"
+   9.  Bloc définition (citation encadrée)
+   10. Tableau de données (mini-table)
+   11. Navigation principale (header)
+   12. Pied de page (footer)
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────
+   1. BOUTONS
+   ──────────────────────────────────────────────── */
+
+/*
+  Bouton principal — fond doré, texte marine.
+  Utilisé pour toutes les actions primaires (soumettre, publier…).
+*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 13px 28px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    transform var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variante dorée (action principale) */
+.btn--gold {
+  background: var(--color-gold);
+  color: var(--color-navy-dark);
+  border: none;
+}
+
+.btn--gold:hover {
+  background: var(--color-gold-light);
+}
+
+/* Variante fantôme (contour doré sur fond transparent) */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.btn--ghost:hover {
+  background: var(--color-gold-pale);
+}
+
+/* Variante petite taille */
+.btn--sm {
+  padding: 5px 12px;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Variante statut : succès */
+.btn--success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: none;
+}
+
+.btn--success:hover {
+  background: rgba(46, 125, 50, 0.45);
+}
+
+/* Variante statut : danger */
+.btn--danger {
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  border: none;
+}
+
+.btn--danger:hover {
+  background: rgba(198, 40, 40, 0.45);
+}
+
+
+/* ────────────────────────────────────────────────
+   2. BADGES & PILLS
+   ──────────────────────────────────────────────── */
+
+/*
+  Badge : étiquette compacte, coins anguleux.
+  Utilisé pour le niveau (L1, L2…) et la matière.
+*/
+.badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+/* Badge niveau — fond marine, texte doré */
+.badge--level {
+  background: var(--color-navy-dark);
+  color: var(--color-gold);
+}
+
+/* Badge matière — fond beige pâle, texte marine */
+.badge--subject {
+  background: var(--color-gold-pale);
+  color: var(--color-navy-dark);
+}
+
+/*
+  Pill : étiquette arrondie.
+  Utilisée pour les statuts (en attente, traitée).
+*/
+.pill {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* Pill en attente — ton doré */
+.pill--pending {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+/* Pill traitée — ton vert */
+.pill--done {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+
+/* ────────────────────────────────────────────────
+   3. CHAMPS DE FORMULAIRE
+   ──────────────────────────────────────────────── */
+
+/*
+  Groupe de champ : conteneur label + input/textarea/select.
+  Toujours utilisé ensemble pour garantir l'alignement.
+*/
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+/* Label du champ */
+.form-group label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* ── Champs sur fond sombre (admin, section demande) ── */
+.form-group--dark label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.form-group--dark input,
+.form-group--dark textarea,
+.form-group--dark select {
+  background: var(--color-overlay-light);
+  border: var(--border-overlay);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  color: var(--color-white);
+  font-size: var(--text-md);
+  outline: none;
+  resize: vertical;
+  transition: border-color var(--transition-normal);
+}
+
+.form-group--dark input::placeholder,
+.form-group--dark textarea::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.form-group--dark input:focus,
+.form-group--dark textarea:focus,
+.form-group--dark select:focus {
+  border-color: var(--color-gold);
+}
+
+/* Correction : fond des options du select sur fond sombre */
+.form-group--dark select option {
+  background: var(--color-navy-dark);
+}
+
+/* Texte d'aide sous un champ */
+.form-hint {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+}
+
+/* Grille de formulaire 2 colonnes */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* Sur mobile, les deux colonnes passent en une seule */
+@media (max-width: 580px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ────────────────────────────────────────────────
+   4. MESSAGES DE RETOUR (FEEDBACK)
+   ──────────────────────────────────────────────── */
+
+/*
+  Messages affichés après une action utilisateur
+  (soumission de formulaire, erreur…).
+  Par défaut masqués ; affichés via .feedback--show.
+*/
+.feedback {
+  margin-top: var(--space-4);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  display: none; /* Masqué par défaut */
+}
+
+/* Affichage déclenché par JS */
+.feedback--show {
+  display: block;
+}
+
+/* Succès */
+.feedback--success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-left: 3px solid var(--color-success-bdr);
+}
+
+/* Erreur */
+.feedback--error {
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  border-left: 3px solid var(--color-error-bdr);
+}
+
+
+/* ────────────────────────────────────────────────
+   5. CARTE DE FICHE
+   ──────────────────────────────────────────────── */
+
+/*
+  Carte cliquable représentant une fiche de révision.
+  Utilisée dans la grille de la page d'accueil.
+*/
+.fiche-card {
+  background: var(--color-beige-card);
+  border: var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-card);
+}
+
+.fiche-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-gold);
+}
+
+/* Ligne de badges en haut de la carte */
+.fiche-card__badges {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Titre de la fiche */
+.fiche-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-navy-dark);
+}
+
+/* Description — limitée à 2 lignes */
+.fiche-card__desc {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-light);
+  flex: 1;
+
+  /* Troncature multi-lignes CSS */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Pied de carte : date à gauche, CTA à droite */
+.fiche-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: var(--border-subtle);
+}
+
+.fiche-card__date {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.fiche-card__cta {
+  font-size: 12px;
+  font-weight: var(--weight-semi);
+  color: var(--color-gold);
+}
+
+
+/* ────────────────────────────────────────────────
+   6. ACCORDÉON (utilisé dans les fiches HTML)
+   ──────────────────────────────────────────────── */
+
+.accordion {
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+  background: var(--color-beige-card);
+}
+
+/* Déclencheur (bouton titre de l'accordéon) */
+.accordion__trigger {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  transition: background var(--transition-fast);
+}
+
+.accordion__trigger:hover,
+.accordion__trigger[aria-expanded="true"] {
+  background: var(--color-gold-pale);
+}
+
+/* Texte du titre */
+.accordion__title {
+  font-size: 13.5px;
+  font-weight: var(--weight-semi);
+  color: var(--color-navy-dark);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Icône +/× animée */
+.accordion__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background: var(--color-navy-dark);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform var(--transition-slow),
+    background var(--transition-normal);
+}
+
+.accordion__icon svg {
+  width: 10px;
+  height: 10px;
+  fill: var(--color-white);
+}
+
+/* Rotation de l'icône en état ouvert */
+.accordion__trigger[aria-expanded="true"] .accordion__icon {
+  transform: rotate(45deg);
+  background: var(--color-gold);
+}
+
+/* Corps de l'accordéon — masqué par défaut */
+.accordion__body {
+  display: none;
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.accordion__body.open {
+  display: block;
+}
+
+
+/* ────────────────────────────────────────────────
+   7. BLOC DE QUIZ
+   ──────────────────────────────────────────────── */
+
+.quiz {
+  border: var(--border-gold);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-beige-card);
+  margin-top: 28px;
+}
+
+/* En-tête du quiz */
+.quiz__header {
+  background: var(--color-navy-dark);
+  padding: 12px var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.quiz__header-icon {
+  width: 22px;
+  height: 22px;
+  background: var(--color-gold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: var(--weight-bold);
+  color: var(--color-navy-dark);
+  flex-shrink: 0;
+}
+
+.quiz__header-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* Zone des questions */
+.quiz__questions {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Texte d'une question */
+.quiz__question-text {
+  font-size: 13.5px;
+  font-weight: var(--weight-semi);
+  color: var(--color-navy-dark);
+  margin-bottom: var(--space-3);
+}
+
+/* Liste des options */
+.quiz__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Option individuelle */
+.quiz__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 9px 14px;
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  background: var(--color-white);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+  user-select: none;
+}
+
+.quiz__option:hover {
+  background: var(--color-gold-pale);
+  border-color: var(--color-gold);
+}
+
+/* Cercle lettre (A, B, C) */
+.quiz__option-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-beige-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* États après réponse */
+.quiz__option--correct {
+  background: #EAF5EA;
+  border-color: var(--color-success-bdr);
+  color: #1B5E20;
+}
+
+.quiz__option--correct .quiz__option-circle {
+  background: var(--color-success-bdr);
+  border-color: var(--color-success-bdr);
+  color: var(--color-white);
+}
+
+.quiz__option--wrong {
+  background: #FDECEA;
+  border-color: var(--color-error-bdr);
+  color: #7F0000;
+}
+
+.quiz__option--wrong .quiz__option-circle {
+  background: var(--color-error-bdr);
+  border-color: var(--color-error-bdr);
+  color: var(--color-white);
+}
+
+/* Révélation de la bonne réponse après une erreur */
+.quiz__option--reveal {
+  background: #EAF5EA;
+  border-color: var(--color-success-bdr);
+  color: #1B5E20;
+}
+
+.quiz__option--reveal .quiz__option-circle {
+  background: var(--color-success-bdr);
+  border-color: var(--color-success-bdr);
+  color: var(--color-white);
+}
+
+/* Message de feedback après réponse */
+.quiz__feedback {
+  font-size: 12px;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  display: none;
+}
+
+.quiz__feedback--show  { display: block; }
+.quiz__feedback--good  { background: #EAF5EA; color: #1B5E20; border-left: 3px solid var(--color-success-bdr); }
+.quiz__feedback--bad   { background: #FDECEA; color: #7F0000; border-left: 3px solid var(--color-error-bdr);   }
+
+
+/* ────────────────────────────────────────────────
+   8. BLOC "À RETENIR"
+   ──────────────────────────────────────────────── */
+
+.retenir {
+  background: linear-gradient(
+    135deg,
+    var(--color-navy-dark) 0%,
+    var(--color-navy-light) 100%
+  );
+  color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) 22px;
+  margin-top: 28px;
+}
+
+.retenir__title {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-3);
+  font-weight: var(--weight-semi);
+}
+
+.retenir__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.retenir__list li {
+  font-size: var(--text-base);
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  opacity: 0.9;
+}
+
+/* Flèche décorative devant chaque point */
+.retenir__list li::before {
+  content: '→';
+  color: var(--color-gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+
+/* ────────────────────────────────────────────────
+   9. BLOC DÉFINITION (citation encadrée)
+   ──────────────────────────────────────────────── */
+
+.def-box {
+  background: var(--color-navy-dark);
+  color: var(--color-white);
+  border-left: 3px solid var(--color-gold);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-block: var(--space-4);
+  font-size: 13.5px;
+  font-style: italic;
+  font-family: var(--font-display);
+  line-height: var(--leading-normal);
+}
+
+
+/* ────────────────────────────────────────────────
+   10. TABLEAU DE DONNÉES (mini-table)
+   ──────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: var(--space-4);
+  font-size: 12.5px;
+}
+
+/* En-tête */
+.data-table thead th {
+  background: var(--color-navy-dark);
+  color: var(--color-gold);
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  font-weight: var(--weight-semi);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-normal);
+  text-transform: uppercase;
+}
+
+/* Cellules */
+.data-table tbody td {
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-secondary);
+  border-bottom: var(--border-subtle);
+  vertical-align: top;
+  line-height: var(--leading-snug);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Alternance de couleurs sur les lignes */
+.data-table tbody tr:nth-child(even) td {
+  background: rgba(245, 237, 224, 0.5);
+}
+
+/* Version sombre (pour l'admin) */
+.data-table--dark {
+  font-size: var(--text-base);
+}
+
+.data-table--dark thead th {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px var(--space-4);
+  border-bottom: none;
+}
+
+.data-table--dark tbody td {
+  padding: 14px var(--space-4);
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  line-height: var(--leading-snug);
+}
+
+.data-table--dark tbody tr:nth-child(even) td {
+  background: transparent;
+}
+
+.data-table--dark tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ────────────────────────────────────────────────
+   11. NAVIGATION PRINCIPALE (header)
+   ──────────────────────────────────────────────── */
+
+.site-header {
+  background: var(--color-navy-dark);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  border-bottom: var(--border-gold-dim);
+}
+
+/* Logo texte */
+.site-header__logo {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+  text-decoration: none;
+  letter-spacing: var(--tracking-tight);
+}
+
+.site-header__logo span {
+  color: var(--color-white);
+  font-weight: var(--weight-light);
+}
+
+/* Navigation */
+.site-header__nav a {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+}
+
+.site-header__nav a:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+
+/* ────────────────────────────────────────────────
+   12. PIED DE PAGE (footer)
+   ──────────────────────────────────────────────── */
+
+.site-footer {
+  background: var(--color-navy-dark);
+  color: rgba(255, 255, 255, 0.35);
+  padding: 30px var(--container-padding);
+  text-align: center;
+}
+
+.site-footer__logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+  margin-bottom: var(--space-2);
+}
+
+.site-footer p {
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.site-footer strong {
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: var(--weight-medium);
+}

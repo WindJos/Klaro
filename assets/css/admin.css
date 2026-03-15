@@ -1,0 +1,475 @@
+/* ============================================================
+   FICHLY — admin.css
+   Styles propres au tableau de bord administrateur (admin.html).
+   
+   Ce fichier ne contient que les styles spécifiques à l'admin.
+   Il dépend de :
+     → variables.css
+     → base.css
+     → components.css  (chargés avant lui)
+   
+   Organisation :
+   1. Corps de la page admin
+   2. Gate de connexion (écran de mot de passe)
+   3. Conteneur principal de l'application
+   4. Barre du haut (topbar admin)
+   5. Bandeau de statistiques
+   6. Barre d'onglets (tabs)
+   7. Contenu des onglets
+   8. Tableau des demandes
+   9. Formulaire de publication de fiche
+   10. Onglet gestion des fiches
+   11. Cellules spéciales du tableau
+   12. Responsive
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────
+   1. CORPS DE LA PAGE ADMIN
+   ──────────────────────────────────────────────── */
+
+/*
+  La page admin utilise un fond marine au lieu du beige
+  de la page publique. On surcharge la règle de base.css ici.
+*/
+.admin-page {
+  background: var(--color-navy-dark);
+  color: var(--color-white);
+  min-height: 100vh;
+}
+
+
+/* ────────────────────────────────────────────────
+   2. GATE DE CONNEXION
+   ──────────────────────────────────────────────── */
+
+/*
+  Écran de protection par mot de passe.
+  Couvre toute la page au chargement, retiré après auth.
+*/
+.gate {
+  position: fixed;
+  inset: 0;   /* Équivalent à top/right/bottom/left: 0 */
+  background: var(--color-navy-dark);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Boîte centrale du formulaire de connexion */
+.gate__box {
+  background: var(--color-navy);
+  border: var(--border-gold-dim);
+  border-radius: var(--radius-2xl);
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Logo dans la gate */
+.gate__logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+  margin-bottom: var(--space-1);
+}
+
+/* Sous-titre de la gate */
+.gate__subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 28px;
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Label du champ mot de passe */
+.gate__box label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: var(--space-2);
+  text-align: left;
+}
+
+/* Champ mot de passe */
+.gate__input {
+  width: 100%;
+  background: var(--color-overlay-light);
+  border: var(--border-overlay);
+  border-radius: var(--radius-md);
+  padding: 13px 16px;
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  margin-bottom: var(--space-4);
+  letter-spacing: 0.05em;
+  transition: border-color var(--transition-normal);
+}
+
+.gate__input:focus {
+  border-color: var(--color-gold);
+}
+
+/* Bouton de connexion */
+.gate__btn {
+  width: 100%;
+  background: var(--color-gold);
+  color: var(--color-navy-dark);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition-normal);
+}
+
+.gate__btn:hover {
+  background: var(--color-gold-light);
+}
+
+/* Message d'erreur de mot de passe */
+.gate__error {
+  color: var(--color-error-text);
+  font-size: 12px;
+  margin-top: var(--space-3);
+  display: none; /* Affiché par JS si erreur */
+}
+
+
+/* ────────────────────────────────────────────────
+   3. CONTENEUR PRINCIPAL DE L'APPLICATION
+   ──────────────────────────────────────────────── */
+
+/*
+  Masqué par défaut, affiché par JS après authentification.
+  Flex column pour empiler topbar → stats → tabs → contenu.
+*/
+.app {
+  display: none;       /* JS le passe à "flex" après login */
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+/* ────────────────────────────────────────────────
+   4. BARRE DU HAUT (TOPBAR ADMIN)
+   ──────────────────────────────────────────────── */
+
+.topbar {
+  background: var(--color-navy);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: var(--border-gold-dim);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+/* Logo dans la topbar */
+.topbar__logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+}
+
+.topbar__logo span {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: var(--weight-light);
+}
+
+/* Sous-libellé "ADMIN" à côté du logo */
+.topbar__role {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: var(--tracking-wide);
+  font-family: var(--font-body);
+  margin-left: var(--space-2);
+}
+
+/* Zone droite de la topbar (badge + liens) */
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.topbar__right a {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  letter-spacing: var(--tracking-normal);
+  transition: color var(--transition-normal);
+}
+
+.topbar__right a:hover {
+  color: var(--color-gold);
+}
+
+/* Badge rouge indiquant le nombre de demandes en attente */
+.topbar__badge {
+  background: var(--color-gold);
+  color: var(--color-navy-dark);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: none; /* Affiché par JS si > 0 demandes en attente */
+}
+
+
+/* ────────────────────────────────────────────────
+   5. BANDEAU DE STATISTIQUES
+   ──────────────────────────────────────────────── */
+
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+  padding: 28px 28px 0;
+}
+
+/* Carte statistique individuelle */
+.stat-card {
+  background: var(--color-navy);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) 22px;
+}
+
+/* Valeur numérique large */
+.stat-card__value {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+/* Label descriptif sous la valeur */
+.stat-card__label {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: var(--space-2);
+  letter-spacing: var(--tracking-normal);
+}
+
+
+/* ────────────────────────────────────────────────
+   6. BARRE D'ONGLETS (TABS)
+   ──────────────────────────────────────────────── */
+
+.tabs-bar {
+  display: flex;
+  padding: var(--space-6) 28px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;      /* Défilement horizontal sur petit écran */
+  scrollbar-width: none; /* Cache la scrollbar sur Firefox */
+}
+
+.tabs-bar::-webkit-scrollbar {
+  display: none; /* Cache la scrollbar sur Chrome/Safari */
+}
+
+/* Bouton d'un onglet */
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-3) var(--space-5);
+  cursor: pointer;
+  transition:
+    color var(--transition-normal),
+    border-color var(--transition-normal);
+  white-space: nowrap;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* État actif de l'onglet */
+.tab-btn--active {
+  color: var(--color-gold);
+  border-bottom-color: var(--color-gold);
+}
+
+/* Indicateur rouge (point) sur l'onglet des demandes si en attente */
+.tab-dot {
+  display: inline-block;
+  background: var(--color-error-bdr);
+  border-radius: var(--radius-full);
+  width: 7px;
+  height: 7px;
+  margin-left: var(--space-2);
+  vertical-align: middle;
+  display: none; /* Affiché par JS si demandes en attente */
+}
+
+
+/* ────────────────────────────────────────────────
+   7. CONTENU DES ONGLETS
+   ──────────────────────────────────────────────── */
+
+/* Masqué par défaut — JS ajoute .tab-content--active */
+.tab-content {
+  display: none;
+  padding: 28px;
+}
+
+.tab-content--active {
+  display: block;
+}
+
+
+/* ────────────────────────────────────────────────
+   8. TABLEAU DES DEMANDES
+   ──────────────────────────────────────────────── */
+
+/* Conteneur avec défilement horizontal sur mobile */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+}
+
+/* État vide du tableau */
+.table-empty {
+  text-align: center;
+  padding: 52px var(--space-5);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.table-empty p {
+  font-size: var(--text-md);
+  margin-top: var(--space-2);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ────────────────────────────────────────────────
+   9. FORMULAIRE DE PUBLICATION DE FICHE
+   ──────────────────────────────────────────────── */
+
+.pub-form {
+  max-width: 580px;
+}
+
+/* Titre du formulaire */
+.pub-form__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+  margin-bottom: var(--space-5);
+}
+
+
+/* ────────────────────────────────────────────────
+   10. ONGLET GESTION DES FICHES
+   ──────────────────────────────────────────────── */
+
+/* En-tête de l'onglet avec titre + bouton rafraîchir */
+.manage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.manage-head__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-gold);
+}
+
+
+/* ────────────────────────────────────────────────
+   11. CELLULES SPÉCIALES DU TABLEAU
+   ──────────────────────────────────────────────── */
+
+/* Texte principal d'une cellule (nom, titre…) */
+.cell-primary {
+  font-weight: var(--weight-semi);
+  color: var(--color-white);
+  max-width: 220px;
+}
+
+/* Texte secondaire sous le principal (email, sous-info…) */
+.cell-secondary {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 2px;
+}
+
+/* Date dans le tableau */
+.cell-date {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Lien d'action dans une cellule */
+.cell-link {
+  color: var(--color-gold);
+  font-size: 12px;
+  text-decoration: none;
+  transition: color var(--transition-normal);
+}
+
+.cell-link:hover {
+  color: var(--color-gold-light);
+}
+
+/* Groupe de boutons d'action dans une cellule */
+.btn-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+
+/* ────────────────────────────────────────────────
+   12. RESPONSIVE
+   ──────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+
+  /* Stats : 2 colonnes sur mobile au lieu de 4 */
+  .stats-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Padding réduit */
+  .topbar,
+  .tab-content,
+  .stats-bar {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  /* Gate : padding réduit */
+  .gate__box {
+    padding: 32px var(--space-5);
+  }
+}

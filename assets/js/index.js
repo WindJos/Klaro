@@ -1,513 +1,361 @@
-/* ============================================================
-   KLARO — index.js
-   Logique de la page d'accueil publique (index.html).
+// KLARO — index.js
+// Logique de la page d'accueil publique
 
-   Ce fichier dépend de supabase-client.js qui doit être
-   chargé avant lui dans le HTML.
-
-   Corrections apportées :
-   - Recherche en temps réel à chaque frappe (pas seulement Entrée)
-   - Normalisation des accents (chercher "rse" trouve "RSE",
-     "ecologie" trouve "écologie")
-   - Filtres et recherche parfaitement combinés
-   - Réinitialisation propre des filtres et de la recherche
-   - Accès direct aux fiches via lien cliquable
-
-   Organisation :
-   1. Récupération des références DOM
-   2. État de l'application
-   3. Utilitaire : normalisation du texte
-   4. Chargement des fiches
-   5. Rendu de la grille
-   6. Filtrage (niveau + recherche combinés)
-   7. Construction des cartes
-   8. Recherche
-   9. Filtres par niveau
-   10. Formulaire de demande
-   11. Animations au scroll
-   12. Initialisation
-   ============================================================ */
-
-
-/* ────────────────────────────────────────────────
-   1. RÉCUPÉRATION DES RÉFÉRENCES DOM
-   ──────────────────────────────────────────────── */
-
-const DOM = {
-
-  /* Grille d'affichage des fiches */
-  fichesGrid:   document.getElementById('fichesGrid'),
-
-  /* Badge affichant le nombre de fiches trouvées */
-  countBadge:   document.getElementById('countBadge'),
-
-  /* Champ de recherche dans le hero */
-  searchInput:  document.getElementById('searchInput'),
-
-  /* Formulaire de demande de fiche */
-  reqForm:      document.getElementById('reqForm'),
-
-  /* Champs du formulaire de demande */
-  reqNom:       document.getElementById('r_nom'),
-  reqEmail:     document.getElementById('r_email'),
-  reqMatiere:   document.getElementById('r_matiere'),
-  reqNiveau:    document.getElementById('r_niveau'),
-  reqDesc:      document.getElementById('r_desc'),
-
-  /* Bouton de soumission de la demande */
-  submitBtn:    document.getElementById('submitBtn'),
-  submitLabel:  document.getElementById('btnLabel'),
-
-  /* Message de retour après soumission */
-  feedbackMsg:  document.getElementById('fMsg'),
+// ─────────────────────────────────────────
+// 1. RÉFÉRENCES DOM
+// ─────────────────────────────────────────
+var DOM = {
+  fichesGrid:      document.getElementById('fichesGrid'),
+  countBadge:      document.getElementById('countBadge'),
+  searchInput:     document.getElementById('searchInput'),
+  reqForm:         document.getElementById('reqForm'),
+  reqNom:          document.getElementById('r_nom'),
+  reqEmail:        document.getElementById('r_email'),
+  reqEtablissement: document.getElementById('r_etablissement'),
+  reqAutreEtab:    document.getElementById('r_autre_etab'),
+  autreEtabGroup:  document.getElementById('autreEtabGroup'),
+  reqFiliere:      document.getElementById('r_filiere'),
+  reqAutreFiliere: document.getElementById('r_autre_filiere'),
+  autreFiliereGroup: document.getElementById('autreFiliereGroup'),
+  reqNiveau:       document.getElementById('r_niveau'),
+  reqMatiere:      document.getElementById('r_matiere'),
+  reqFichier:      document.getElementById('r_fichier'),
+  reqDesc:         document.getElementById('r_desc'),
+  submitBtn:       document.getElementById('submitBtn'),
+  submitLabel:     document.getElementById('btnLabel'),
+  feedbackMsg:     document.getElementById('fMsg'),
+  uploadProgress:  document.getElementById('uploadProgress'),
+  uploadPct:       document.getElementById('uploadPct'),
+  uploadBar:       document.getElementById('uploadBar')
 };
 
 
-/* ────────────────────────────────────────────────
-   2. ÉTAT DE L'APPLICATION
-   ──────────────────────────────────────────────── */
-
-/**
- * État centralisé de la page.
- * Toute modification des filtres passe par cet objet —
- * jamais directement dans le DOM.
- *
- * @type {Object}
- * @property {Array}  fiches    - Toutes les fiches chargées depuis Supabase
- * @property {string} niveau    - Filtre actif ('all' ou 'L1', 'L2'…)
- * @property {string} recherche - Texte de recherche normalisé en cours
- */
-const AppState = {
+// ─────────────────────────────────────────
+// 2. ÉTAT DE L'APPLICATION
+// ─────────────────────────────────────────
+var AppState = {
   fiches:    [],
   niveau:    'all',
-  recherche: '',
+  etab:      'all',
+  filiere:   'all',
+  recherche: ''
 };
 
 
-/* ────────────────────────────────────────────────
-   3. UTILITAIRE : NORMALISATION DU TEXTE
-   ──────────────────────────────────────────────── */
-
-/**
- * Normalise une chaîne de caractères pour la recherche :
- * - Convertit en minuscules
- * - Supprime les accents (é → e, è → e, ç → c…)
- *
- * Cela permet de chercher "ecologie" et trouver "écologie",
- * ou chercher "rse" et trouver "RSE".
- *
- * @param   {string} texte - Texte à normaliser
- * @returns {string}         Texte normalisé sans accents, en minuscules
- *
- * @example
- * normaliser("Responsabilité Sociétale") → "responsabilite societale"
- * normaliser("Écologie")                 → "ecologie"
- */
+// ─────────────────────────────────────────
+// 3. NORMALISATION (accents + casse)
+// ─────────────────────────────────────────
 function normaliser(texte) {
   return (texte || '')
     .toLowerCase()
-    /*
-      normalize('NFD') décompose les caractères accentués
-      en lettre de base + signe diacritique.
-      ex : "é" devient "e" + "´"
-    */
     .normalize('NFD')
-    /*
-      \u0300-\u036f correspond à la plage Unicode des
-      signes diacritiques (accents, cédilles…).
-      On les supprime avec replace().
-    */
     .replace(/[\u0300-\u036f]/g, '');
 }
 
 
-/* ────────────────────────────────────────────────
-   4. CHARGEMENT DES FICHES
-   ──────────────────────────────────────────────── */
-
-/**
- * Charge toutes les fiches depuis Supabase et déclenche
- * le rendu de la grille.
- *
- * @async
- * @returns {Promise<void>}
- */
+// ─────────────────────────────────────────
+// 4. CHARGEMENT DES FICHES
+// ─────────────────────────────────────────
 async function chargerFiches() {
+  DOM.fichesGrid.innerHTML = '<div class="state-empty"><div class="spinner"></div><p>Chargement des fiches…</p></div>';
+  DOM.countBadge.textContent = '…';
 
-  afficherEtatChargement();
-
-  /* Vérifie que Supabase est bien initialisé */
-  if (!window.KlaroDB || !window.KlaroDB.db) {
-    DOM.fichesGrid.innerHTML = `
-      <div class="state-empty">
-        <div class="state-icon">⚠️</div>
-        <p>Connexion impossible.<br>
-           Ouvre le site depuis <strong>Netlify</strong>,
-           pas en local depuis ton téléphone.</p>
-      </div>`;
+  if (!window.KlaroDB || !window.KlaroDB.pret) {
+    DOM.fichesGrid.innerHTML = '<div class="state-empty"><div class="state-icon">⚠️</div><p>Connexion impossible. Vérifie ta connexion et recharge.</p></div>';
     DOM.countBadge.textContent = '—';
     return;
   }
 
-  const { db, TABLES } = window.KlaroDB;
+  var db     = window.KlaroDB.db;
+  var TABLES = window.KlaroDB.TABLES;
 
-  const { data, error } = await db
+  var result = await db
     .from(TABLES.FICHES)
     .select('*')
     .order('date_ajout', { ascending: false });
 
-  if (error) {
-    afficherEtatErreur();
-    console.error('[index.js] Erreur chargement fiches :', error);
+  if (result.error) {
+    DOM.fichesGrid.innerHTML = '<div class="state-empty"><div class="state-icon">⚠️</div><p>Impossible de charger les fiches.</p></div>';
+    DOM.countBadge.textContent = '—';
+    console.error('[index.js] Erreur chargement :', result.error);
     return;
   }
 
-  AppState.fiches = data || [];
+  AppState.fiches = result.data || [];
   rendreGrille();
 }
 
-/**
- * Affiche le spinner de chargement dans la grille.
- */
-function afficherEtatChargement() {
-  DOM.fichesGrid.innerHTML = `
-    <div class="state-empty">
-      <div class="spinner"></div>
-      <p>Chargement des fiches…</p>
-    </div>`;
-  DOM.countBadge.textContent = '…';
+
+// ─────────────────────────────────────────
+// 5. FILTRAGE (niveau + etab + filiere + recherche)
+// ─────────────────────────────────────────
+function filtrerFiches(fiches) {
+  var terme = normaliser(AppState.recherche);
+
+  return fiches.filter(function(f) {
+
+    // Filtre niveau
+    var niveauOk = AppState.niveau === 'all' || f.niveau === AppState.niveau;
+
+    // Filtre établissement
+    var etabOk = AppState.etab === 'all' || f.etablissement === AppState.etab;
+
+    // Filtre filière
+    var filiereOk = AppState.filiere === 'all' || f.filiere === AppState.filiere;
+
+    // Filtre recherche texte
+    var rechercheOk = terme === '' ||
+      normaliser(f.titre).includes(terme) ||
+      normaliser(f.matiere).includes(terme) ||
+      normaliser(f.filiere).includes(terme) ||
+      normaliser(f.etablissement).includes(terme) ||
+      normaliser(f.description).includes(terme) ||
+      normaliser(f.niveau).includes(terme);
+
+    return niveauOk && etabOk && filiereOk && rechercheOk;
+  });
 }
 
-/**
- * Affiche un message d'erreur dans la grille.
- */
-function afficherEtatErreur() {
-  DOM.fichesGrid.innerHTML = `
-    <div class="state-empty">
-      <div class="state-icon">⚠️</div>
-      <p>Impossible de charger les fiches.<br>
-         Vérifie ta connexion internet.</p>
-    </div>`;
-  DOM.countBadge.textContent = '—';
-}
 
-
-/* ────────────────────────────────────────────────
-   5. RENDU DE LA GRILLE
-   ──────────────────────────────────────────────── */
-
-/**
- * Filtre les fiches selon l'état actuel et met à jour la grille.
- * Ne refait PAS de requête réseau — travaille sur AppState.fiches.
- * Appelée à chaque changement de filtre ou de recherche.
- */
+// ─────────────────────────────────────────
+// 6. RENDU DE LA GRILLE
+// ─────────────────────────────────────────
 function rendreGrille() {
+  var liste = filtrerFiches(AppState.fiches);
+  var total = liste.length;
 
-  const fichesFiltrees = filtrerFiches(AppState.fiches);
-  const total          = fichesFiltrees.length;
+  DOM.countBadge.textContent = total + ' fiche' + (total !== 1 ? 's' : '');
 
-  /* Met à jour le badge compteur */
-  DOM.countBadge.textContent = `${total} fiche${total !== 1 ? 's' : ''}`;
-
-  /* Cas : aucun résultat après filtrage */
   if (total === 0) {
-
-    /*
-      Message différent selon la cause :
-      - Recherche active → invite à reformuler
-      - Filtre niveau → invite à changer de niveau
-      - Les deux → invite à faire une demande
-    */
-    const messageVide = AppState.recherche
-      ? `Aucune fiche ne correspond à "<strong>${DOM.searchInput.value}</strong>".<br>
-         <a href="#demande">Demander cette fiche ?</a>`
-      : `Aucune fiche disponible pour le niveau <strong>${AppState.niveau}</strong>.<br>
-         <a href="#demande">Faire une demande ?</a>`;
-
-    DOM.fichesGrid.innerHTML = `
-      <div class="state-empty">
-        <div class="state-icon">📭</div>
-        <p>${messageVide}</p>
-      </div>`;
+    var msg = AppState.recherche
+      ? 'Aucune fiche pour "<strong>' + DOM.searchInput.value + '</strong>".<br><a href="#demande">Faire une demande ?</a>'
+      : 'Aucune fiche pour ce filtre.<br><a href="#demande">Faire une demande ?</a>';
+    DOM.fichesGrid.innerHTML = '<div class="state-empty"><div class="state-icon">📭</div><p>' + msg + '</p></div>';
     return;
   }
 
-  /* Génère et insère les cartes */
-  DOM.fichesGrid.innerHTML = fichesFiltrees
-    .map(fiche => construireCarteHTML(fiche))
-    .join('');
-
-  /*
-    S'assure que la grille est bien visible.
-    Nécessaire si un résidu de classe fade-up était présent.
-  */
+  DOM.fichesGrid.innerHTML = liste.map(construireCarte).join('');
   DOM.fichesGrid.style.opacity   = '1';
   DOM.fichesGrid.style.transform = 'none';
 }
 
-
-/* ────────────────────────────────────────────────
-   6. FILTRAGE (NIVEAU + RECHERCHE COMBINÉS)
-   ──────────────────────────────────────────────── */
-
-/**
- * Filtre un tableau de fiches en appliquant simultanément
- * le filtre de niveau ET le filtre de recherche.
- *
- * Les deux filtres sont cumulatifs : une fiche doit satisfaire
- * les deux conditions pour apparaître.
- *
- * La recherche est insensible à la casse ET aux accents
- * grâce à la fonction normaliser().
- *
- * @param   {Array} fiches - Tableau complet des fiches
- * @returns {Array}          Tableau filtré
- */
-function filtrerFiches(fiches) {
-
-  /* Terme de recherche normalisé — calculé une seule fois */
-  const termeNormalise = normaliser(AppState.recherche);
-
-  return fiches.filter(fiche => {
-
-    /* ── Condition 1 : filtre par niveau ── */
-    const niveauOk =
-      AppState.niveau === 'all' ||
-      fiche.niveau === AppState.niveau;
-
-    /* ── Condition 2 : filtre par recherche ── */
-    /*
-      Si la recherche est vide, toutes les fiches passent.
-      Sinon, on cherche le terme dans le titre, la matière
-      et la description — les trois champs textuels pertinents.
-      Chaque champ est normalisé avant comparaison.
-    */
-    const rechercheOk =
-      termeNormalise === '' ||
-      normaliser(fiche.titre).includes(termeNormalise)       ||
-      normaliser(fiche.matiere).includes(termeNormalise)     ||
-      normaliser(fiche.description).includes(termeNormalise) ||
-      normaliser(fiche.niveau).includes(termeNormalise);
-
-    /* La fiche s'affiche seulement si les deux conditions sont vraies */
-    return niveauOk && rechercheOk;
+function construireCarte(f) {
+  var date = new Date(f.date_ajout).toLocaleDateString('fr-FR', {
+    day: 'numeric', month: 'short', year: 'numeric'
   });
+  var descHTML = f.description
+    ? '<div class="fiche-card__desc">' + f.description + '</div>' : '';
+  var etabHTML = f.etablissement
+    ? '<span class="badge badge--subject">' + f.etablissement + '</span>' : '';
+  var filiereHTML = f.filiere
+    ? '<span class="badge badge--subject">' + f.filiere + '</span>' : '';
+  var cible = f.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : '';
+
+  return '<a class="fiche-card" href="' + f.url + '" ' + cible + '>' +
+    '<div class="fiche-card__badges">' +
+      '<span class="badge badge--level">' + f.niveau + '</span>' +
+      etabHTML + filiereHTML +
+    '</div>' +
+    '<div class="fiche-card__title">' + f.titre + '</div>' +
+    descHTML +
+    '<div class="fiche-card__footer">' +
+      '<span class="fiche-card__date">' + date + '</span>' +
+      '<span class="fiche-card__cta">Ouvrir →</span>' +
+    '</div>' +
+  '</a>';
 }
 
 
-/* ────────────────────────────────────────────────
-   7. CONSTRUCTION DES CARTES
-   ──────────────────────────────────────────────── */
-
-/**
- * Construit le HTML d'une carte de fiche cliquable.
- *
- * Le lien pointe vers l'URL stockée dans Supabase.
- * Si c'est un chemin relatif (ex: "fiches/rse-2026.html"),
- * il s'ouvre dans le même site.
- * Si c'est une URL complète (ex: "https://..."), elle s'ouvre
- * dans un nouvel onglet.
- *
- * @param   {Object} fiche - Objet fiche provenant de Supabase
- * @returns {string}         Chaîne HTML de la carte
- */
-function construireCarteHTML(fiche) {
-
-  /* Formate la date en français lisible */
-  const dateFormatee = new Date(fiche.date_ajout).toLocaleDateString('fr-FR', {
-    day:   'numeric',
-    month: 'short',
-    year:  'numeric',
+// ─────────────────────────────────────────
+// 7. FILTRES
+// ─────────────────────────────────────────
+function filtrerParNiveau(btn) {
+  document.querySelectorAll('[data-niveau]').forEach(function(b) {
+    b.classList.remove('filter-btn--active');
   });
-
-  /* Description optionnelle */
-  const descHTML = fiche.description
-    ? `<div class="fiche-card__desc">${fiche.description}</div>`
-    : '';
-
-  /*
-    Détermine si l'URL est externe (commence par http)
-    pour ouvrir dans un nouvel onglet uniquement si nécessaire.
-  */
-  const estExterne  = fiche.url.startsWith('http');
-  const targetAttr  = estExterne ? 'target="_blank" rel="noopener noreferrer"' : '';
-
-  return `
-    <a class="fiche-card" href="${fiche.url}" ${targetAttr}>
-
-      <div class="fiche-card__badges">
-        <span class="badge badge--level">${fiche.niveau}</span>
-        <span class="badge badge--subject">${fiche.matiere}</span>
-      </div>
-
-      <div class="fiche-card__title">${fiche.titre}</div>
-
-      ${descHTML}
-
-      <div class="fiche-card__footer">
-        <span class="fiche-card__date">${dateFormatee}</span>
-        <span class="fiche-card__cta">Ouvrir →</span>
-      </div>
-
-    </a>`;
-}
-
-
-/* ────────────────────────────────────────────────
-   8. RECHERCHE
-   ──────────────────────────────────────────────── */
-
-/**
- * Met à jour l'état de recherche et relance le rendu.
- * Appelée à chaque frappe dans le champ de recherche.
- *
- * @param {string} [valeur] - Valeur à rechercher.
- *                            Si omise, lit directement le champ.
- */
-function effectuerRecherche(valeur) {
-  AppState.recherche = (valeur !== undefined ? valeur : DOM.searchInput.value).trim();
+  btn.classList.add('filter-btn--active');
+  AppState.niveau = btn.dataset.niveau;
   rendreGrille();
 }
 
-/*
-  ── Recherche en temps réel ──
-  Déclenche la recherche à CHAQUE frappe dans le champ.
-  L'utilisateur voit les résultats se filtrer instantanément
-  sans avoir à appuyer sur Entrée ou cliquer sur le bouton.
-*/
-DOM.searchInput.addEventListener('input', () => {
+function filtrerParEtab(btn) {
+  document.querySelectorAll('[data-etab]').forEach(function(b) {
+    b.classList.remove('filter-btn--active');
+  });
+  btn.classList.add('filter-btn--active');
+  AppState.etab = btn.dataset.etab;
+  rendreGrille();
+}
+
+function filtrerParFiliere(btn) {
+  document.querySelectorAll('[data-filiere]').forEach(function(b) {
+    b.classList.remove('filter-btn--active');
+  });
+  btn.classList.add('filter-btn--active');
+  AppState.filiere = btn.dataset.filiere;
+  rendreGrille();
+}
+
+window.filtrerParNiveau  = filtrerParNiveau;
+window.filtrerParEtab    = filtrerParEtab;
+window.filtrerParFiliere = filtrerParFiliere;
+
+
+// ─────────────────────────────────────────
+// 8. RECHERCHE
+// ─────────────────────────────────────────
+function effectuerRecherche(val) {
+  AppState.recherche = (val !== undefined ? val : DOM.searchInput.value).trim();
+  rendreGrille();
+}
+
+DOM.searchInput.addEventListener('input', function() {
   effectuerRecherche(DOM.searchInput.value);
 });
 
-/*
-  ── Recherche sur Entrée ──
-  Conservé pour les utilisateurs qui appuient sur Entrée.
-*/
-DOM.searchInput.addEventListener('keydown', (e) => {
+DOM.searchInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') effectuerRecherche();
 });
 
-/*
-  Expose la fonction au HTML pour le bouton "Chercher".
-*/
 window.effectuerRecherche = effectuerRecherche;
 
 
-/* ────────────────────────────────────────────────
-   9. FILTRES PAR NIVEAU
-   ──────────────────────────────────────────────── */
+// ─────────────────────────────────────────
+// 9. AFFICHAGE DYNAMIQUE "AUTRE ÉTABLISSEMENT / FILIÈRE"
+// ─────────────────────────────────────────
+DOM.reqEtablissement.addEventListener('change', function() {
+  DOM.autreEtabGroup.style.display = this.value === 'autre' ? 'flex' : 'none';
+  if (this.value !== 'autre') DOM.reqAutreEtab.value = '';
+});
 
-/**
- * Active un filtre de niveau.
- * La recherche en cours est conservée — les deux filtres
- * s'appliquent simultanément.
- *
- * @param {HTMLElement} boutonClique - Le bouton filtre cliqué
- */
-function filtrerParNiveau(boutonClique) {
+DOM.reqFiliere.addEventListener('change', function() {
+  DOM.autreFiliereGroup.style.display = this.value === 'autre' ? 'flex' : 'none';
+  if (this.value !== 'autre') DOM.reqAutreFiliere.value = '';
+});
 
-  /* Retire l'état actif de tous les boutons de filtre */
-  document.querySelectorAll('[data-niveau]').forEach(btn => {
-    btn.classList.remove('filter-btn--active');
-  });
 
-  /* Active le bouton cliqué */
-  boutonClique.classList.add('filter-btn--active');
+// ─────────────────────────────────────────
+// 10. UPLOAD FICHIER VERS SUPABASE STORAGE
+// ─────────────────────────────────────────
+async function uploaderFichier(fichier) {
+  if (!fichier) return null;
 
-  /* Met à jour l'état et relance le rendu */
-  AppState.niveau = boutonClique.dataset.niveau;
-  rendreGrille();
+  // Limite 10 Mo
+  if (fichier.size > 10 * 1024 * 1024) {
+    throw new Error('Le fichier dépasse 10 Mo. Choisis un fichier plus léger.');
+  }
+
+  var db = window.KlaroDB.db;
+
+  // Nom unique : timestamp + nom original nettoyé
+  var nomNettoye = fichier.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  var cheminFichier = Date.now() + '_' + nomNettoye;
+
+  // Affiche la barre de progression
+  DOM.uploadProgress.style.display = 'block';
+  DOM.uploadBar.style.width = '20%';
+  DOM.uploadPct.textContent = '20%';
+
+  var uploadResult = await db.storage
+    .from('cours-documents')
+    .upload(cheminFichier, fichier, { cacheControl: '3600', upsert: false });
+
+  DOM.uploadBar.style.width = '100%';
+  DOM.uploadPct.textContent = '100%';
+
+  if (uploadResult.error) {
+    DOM.uploadProgress.style.display = 'none';
+    throw new Error('Erreur upload : ' + uploadResult.error.message);
+  }
+
+  DOM.uploadProgress.style.display = 'none';
+  return uploadResult.data.path;
 }
 
-/*
-  Expose la fonction au HTML pour les boutons de filtre.
-*/
-window.filtrerParNiveau = filtrerParNiveau;
 
+// ─────────────────────────────────────────
+// 11. FORMULAIRE DE DEMANDE
+// ─────────────────────────────────────────
+async function envoyerDemande(e) {
+  e.preventDefault();
 
-/* ────────────────────────────────────────────────
-   10. FORMULAIRE DE DEMANDE
-   ──────────────────────────────────────────────── */
+  // Récupère les valeurs
+  var nom          = DOM.reqNom.value.trim();
+  var matiere      = DOM.reqMatiere.value.trim();
+  var etabVal      = DOM.reqEtablissement.value;
+  var etablissement = etabVal === 'autre'
+    ? DOM.reqAutreEtab.value.trim()
+    : etabVal;
+  var filiereVal   = DOM.reqFiliere.value;
+  var filiere      = filiereVal === 'autre'
+    ? DOM.reqAutreFiliere.value.trim()
+    : filiereVal;
 
-/**
- * Gère la soumission du formulaire de demande de fiche.
- * Envoie les données dans la table "demandes" de Supabase.
- *
- * @async
- * @param {SubmitEvent} evenement
- */
-async function envoyerDemande(evenement) {
+  // Validation
+  if (!nom) { afficherFeedback('error', 'Merci de renseigner ton nom.'); return; }
+  if (!etablissement) { afficherFeedback('error', 'Merci de renseigner ton établissement.'); return; }
+  if (!filiere) { afficherFeedback('error', 'Merci de renseigner ta filière.'); return; }
+  if (!matiere) { afficherFeedback('error', 'Merci de renseigner la matière.'); return; }
 
-  evenement.preventDefault();
-
-  /* Validation : champs obligatoires non vides */
-  const nom     = DOM.reqNom.value.trim();
-  const matiere = DOM.reqMatiere.value.trim();
-
-  if (!nom || !matiere) {
-    afficherFeedback('error', 'Merci de remplir au moins ton nom et la matière.');
+  if (!window.KlaroDB || !window.KlaroDB.pret) {
+    afficherFeedback('error', 'Connexion impossible. Recharge la page.');
     return;
   }
 
-  /* Passe en état de chargement */
   DOM.submitBtn.disabled      = true;
   DOM.submitLabel.textContent = 'Envoi en cours…';
   cacherFeedback();
 
-  const donneesDemande = {
-    nom,
-    email:       DOM.reqEmail.value.trim()  || null,
-    matiere,
-    niveau:      DOM.reqNiveau.value        || null,
-    description: DOM.reqDesc.value.trim()   || null,
-    statut:      'en_attente',
-  };
-
-  const { db, TABLES } = window.KlaroDB;
-
-  /* Vérifie que le client est disponible avant d'envoyer */
-  if (!db) {
-    afficherFeedback('error',
-      'Connexion impossible. Vérifie ta connexion internet.'
-    );
-    DOM.submitBtn.disabled      = false;
-    DOM.submitLabel.textContent = 'Envoyer la demande';
-    return;
+  // Upload du fichier si présent
+  var fichierUrl = null;
+  var fichierInput = DOM.reqFichier.files[0];
+  if (fichierInput) {
+    try {
+      fichierUrl = await uploaderFichier(fichierInput);
+    } catch (err) {
+      afficherFeedback('error', err.message);
+      DOM.submitBtn.disabled      = false;
+      DOM.submitLabel.textContent = 'Envoyer la demande';
+      return;
+    }
   }
 
-  const { error } = await db
-    .from(TABLES.DEMANDES)
-    .insert([donneesDemande]);
+  // Envoi dans Supabase
+  var db     = window.KlaroDB.db;
+  var TABLES = window.KlaroDB.TABLES;
 
-  if (error) {
-    afficherFeedback('error',
-      'Une erreur est survenue. Réessaie dans quelques instants.'
-    );
-    console.error('[index.js] Erreur envoi demande :', error);
+  var donnees = {
+    nom:          nom,
+    email:        DOM.reqEmail.value.trim() || null,
+    etablissement: etablissement || null,
+    filiere:      filiere || null,
+    matiere:      matiere,
+    niveau:       DOM.reqNiveau.value || null,
+    description:  DOM.reqDesc.value.trim() || null,
+    fichier_url:  fichierUrl,
+    statut:       'en_attente'
+  };
+
+  var result = await db.from(TABLES.DEMANDES).insert([donnees]);
+
+  if (result.error) {
+    afficherFeedback('error', 'Une erreur est survenue. Réessaie dans quelques instants.');
+    console.error('[index.js] Erreur demande :', result.error);
   } else {
-    afficherFeedback('success',
-      '✓ Demande envoyée ! Notre équipe Klaro s\'en occupe rapidement.'
-    );
+    afficherFeedback('success', '✓ Demande envoyée ! Notre équipe Klaro s\'en occupe rapidement.');
     DOM.reqForm.reset();
+    DOM.autreEtabGroup.style.display    = 'none';
+    DOM.autreFiliereGroup.style.display = 'none';
   }
 
   DOM.submitBtn.disabled      = false;
   DOM.submitLabel.textContent = 'Envoyer la demande';
 }
 
-/**
- * Affiche un message de retour sous le formulaire.
- * @param {'success'|'error'} type
- * @param {string}            message
- */
-function afficherFeedback(type, message) {
-  DOM.feedbackMsg.textContent = message;
-  DOM.feedbackMsg.className   = `feedback feedback--show feedback--${type}`;
+function afficherFeedback(type, msg) {
+  DOM.feedbackMsg.textContent = msg;
+  DOM.feedbackMsg.className   = 'feedback feedback--show feedback--' + type;
 }
-
-/**
- * Masque le message de retour.
- */
 function cacherFeedback() {
   DOM.feedbackMsg.textContent = '';
   DOM.feedbackMsg.className   = 'feedback';
@@ -518,44 +366,31 @@ if (DOM.reqForm) {
 }
 
 
-/* ────────────────────────────────────────────────
-   11. ANIMATIONS AU SCROLL
-   ──────────────────────────────────────────────── */
+// ─────────────────────────────────────────
+// 12. ANIMATIONS SCROLL
+// ─────────────────────────────────────────
+function initialiserAnimations() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
 
-/**
- * Active les animations fade-up au scroll via IntersectionObserver.
- */
-function initialiserAnimationsScroll() {
-
-  const observateur = new IntersectionObserver(
-    (entrees) => {
-      entrees.forEach((entree) => {
-        if (entree.isIntersecting) {
-          entree.target.classList.add('visible');
-          observateur.unobserve(entree.target);
-        }
-      });
-    },
-    { threshold: 0.08 }
-  );
-
-  document.querySelectorAll('.fade-up').forEach(el => {
-    observateur.observe(el);
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    obs.observe(el);
   });
 }
 
 
-/* ────────────────────────────────────────────────
-   12. INITIALISATION
-   ──────────────────────────────────────────────── */
-
-/**
- * Point d'entrée principal.
- * Lance le chargement des fiches puis les fonctionnalités UI.
- */
+// ─────────────────────────────────────────
+// 13. INITIALISATION
+// ─────────────────────────────────────────
 async function initialiser() {
   await chargerFiches();
-  initialiserAnimationsScroll();
+  initialiserAnimations();
 }
 
 document.addEventListener('DOMContentLoaded', initialiser);

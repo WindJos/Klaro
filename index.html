@@ -3,93 +3,53 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fichly — Fiches de révision</title>
+  <title>Klaro — Fiches de révision</title>
   <meta name="description" content="Des fiches de révision structurées pour réussir tes examens. Une initiative WindJos Digital."/>
 
-  <!-- ── Polices Google Fonts ── -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-  <!-- ── Feuilles de style (ordre obligatoire) ── -->
-  <link rel="stylesheet" href="assets/css/variables.css"/>  <!-- 1. Tokens design       -->
-  <link rel="stylesheet" href="assets/css/base.css"/>       <!-- 2. Reset & fondations  -->
-  <link rel="stylesheet" href="assets/css/components.css"/> <!-- 3. Composants partagés -->
-  <link rel="stylesheet" href="assets/css/index.css"/>      <!-- 4. Styles page accueil -->
+  <link rel="stylesheet" href="assets/css/variables.css"/>
+  <link rel="stylesheet" href="assets/css/base.css"/>
+  <link rel="stylesheet" href="assets/css/components.css"/>
+  <link rel="stylesheet" href="assets/css/index.css"/>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       HEADER — Navigation principale
-  ════════════════════════════════════════════ -->
+  <!-- ═══ HEADER ═══ -->
   <header class="site-header">
-    <a class="site-header__logo" href="index.html">
-      Kla<span>ro</span>
-    </a>
+    <a class="site-header__logo" href="index.html">Kla<span>ro</span></a>
     <nav class="site-header__nav">
       <a href="admin.html">Admin ↗</a>
     </nav>
   </header>
 
 
-  <!-- ═══════════════════════════════════════════
-       HERO — Accroche et barre de recherche
-  ════════════════════════════════════════════ -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="hero__inner">
-
-      <div class="hero__tag">Fiches de révision · IBAM</div>
-
-      <h1 class="hero__title">
-        Révise <em>intelligemment</em>,<br/>réussis brillamment.
-      </h1>
-
-      <p class="hero__subtitle">
-        Des fiches structurées et vérifiées, gratuites pour tous les étudiants.
-      </p>
-
-      <!-- Barre de recherche -->
+      <div class="hero__tag">Fiches de révision · Burkina Faso</div>
+      <h1 class="hero__title">Révise <em>intelligemment</em>,<br/>réussis brillamment.</h1>
+      <p class="hero__subtitle">Des fiches structurées et vérifiées, gratuites pour tous les étudiants.</p>
       <div class="search-bar">
-        <input
-          class="search-bar__input"
-          type="text"
-          id="searchInput"
-          placeholder="Matière, cours, mot-clé…"
-          aria-label="Rechercher une fiche"
-        />
-        <button
-          class="search-bar__btn"
-          onclick="effectuerRecherche()"
-          aria-label="Lancer la recherche"
-        >
+        <input class="search-bar__input" type="text" id="searchInput"
+          placeholder="Matière, cours, filière…" aria-label="Rechercher une fiche"/>
+        <button class="search-bar__btn" onclick="effectuerRecherche()" aria-label="Chercher">
           Chercher
         </button>
       </div>
-
     </div>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════
-       CONTENU PRINCIPAL
-  ════════════════════════════════════════════ -->
-  <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+  <!-- ═══ CONTENU PRINCIPAL ═══ -->
+  <main class="container" style="padding-top: 36px; padding-bottom: 80px;">
 
-    <!-- ── Filtres par niveau académique ── -->
-    <!--
-      Pas de fade-up ici : ces éléments doivent être
-      immédiatement visibles au chargement de la page.
-    -->
+    <!-- ── Filtre Niveau ── -->
     <div class="filters">
       <span class="filters__label">Niveau :</span>
-
-      <!-- Le premier bouton est actif par défaut -->
-      <button
-        class="filter-btn filter-btn--active"
-        data-niveau="all"
-        onclick="filtrerParNiveau(this)"
-      >Tous</button>
-
+      <button class="filter-btn filter-btn--active" data-niveau="all"    onclick="filtrerParNiveau(this)">Tous</button>
       <button class="filter-btn" data-niveau="L1"     onclick="filtrerParNiveau(this)">L1</button>
       <button class="filter-btn" data-niveau="L2"     onclick="filtrerParNiveau(this)">L2</button>
       <button class="filter-btn" data-niveau="L3"     onclick="filtrerParNiveau(this)">L3</button>
@@ -97,19 +57,45 @@
       <button class="filter-btn" data-niveau="BTS"    onclick="filtrerParNiveau(this)">BTS</button>
     </div>
 
-    <!-- ── En-tête de section avec compteur ── -->
+    <!-- ── Filtre Établissement ── -->
+    <div class="filters" style="margin-top: -4px;">
+      <span class="filters__label">École :</span>
+      <button class="filter-btn filter-btn--active" data-etab="all"     onclick="filtrerParEtab(this)">Toutes</button>
+      <button class="filter-btn" data-etab="IBAM"    onclick="filtrerParEtab(this)">IBAM</button>
+      <button class="filter-btn" data-etab="UJKZ"    onclick="filtrerParEtab(this)">UJKZ</button>
+      <button class="filter-btn" data-etab="IST"     onclick="filtrerParEtab(this)">IST</button>
+      <button class="filter-btn" data-etab="ISTAPEM" onclick="filtrerParEtab(this)">ISTAPEM</button>
+      <button class="filter-btn" data-etab="U-AUBEN" onclick="filtrerParEtab(this)">U-AUBEN</button>
+      <button class="filter-btn" data-etab="ISTIC"   onclick="filtrerParEtab(this)">ISTIC</button>
+      <button class="filter-btn" data-etab="IPERMIC" onclick="filtrerParEtab(this)">IPERMIC</button>
+      <button class="filter-btn" data-etab="UV-BF"   onclick="filtrerParEtab(this)">UV-BF</button>
+      <button class="filter-btn" data-etab="USTA"    onclick="filtrerParEtab(this)">USTA</button>
+      <button class="filter-btn" data-etab="ESTA"    onclick="filtrerParEtab(this)">ESTA</button>
+      <button class="filter-btn" data-etab="ESC"     onclick="filtrerParEtab(this)">ESC</button>
+      <button class="filter-btn" data-etab="ULB"     onclick="filtrerParEtab(this)">ULB</button>
+      <button class="filter-btn" data-etab="UPG"     onclick="filtrerParEtab(this)">UPG</button>
+    </div>
+
+    <!-- ── Filtre Filière ── -->
+    <div class="filters" style="margin-top: -4px;">
+      <span class="filters__label">Filière :</span>
+      <button class="filter-btn filter-btn--active" data-filiere="all"   onclick="filtrerParFiliere(this)">Toutes</button>
+      <button class="filter-btn" data-filiere="MGC"   onclick="filtrerParFiliere(this)">MGC</button>
+      <button class="filter-btn" data-filiere="MID"   onclick="filtrerParFiliere(this)">MID</button>
+      <button class="filter-btn" data-filiere="ADB"   onclick="filtrerParFiliere(this)">ADB</button>
+      <button class="filter-btn" data-filiere="ADC"   onclick="filtrerParFiliere(this)">ADC</button>
+      <button class="filter-btn" data-filiere="MIAGE" onclick="filtrerParFiliere(this)">MIAGE</button>
+      <button class="filter-btn" data-filiere="CCA"   onclick="filtrerParFiliere(this)">CCA</button>
+      <button class="filter-btn" data-filiere="Droit" onclick="filtrerParFiliere(this)">Droit</button>
+    </div>
+
+    <!-- ── En-tête section + compteur ── -->
     <div class="section-head">
       <h2 class="section-head__title">Fiches disponibles</h2>
-      <!-- Rempli dynamiquement par index.js -->
       <span class="count-badge" id="countBadge">…</span>
     </div>
 
-    <!-- ── Grille des fiches ── -->
-    <!--
-      Pas de fade-up : la grille est remplie dynamiquement
-      par index.js — elle doit être visible dès que les fiches
-      arrivent depuis Supabase.
-    -->
+    <!-- ── Grille des fiches (remplie par index.js) ── -->
     <div class="fiches-grid" id="fichesGrid">
       <div class="state-empty">
         <div class="spinner"></div>
@@ -118,55 +104,51 @@
     </div>
 
 
-    <!-- ── Section : demande d'une nouvelle fiche ── -->
+    <!-- ═══ FORMULAIRE DE DEMANDE ═══ -->
     <section class="request-section fade-up" id="demande">
 
       <div class="request-section__tag">Tu ne trouves pas ton cours ?</div>
-
       <h2 class="request-section__title">Demande une fiche</h2>
-
       <p class="request-section__desc">
-        Notre équipe WindJos prépare la fiche et la publie en priorité pour toi.
+        Notre équipe Klaro prépare ta fiche et la publie en priorité.
       </p>
 
-      <!-- novalidate : la validation est gérée par index.js -->
       <form id="reqForm" novalidate>
 
+        <!-- Nom + Email -->
         <div class="form-row">
-
           <div class="form-group form-group--dark">
             <label for="r_nom">Ton nom *</label>
-            <input
-              type="text"
-              id="r_nom"
-              placeholder="Ex : Aminata Traoré"
-              required
-            />
+            <input type="text" id="r_nom" placeholder="Ex : Aminata Traoré" required/>
           </div>
-
           <div class="form-group form-group--dark">
             <label for="r_email">Email (optionnel)</label>
-            <input
-              type="email"
-              id="r_email"
-              placeholder="ton@email.com"
-            />
+            <input type="email" id="r_email" placeholder="ton@email.com"/>
           </div>
+        </div>
 
-        </div><!-- /.form-row -->
-
+        <!-- Établissement + Niveau -->
         <div class="form-row">
-
           <div class="form-group form-group--dark">
-            <label for="r_matiere">Matière *</label>
-            <input
-              type="text"
-              id="r_matiere"
-              placeholder="Ex : Droit des affaires"
-              required
-            />
+            <label for="r_etablissement">Ton établissement *</label>
+            <select id="r_etablissement" required>
+              <option value="">Choisir…</option>
+              <option>IBAM</option>
+              <option>UJKZ</option>
+              <option>IST</option>
+              <option>ISTAPEM</option>
+              <option>U-AUBEN</option>
+              <option>ISTIC</option>
+              <option>IPERMIC</option>
+              <option>UV-BF</option>
+              <option>USTA</option>
+              <option>ESTA</option>
+              <option>ESC</option>
+              <option>ULB</option>
+              <option>UPG</option>
+              <option value="autre">Autre…</option>
+            </select>
           </div>
-
           <div class="form-group form-group--dark">
             <label for="r_niveau">Niveau</label>
             <select id="r_niveau">
@@ -179,16 +161,68 @@
               <option>Autre</option>
             </select>
           </div>
+        </div>
 
-        </div><!-- /.form-row -->
+        <!-- Champ "autre établissement" — visible si "Autre" sélectionné -->
+        <div class="form-group form-group--dark" id="autreEtabGroup" style="display:none;">
+          <label for="r_autre_etab">Précise le nom de ton université *</label>
+          <input type="text" id="r_autre_etab" placeholder="Ex : Université de Koudougou"/>
+        </div>
 
+        <!-- Filière + Matière -->
+        <div class="form-row">
+          <div class="form-group form-group--dark">
+            <label for="r_filiere">Filière *</label>
+            <select id="r_filiere" required>
+              <option value="">Choisir…</option>
+              <option>MGC</option>
+              <option>MID</option>
+              <option>ADB</option>
+              <option>ADC</option>
+              <option>MIAGE</option>
+              <option>CCA</option>
+              <option>Droit</option>
+              <option value="autre">Autre…</option>
+            </select>
+          </div>
+          <div class="form-group form-group--dark">
+            <label for="r_matiere">Matière *</label>
+            <input type="text" id="r_matiere" placeholder="Ex : Droit des affaires" required/>
+          </div>
+        </div>
+
+        <!-- Champ "autre filière" — visible si "Autre" sélectionné -->
+        <div class="form-group form-group--dark" id="autreFiliereGroup" style="display:none;">
+          <label for="r_autre_filiere">Précise ta filière *</label>
+          <input type="text" id="r_autre_filiere" placeholder="Ex : Informatique de gestion"/>
+        </div>
+
+        <!-- Fichier du cours -->
+        <div class="form-group form-group--dark">
+          <label for="r_fichier">Fichier du cours — PDF ou Word (Utile pour la fiche)</label>
+          <input
+            type="file"
+            id="r_fichier"
+            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            style="color:rgba(255,255,255,0.7); padding:8px 0;" required
+          />
+          <span class="form-hint">Max 10 Mo · Formats acceptés : PDF, DOC, DOCX</span>
+        </div>
+
+        <!-- Barre de progression upload -->
+        <div id="uploadProgress" style="display:none; margin-bottom:14px;">
+          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:6px;">
+            Upload en cours… <span id="uploadPct">0%</span>
+          </div>
+          <div style="height:3px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden;">
+            <div id="uploadBar" style="height:100%; width:0%; background:var(--color-gold); border-radius:2px; transition:width 0.3s;"></div>
+          </div>
+        </div>
+
+        <!-- Précisions -->
         <div class="form-group form-group--dark">
           <label for="r_desc">Précisions (optionnel)</label>
-          <textarea
-            id="r_desc"
-            rows="3"
-            placeholder="Chapitre précis, enseignant, date d'examen…"
-          ></textarea>
+          <textarea id="r_desc" rows="3" placeholder="Chapitre précis, nom de l'enseignant, date d'examen…"></textarea>
         </div>
 
         <button type="submit" class="btn btn--gold" id="submitBtn">
@@ -196,13 +230,7 @@
           <span aria-hidden="true">→</span>
         </button>
 
-        <!-- Message de retour — affiché/masqué par index.js -->
-        <div
-          class="feedback"
-          id="fMsg"
-          role="alert"
-          aria-live="polite"
-        ></div>
+        <div class="feedback" id="fMsg" role="alert" aria-live="polite"></div>
 
       </form>
     </section>
@@ -210,9 +238,7 @@
   </main>
 
 
-  <!-- ═══════════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════════ -->
+  <!-- ═══ FOOTER ═══ -->
   <footer class="site-footer">
     <div class="site-footer__logo">Klaro</div>
     <p>Une initiative de <strong>WindJos Digital</strong></p>
@@ -220,13 +246,7 @@
   </footer>
 
 
-  <!-- ================================================================
-       SCRIPTS
-       Ordre obligatoire :
-         1. supabase.min.js  (librairie locale - pas de CDN externe)
-         2. supabase-client.js  (initialise window.KlaroDB)
-         3. index.js            (logique de la page)
-  ================================================================ -->
+  <!-- ═══ SCRIPTS ═══ -->
   <script src="assets/lib/supabase.min.js"></script>
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/index.js"></script>

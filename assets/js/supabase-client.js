@@ -1,21 +1,19 @@
 /* ============================================================
-   FICHLY — supabase-client.js
+   KLARO — supabase-client.js
    Point d'entrée unique pour la connexion à Supabase.
 
-   Ce fichier doit être chargé EN PREMIER avant index.js
-   et admin.js. Il expose un objet global `FichlyDB` que
+   Ce fichier expose un objet global `window.KlaroDB` que
    tous les autres scripts utilisent pour interagir avec
    la base de données.
 
    ⚠️  Ne jamais dupliquer les clés Supabase dans d'autres
-       fichiers. Toute modification de projet se fait ici
-       uniquement.
+       fichiers. Toute modification de projet se fait ici.
 
    Organisation :
    1. Configuration du projet Supabase
-   2. Initialisation du client
-   3. Export vers l'objet global FichlyDB
-   4. Test de connexion (optionnel, mode développement)
+   2. Vérification du chargement de la librairie CDN
+   3. Initialisation du client
+   4. Export vers l'objet global KlaroDB
    ============================================================ */
 
 
@@ -25,20 +23,14 @@
 
 /**
  * URL publique du projet Supabase.
- * Disponible dans : Supabase Dashboard → Settings → API → Project URL
  * @type {string}
  */
 const SUPABASE_URL = 'https://lonofaznqdqptatyqgdn.supabase.co';
 
 /**
  * Clé publique anonyme (anon key).
- * Disponible dans : Supabase Dashboard → Settings → API → Project API Keys
- *
- * ℹ️  Cette clé est publique par nature : elle est visible dans
- *     le navigateur. La sécurité repose sur les politiques RLS
- *     (Row Level Security) configurées dans Supabase, pas sur
- *     le secret de cette clé.
- *
+ * Cette clé est publique par nature — la sécurité repose
+ * sur les politiques RLS configurées dans Supabase.
  * @type {string}
  */
 const SUPABASE_ANON_KEY =
@@ -49,8 +41,7 @@ const SUPABASE_ANON_KEY =
 
 /**
  * Noms des tables Supabase.
- * Centralisés ici pour éviter les fautes de frappe dans les
- * requêtes et faciliter un éventuel renommage.
+ * Centralisés ici pour éviter les fautes de frappe.
  * @type {Object.<string, string>}
  */
 const DB_TABLES = {
@@ -60,53 +51,102 @@ const DB_TABLES = {
 
 
 /* ────────────────────────────────────────────────
-   2. INITIALISATION DU CLIENT
+   2. VÉRIFICATION DU CHARGEMENT DE LA LIBRAIRIE CDN
    ──────────────────────────────────────────────── */
 
 /*
-  On récupère la fonction createClient depuis la librairie
-  Supabase chargée via le CDN dans les fichiers HTML.
-  La librairie expose un objet global `window.supabase`.
+  window.supabase est exposé par la librairie CDN chargée
+  dans le HTML avant ce fichier. Si elle est undefined,
+  c'est que le CDN n'a pas réussi à se charger
+  (réseau lent, coupure internet, firewall…).
+
+  On vérifie explicitement avant d'utiliser la librairie
+  pour éviter l'erreur :
+  "Cannot destructure property 'createClient' of undefined"
 */
-const { createClient } = window.supabase;
+if (!window.supabase) {
 
-/**
- * Instance du client Supabase.
- * Utilisée pour toutes les opérations de base de données :
- * select, insert, update, delete.
- *
- * @type {import('@supabase/supabase-js').SupabaseClient}
- */
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  console.error(
+    '[KlaroDB] ❌ La librairie Supabase (CDN) n\'a pas pu se charger.\n' +
+    'Vérifie ta connexion internet et recharge la page.'
+  );
+
+  /*
+    On expose un objet KlaroDB minimal pour éviter que
+    les autres scripts plantent en cascade avec des
+    erreurs "Cannot read properties of undefined".
+    La propriété pret:false permet aux scripts de détecter
+    que la connexion n'est pas disponible.
+  */
+  window.KlaroDB = {
+    db:     null,
+    TABLES: DB_TABLES,
+    pret:   false,
+  };
+
+} else {
+
+  /* ────────────────────────────────────────────────
+     3. INITIALISATION DU CLIENT
+     ──────────────────────────────────────────────── */
+
+  /*
+    Certaines versions du bundle UMD exposent createClient
+    de deux façons différentes selon le bundler utilisé.
+    On tente les deux formes pour garantir la compatibilité.
+  */
+  const createClient =
+    window.supabase.createClient ||
+    (window.supabase.default && window.supabase.default.createClient);
+
+  if (!createClient) {
+
+    console.error(
+      '[KlaroDB] ❌ createClient introuvable dans window.supabase.\n' +
+      'La version du CDN chargée est peut-être incompatible.'
+    );
+
+    window.KlaroDB = { db: null, TABLES: DB_TABLES, pret: false };
+
+  } else {
+
+    /**
+     * Instance du client Supabase.
+     * Utilisée pour toutes les opérations : select, insert, update, delete.
+     * @type {import('@supabase/supabase-js').SupabaseClient}
+     */
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
-/* ────────────────────────────────────────────────
-   3. EXPORT VERS L'OBJET GLOBAL FichlyDB
-   ──────────────────────────────────────────────── */
+    /* ────────────────────────────────────────────────
+       4. EXPORT VERS L'OBJET GLOBAL KlaroDB
+       ──────────────────────────────────────────────── */
 
-/**
- * Objet global exposant le client Supabase et les constantes
- * nécessaires aux autres scripts (index.js, admin.js).
- *
- * Usage dans les autres fichiers :
- *   const { db, TABLES } = window.FichlyDB;
- *   const { data } = await db.from(TABLES.FICHES).select('*');
- *
- * @namespace FichlyDB
- * @property {SupabaseClient} db     - Instance du client Supabase
- * @property {Object}         TABLES - Noms des tables de la BDD
- */
-window.FichlyDB = {
-  db:     supabaseClient,
-  TABLES: DB_TABLES,
-};
+    /**
+     * Objet global exposant le client et les constantes.
+     *
+     * Usage dans les autres fichiers :
+     *
+     *   // Vérifier que la connexion est disponible
+     *   if (!window.KlaroDB.pret) return;
+     *
+     *   // Utiliser le client
+     *   const { db, TABLES } = window.KlaroDB;
+     *   const { data } = await db.from(TABLES.FICHES).select('*');
+     *
+     * @property {SupabaseClient|null} db     - Client Supabase (null si CDN échoue)
+     * @property {Object}              TABLES - Noms des tables
+     * @property {boolean}             pret   - true si connexion disponible
+     */
+    window.KlaroDB = {
+      db:     supabaseClient,
+      TABLES: DB_TABLES,
+      pret:   true,
+    };
 
-
-/* ────────────────────────────────────────────────
-   4. TEST DE CONNEXION (MODE DÉVELOPPEMENT)
-   ──────────────────────────────────────────────── */
-
-/*
+    console.info('[KlaroDB] ✅ Client Supabase initialisé avec succès.');
+  }
+}
   Ce bloc s'exécute uniquement sur localhost pour vérifier
   que la connexion à Supabase est opérationnelle au démarrage.
   Il n'a aucun effet en production.

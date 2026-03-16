@@ -329,6 +329,246 @@
          2. supabase-client.js  (initialise window.FichlyDB)
          3. admin.js            (logique du dashboard)
   ════════════════════════════════════════════ -->
+
+  <!-- CDN principal : jsDelivr -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- CDN secours : unpkg (chargé uniquement si jsDelivr a échoué) -->
+  <script>
+    if (!window.supabase) {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js';
+      document.head.appendChild(s);
+    }
+  </script>
+
+  <script src="assets/js/supabase-client.js" defer></script>
+  <script src="assets/js/admin.js" defer></script>
+
+</body>
+</html>
+      <div class="stat-card">
+        <div class="stat-card__value" id="st-pending">–</div>
+        <div class="stat-card__label">En attente</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__value" id="st-done">–</div>
+        <div class="stat-card__label">Traitées</div>
+      </div>
+
+    </div><!-- /.stats-bar -->
+
+
+    <!-- ── Barre d'onglets ── -->
+    <div class="tabs-bar" role="tablist">
+
+      <button
+        class="tab-btn tab-btn--active"
+        role="tab"
+        data-tab="demandes"
+        aria-selected="true"
+        onclick="afficherOnglet('demandes', this)"
+      >
+        Demandes
+        <!-- Point rouge visible si demandes en attente (affiché par admin.js) -->
+        <span class="tab-dot" id="tabDot" aria-hidden="true"></span>
+      </button>
+
+      <button
+        class="tab-btn"
+        role="tab"
+        data-tab="publier"
+        aria-selected="false"
+        onclick="afficherOnglet('publier', this)"
+      >
+        Publier une fiche
+      </button>
+
+      <button
+        class="tab-btn"
+        role="tab"
+        data-tab="gerer"
+        aria-selected="false"
+        onclick="afficherOnglet('gerer', this)"
+      >
+        Gérer les fiches
+      </button>
+
+    </div><!-- /.tabs-bar -->
+
+
+    <!-- ════════════════════════════════════════
+         ONGLET 1 — Demandes des étudiants
+    ════════════════════════════════════════ -->
+    <div class="tab-content tab-content--active" id="tab-demandes" role="tabpanel">
+
+      <div class="table-wrap">
+        <table class="data-table data-table--dark" aria-label="Liste des demandes">
+          <thead>
+            <tr>
+              <th>Étudiant</th>
+              <th>Matière</th>
+              <th>Niveau</th>
+              <th>Précisions</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <!-- Rempli dynamiquement par admin.js -->
+          <tbody id="demandesTbody">
+            <tr>
+              <td colspan="7" class="table-empty">
+                <p>Chargement…</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /#tab-demandes -->
+
+
+    <!-- ════════════════════════════════════════
+         ONGLET 2 — Publier une nouvelle fiche
+    ════════════════════════════════════════ -->
+    <div class="tab-content" id="tab-publier" role="tabpanel">
+
+      <!-- novalidate : la validation est gérée par admin.js -->
+      <form class="pub-form" id="pubForm" novalidate>
+
+        <h3 class="pub-form__title">Publier une nouvelle fiche</h3>
+
+        <div class="form-group form-group--dark">
+          <label for="p_titre">Titre de la fiche *</label>
+          <input
+            type="text"
+            id="p_titre"
+            placeholder="Ex : Responsabilité Sociale de l'Entreprise (RSE)"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+
+          <div class="form-group form-group--dark">
+            <label for="p_matiere">Matière *</label>
+            <input
+              type="text"
+              id="p_matiere"
+              placeholder="Ex : Management"
+              required
+            />
+          </div>
+
+          <div class="form-group form-group--dark">
+            <label for="p_niveau">Niveau *</label>
+            <select id="p_niveau" required>
+              <option value="">Choisir…</option>
+              <option>L1</option>
+              <option>L2</option>
+              <option>L3</option>
+              <option>Master</option>
+              <option>BTS</option>
+              <option>Autre</option>
+            </select>
+          </div>
+
+        </div><!-- /.form-row -->
+
+        <div class="form-group form-group--dark">
+          <label for="p_desc">Description courte (optionnel)</label>
+          <textarea
+            id="p_desc"
+            rows="3"
+            placeholder="Résumé du contenu de la fiche…"
+          ></textarea>
+        </div>
+
+        <div class="form-group form-group--dark">
+          <label for="p_url">Chemin / URL du fichier HTML *</label>
+          <input
+            type="text"
+            id="p_url"
+            placeholder="fiches/rse-2026.html  ou  https://…"
+            required
+          />
+          <span class="form-hint">
+            Chemin relatif depuis la racine du site, ou URL complète.
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn--gold" id="pubBtn">
+          <span id="pubLabel">Publier la fiche</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <!-- Message de retour — affiché/masqué par admin.js -->
+        <div
+          class="feedback"
+          id="pubMsg"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+      </form>
+    </div><!-- /#tab-publier -->
+
+
+    <!-- ════════════════════════════════════════
+         ONGLET 3 — Gérer les fiches existantes
+    ════════════════════════════════════════ -->
+    <div class="tab-content" id="tab-gerer" role="tabpanel">
+
+      <div class="manage-head">
+        <h3 class="manage-head__title">Fiches publiées</h3>
+        <!-- Recharge la liste sans rafraîchir la page -->
+        <button
+          class="btn btn--gold btn--sm"
+          onclick="chargerGestionFiches()"
+          aria-label="Rafraîchir la liste des fiches"
+        >
+          ↻ Rafraîchir
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table data-table--dark" aria-label="Liste des fiches publiées">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Matière</th>
+              <th>Niveau</th>
+              <th>Date</th>
+              <th>Lien</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <!-- Rempli dynamiquement par admin.js -->
+          <tbody id="fichesTbody">
+            <tr>
+              <td colspan="6" class="table-empty">
+                <p>Chargement…</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /#tab-gerer -->
+
+
+  </div><!-- /.app -->
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS — Chargés en fin de body
+       Ordre impératif :
+         1. Librairie Supabase  (CDN externe)
+         2. supabase-client.js  (initialise window.FichlyDB)
+         3. admin.js            (logique du dashboard)
+  ════════════════════════════════════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/admin.js"></script>

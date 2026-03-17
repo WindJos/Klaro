@@ -192,7 +192,126 @@ function initialiserNavigation() {
 
 
 /* ────────────────────────────────────────────────
-   5. INITIALISATION
+   5. BOUTON COURS ORIGINAL
+   ──────────────────────────────────────────────── */
+
+/**
+ * Charge l'URL du cours original depuis Supabase et
+ * l'injecte dans le bouton "Cours original" de la fiche.
+ *
+ * Fonctionnement :
+ *  1. Détermine l'URL relative de la fiche en cours
+ *     (ex: "fiches/rse-2026.html") à partir de window.location
+ *  2. Cherche dans la table "fiches" la ligne dont le champ
+ *     "url" correspond à ce chemin
+ *  3. Cherche dans "cours_originaux" le cours lié à cette fiche
+ *  4. Récupère l'URL publique du fichier dans le bucket Storage
+ *  5. Met à jour le href du bouton
+ *
+ * Si aucun cours n'est disponible, le bouton est masqué
+ * pour ne pas présenter un lien mort à l'étudiant.
+ */
+async function chargerCoursOriginal() {
+
+  /* Récupère le bouton dans le DOM */
+  var btn = document.getElementById('btnCoursOriginal');
+  if (!btn) return; /* La page n'a pas de bouton cours — on sort */
+
+  /* Vérifie que Supabase est disponible */
+  if (!window.KlaroDB || !window.KlaroDB.pret) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  var db = window.KlaroDB.db;
+
+  /*
+    Extrait le chemin relatif de la fiche depuis l'URL du navigateur.
+    Exemple :
+      URL complète  → "https://user.github.io/klaro/fiches/rse-2026.html"
+      On veut       → "fiches/rse-2026.html"
+
+    On cherche "fiches/" dans le pathname et on prend tout depuis là.
+    Si le site est à la racine ou dans un sous-dossier (ex: /klaro/),
+    cette méthode fonctionne dans les deux cas.
+  */
+  var pathname    = window.location.pathname;
+  var idxFiches   = pathname.indexOf('fiches/');
+  if (idxFiches === -1) {
+    /* Chemin inattendu — on masque le bouton par sécurité */
+    btn.style.display = 'none';
+    return;
+  }
+  var cheminFiche = pathname.substring(idxFiches);
+  /* Résultat : "fiches/rse-2026.html" */
+
+  /*
+    Étape 1 : trouve la fiche dans Supabase par son URL
+  */
+  var resultFiche = await db
+    .from('fiches')
+    .select('id')
+    .eq('url', cheminFiche)
+    .single();
+
+  if (resultFiche.error || !resultFiche.data) {
+    /* Fiche introuvable en base → masque le bouton */
+    btn.style.display = 'none';
+    return;
+  }
+
+  var ficheId = resultFiche.data.id;
+
+  /*
+    Étape 2 : cherche le cours original lié à cette fiche
+    On prend le plus récent si plusieurs existent (order desc)
+  */
+  var resultCours = await db
+    .from('cours_originaux')
+    .select('fichier_url, titre')
+    .eq('fiche_id', ficheId)
+    .order('date_ajout', { ascending: false })
+    .limit(1)
+    .single();
+
+  if (resultCours.error || !resultCours.data) {
+    /* Aucun cours publié pour cette fiche → masque le bouton */
+    btn.style.display = 'none';
+    return;
+  }
+
+  /*
+    Étape 3 : récupère l'URL publique du fichier dans Storage
+    Le bucket "cours-originaux" est public, donc l'URL est
+    directement accessible sans authentification.
+  */
+  var urlResult = db.storage
+    .from('cours-originaux')
+    .getPublicUrl(resultCours.data.fichier_url);
+
+  var urlPublique = urlResult.data && urlResult.data.publicUrl;
+
+  if (!urlPublique) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  /*
+    Étape 4 : injecte l'URL dans le bouton et met à jour
+    son titre pour l'accessibilité
+  */
+  btn.href  = urlPublique;
+  btn.title = 'Télécharger : ' + resultCours.data.titre;
+
+  /* S'assure que le bouton est visible */
+  btn.style.display = '';
+
+  console.log('[fiche.js] Cours original chargé :', resultCours.data.titre);
+}
+
+
+/* ────────────────────────────────────────────────
+   6. INITIALISATION
    ──────────────────────────────────────────────── */
 
 /**
@@ -201,4 +320,5 @@ function initialiserNavigation() {
 document.addEventListener('DOMContentLoaded', () => {
   initialiserAnimationsScroll();
   initialiserNavigation();
+  chargerCoursOriginal(); /* ★ Nouveau — charge l'URL du cours */
 });

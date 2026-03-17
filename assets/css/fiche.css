@@ -473,3 +473,114 @@
     padding-inline: var(--space-4);
   }
 }
+
+/* ────────────────────────────────────────────────
+   12. BARRE D'ACTIONS DE LA FICHE
+   (Cours original + Anciens devoirs corrigés)
+   ──────────────────────────────────────────────── */
+
+/*
+  Barre horizontale affichée entre la navigation
+  interne et le contenu principal de la fiche.
+  Contient les 2 boutons d'accès rapide.
+*/
+.fiche-actions {
+  background: var(--color-beige-card);
+  border-bottom: var(--border-subtle);
+  padding: 12px var(--container-padding);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/*
+  Conteneur centré pour aligner les boutons
+  avec le reste du contenu de la fiche.
+*/
+.fiche-actions__inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  width: 100%;
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Label "Accès rapide :" */
+.fiche-actions__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-right: var(--space-1);
+  white-space: nowrap;
+}
+
+/*
+  Bouton d'action individuel.
+  Deux variantes : --cours (fond marine) et --devoirs (fond doré).
+*/
+.fiche-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--tracking-normal);
+  text-decoration: none;
+  transition: var(--transition-card);
+  white-space: nowrap;
+}
+
+/* Variante "Cours original" — fond marine, texte doré */
+.fiche-action-btn--cours {
+  background: var(--color-navy-dark);
+  color: var(--color-gold);
+  border: 1px solid var(--color-navy-dark);
+}
+
+.fiche-action-btn--cours:hover {
+  background: var(--color-navy-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Variante "Anciens devoirs" — fond doré, texte marine */
+.fiche-action-btn--devoirs {
+  background: var(--color-gold);
+  color: var(--color-navy-dark);
+  border: 1px solid var(--color-gold);
+}
+
+.fiche-action-btn--devoirs:hover {
+  background: var(--color-gold-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Icône dans le bouton */
+.fiche-action-btn__icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+
+  /* Sur mobile les boutons prennent toute la largeur */
+  .fiche-actions__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fiche-action-btn {
+    justify-content: center;
+    padding: 11px 18px;
+  }
+}

@@ -69,6 +69,59 @@
 
 
   <!-- ═══════════════════════════════════════════
+       BARRE D'ACTIONS — Cours original & Devoirs
+       Affichée juste sous la navigation interne.
+       Les liens pointent vers :
+       - Le cours original dans Supabase Storage
+       - La page des anciens devoirs corrigés
+  ════════════════════════════════════════════ -->
+  <div class="fiche-actions">
+    <div class="fiche-actions__inner">
+
+      <span class="fiche-actions__label">Accès rapide :</span>
+
+      <!--
+        Bouton "Cours original"
+        href : URL publique du fichier dans le bucket
+               cours-originaux de Supabase.
+        Pour obtenir cette URL :
+          Supabase > Storage > cours-originaux
+          > clic sur le fichier > Copy URL
+        Remplace le # par l'URL réelle quand
+        tu auras uploadé le fichier.
+      -->
+      
+        class="fiche-action-btn fiche-action-btn--cours"
+        href="#"
+        id="btnCoursOriginal"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Télécharger le cours original"
+      >
+        <span class="fiche-action-btn__icon">📄</span>
+        Cours original
+      </a>
+
+      <!--
+        Bouton "Anciens devoirs corrigés"
+        href : chemin vers la page des devoirs
+               de cette fiche spécifique.
+        Le fichier devoirs/rse-2026.html sera
+        créé dans la prochaine étape.
+      -->
+      
+        class="fiche-action-btn fiche-action-btn--devoirs"
+        href="../devoirs/rse-2026.html"
+        title="Voir les anciens devoirs corrigés"
+      >
+        <span class="fiche-action-btn__icon">📝</span>
+        Anciens devoirs corrigés
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
        CONTENU PRINCIPAL
   ════════════════════════════════════════════ -->
   <main class="fiche-main">

@@ -30,10 +30,31 @@
 
     <div class="fiche-header__inner">
 
-      <!-- Ligne de marque -->
+      <!-- Ligne de marque — logo cliquable vers l'accueil -->
       <div class="fiche-header__brand">
-        <div class="fiche-header__brand-logo" aria-hidden="true">K</div>
-        <span class="fiche-header__brand-text">Klaro — Fiche de révision académique</span>
+        <a
+          href="../index.html"
+          style="display:flex; align-items:center; gap:12px; text-decoration:none;"
+          title="Retour à l'accueil Klaro"
+        >
+          <div class="fiche-header__brand-logo" aria-hidden="true">K</div>
+          <span class="fiche-header__brand-text">Klaro — Fiche de révision académique</span>
+        </a>
+
+        <!-- Bouton retour accueil (coin droit du header) -->
+        <a
+          href="../index.html"
+          style="margin-left:auto; font-size:11px; font-weight:600;
+                 letter-spacing:0.12em; text-transform:uppercase;
+                 color:rgba(255,255,255,0.45); text-decoration:none;
+                 border:1px solid rgba(255,255,255,0.15); border-radius:3px;
+                 padding:6px 14px; transition:all 0.2s; white-space:nowrap;"
+          onmouseover="this.style.color='var(--color-gold)'; this.style.borderColor='var(--color-gold)';"
+          onmouseout="this.style.color='rgba(255,255,255,0.45)'; this.style.borderColor='rgba(255,255,255,0.15)';"
+          title="Retour à l'accueil"
+        >
+          ← Accueil
+        </a>
       </div>
 
       <!-- Étiquette niveau/année -->
@@ -66,6 +87,64 @@
       <a class="fiche-nav__link" href="#chap5">Chap. V</a>
     </div>
   </nav>
+
+
+  <!-- ═══════════════════════════════════════════
+       BARRE D'ACTIONS
+       3 boutons : Accueil · Cours original · Anciens devoirs
+       Affichée entre la navigation interne et le contenu.
+  ════════════════════════════════════════════ -->
+  <div class="fiche-actions">
+    <div class="fiche-actions__inner">
+
+      <span class="fiche-actions__label">Accès rapide :</span>
+
+      <!-- Bouton retour accueil -->
+      <a
+        class="fiche-action-btn fiche-action-btn--cours"
+        href="../index.html"
+        title="Retour à l'accueil Klaro"
+        style="background:var(--color-navy-light);"
+      >
+        <span class="fiche-action-btn__icon">🏠</span>
+        Accueil
+      </a>
+
+      <!--
+        Bouton "Cours original"
+        Le href="#" est remplacé automatiquement par fiche.js
+        dès que la page charge — il récupère l'URL du cours
+        depuis Supabase via la fonction chargerCoursOriginal().
+        Si aucun cours n'est publié, ce bouton est masqué.
+      -->
+      <a
+        class="fiche-action-btn fiche-action-btn--cours"
+        href="#"
+        id="btnCoursOriginal"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Télécharger le cours original"
+      >
+        <span class="fiche-action-btn__icon">📄</span>
+        Cours original
+      </a>
+
+      <!--
+        Bouton "Anciens devoirs corrigés"
+        Pointe vers la page des devoirs de cette fiche.
+        La page devoirs/rse-2026.html sera créée prochainement.
+      -->
+      <a
+        class="fiche-action-btn fiche-action-btn--devoirs"
+        href="../devoirs/rse-2026.html"
+        title="Voir les anciens devoirs corrigés"
+      >
+        <span class="fiche-action-btn__icon">📝</span>
+        Anciens devoirs corrigés
+      </a>
+
+    </div>
+  </div>
 
 
   <!-- ═══════════════════════════════════════════

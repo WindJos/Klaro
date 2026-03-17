@@ -230,6 +230,222 @@
         </table>
       </div>
     </div>
+    <!-- ═══ ONGLET 4 — Cours originaux ═══ -->
+    <div class="tab-content" id="tab-cours" role="tabpanel">
+
+      <form class="pub-form" id="coursForm" novalidate>
+        <h3 class="pub-form__title">Publier un cours original</h3>
+
+        <!--
+          Liste déroulante des fiches existantes.
+          Remplie dynamiquement par admin.js au chargement
+          de l'onglet — elle affiche toutes les fiches
+          de la table "fiches" dans Supabase.
+        -->
+        <div class="form-group form-group--dark">
+          <label for="cours_fiche_id">Fiche concernée *</label>
+          <select id="cours_fiche_id" required>
+            <option value="">Chargement des fiches…</option>
+          </select>
+          <span class="form-hint">
+            Sélectionne la fiche à laquelle ce cours appartient.
+          </span>
+        </div>
+
+        <!-- Titre du cours -->
+        <div class="form-group form-group--dark">
+          <label for="cours_titre">Titre du cours *</label>
+          <input type="text" id="cours_titre"
+            placeholder="Ex : RSE — Cours complet Pr. SAWADOGO 2025-2026"
+            required/>
+        </div>
+
+        <!--
+          Upload du fichier cours.
+          Formats acceptés : PDF, DOC, DOCX.
+          Le fichier sera uploadé dans le bucket
+          "cours-originaux" de Supabase Storage.
+          L'URL publique sera automatiquement stockée
+          dans la table cours_originaux.
+        -->
+        <div class="form-group form-group--dark">
+          <label for="cours_fichier">Fichier du cours *</label>
+          <input
+            type="file"
+            id="cours_fichier"
+            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            style="color:rgba(255,255,255,0.7); padding:8px 0;"
+            required
+          />
+          <span class="form-hint">PDF, DOC ou DOCX · Max 20 Mo</span>
+        </div>
+
+        <!-- Barre de progression upload cours -->
+        <div id="coursUploadProgress" style="display:none; margin-bottom:14px;">
+          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:6px;">
+            Upload en cours… <span id="coursUploadPct">0%</span>
+          </div>
+          <div style="height:3px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden;">
+            <div id="coursUploadBar"
+              style="height:100%; width:0%; background:var(--color-gold); border-radius:2px; transition:width 0.3s;">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--gold" id="coursBtn">
+          <span id="coursLabel">Publier le cours</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <div class="feedback" id="coursMsg" role="alert" aria-live="polite"></div>
+
+      </form>
+
+      <!-- Liste des cours déjà publiés -->
+      <div style="margin-top: 36px;">
+        <div class="manage-head">
+          <h3 class="manage-head__title">Cours publiés</h3>
+          <button class="btn btn--gold btn--sm" onclick="chargerCours()">↻ Rafraîchir</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table data-table--dark">
+            <thead>
+              <tr>
+                <th>Fiche</th>
+                <th>Titre du cours</th>
+                <th>Date</th>
+                <th>Fichier</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="coursTbody">
+              <tr><td colspan="5" class="table-empty"><p>Chargement…</p></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#tab-cours -->
+
+
+    <!-- ═══ ONGLET 5 — Devoirs & Corrections ═══ -->
+    <div class="tab-content" id="tab-devoirs" role="tabpanel">
+
+      <form class="pub-form" id="devoirsForm" novalidate>
+        <h3 class="pub-form__title">Publier un ancien devoir corrigé</h3>
+
+        <!-- Fiche concernée -->
+        <div class="form-group form-group--dark">
+          <label for="devoir_fiche_id">Fiche concernée *</label>
+          <select id="devoir_fiche_id" required>
+            <option value="">Chargement des fiches…</option>
+          </select>
+        </div>
+
+        <!-- Titre + Année -->
+        <div class="form-row">
+          <div class="form-group form-group--dark">
+            <label for="devoir_titre">Titre du devoir *</label>
+            <input type="text" id="devoir_titre"
+              placeholder="Ex : Examen session juin 2024" required/>
+          </div>
+          <div class="form-group form-group--dark">
+            <label for="devoir_annee">Année académique</label>
+            <input type="text" id="devoir_annee"
+              placeholder="Ex : 2023-2024"/>
+          </div>
+        </div>
+
+        <!--
+          Upload images du SUJET.
+          Accepte plusieurs fichiers simultanément (multiple).
+          Formats : JPG, PNG, WebP.
+          Chaque image sera uploadée dans le bucket
+          "devoirs-images" avec un préfixe "sujets/".
+        -->
+        <div class="form-group form-group--dark">
+          <label for="devoir_sujets">Images du sujet *</label>
+          <input
+            type="file"
+            id="devoir_sujets"
+            accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+            multiple
+            style="color:rgba(255,255,255,0.7); padding:8px 0;"
+            required
+          />
+          <span class="form-hint">
+            JPG, PNG ou WebP · Plusieurs pages possibles · Sélectionne plusieurs fichiers à la fois
+          </span>
+        </div>
+
+        <!--
+          Upload images de la CORRECTION.
+          Même logique que le sujet.
+          Préfixe de stockage : "corrections/".
+        -->
+        <div class="form-group form-group--dark">
+          <label for="devoir_corrections">Images de la correction *</label>
+          <input
+            type="file"
+            id="devoir_corrections"
+            accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+            multiple
+            style="color:rgba(255,255,255,0.7); padding:8px 0;"
+            required
+          />
+          <span class="form-hint">
+            JPG, PNG ou WebP · Plusieurs pages possibles
+          </span>
+        </div>
+
+        <!-- Barre de progression upload devoirs -->
+        <div id="devoirsUploadProgress" style="display:none; margin-bottom:14px;">
+          <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:6px;">
+            Upload en cours… <span id="devoirsUploadPct">0%</span>
+          </div>
+          <div style="height:3px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden;">
+            <div id="devoirsUploadBar"
+              style="height:100%; width:0%; background:var(--color-gold); border-radius:2px; transition:width 0.3s;">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--gold" id="devoirsBtn">
+          <span id="devoirsLabel">Publier le devoir</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <div class="feedback" id="devoirsMsg" role="alert" aria-live="polite"></div>
+
+      </form>
+
+      <!-- Liste des devoirs déjà publiés -->
+      <div style="margin-top: 36px;">
+        <div class="manage-head">
+          <h3 class="manage-head__title">Devoirs publiés</h3>
+          <button class="btn btn--gold btn--sm" onclick="chargerDevoirs()">↻ Rafraîchir</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table data-table--dark">
+            <thead>
+              <tr>
+                <th>Fiche</th>
+                <th>Titre du devoir</th>
+                <th>Année</th>
+                <th>Sujets</th>
+                <th>Corrections</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="devoirsTbody">
+              <tr><td colspan="7" class="table-empty"><p>Chargement…</p></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /#tab-devoirs -->
 
   </div><!-- /.app -->
 

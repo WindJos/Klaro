@@ -213,12 +213,12 @@ function initialiserNavigation() {
  */
 async function chargerCoursOriginal() {
 
-  /* Récupère le bouton dans le DOM */
   var btn = document.getElementById('btnCoursOriginal');
-  if (!btn) return; /* La page n'a pas de bouton cours — on sort */
+  if (!btn) return;
 
   /* Vérifie que Supabase est disponible */
   if (!window.KlaroDB || !window.KlaroDB.pret) {
+    console.warn('[fiche.js] KlaroDB non disponible — bouton masqué.');
     btn.style.display = 'none';
     return;
   }
@@ -226,87 +226,87 @@ async function chargerCoursOriginal() {
   var db = window.KlaroDB.db;
 
   /*
-    Extrait le chemin relatif de la fiche depuis l'URL du navigateur.
-    Exemple :
-      URL complète  → "https://user.github.io/klaro/fiches/rse-2026.html"
-      On veut       → "fiches/rse-2026.html"
+    Stratégie URL plus robuste :
+    On extrait le nom du fichier HTML depuis l'URL du navigateur
+    puis on cherche dans Supabase toutes les fiches dont l'URL
+    SE TERMINE par ce nom de fichier.
 
-    On cherche "fiches/" dans le pathname et on prend tout depuis là.
-    Si le site est à la racine ou dans un sous-dossier (ex: /klaro/),
-    cette méthode fonctionne dans les deux cas.
+    Exemple :
+      pathname → "/klaro/fiches/rse-2026.html"
+      nomFichier → "rse-2026.html"
+      On cherche les fiches où url contient "rse-2026.html"
+
+    C'est plus souple que la correspondance exacte, car
+    l'URL stockée dans Supabase peut être "fiches/rse-2026.html"
+    ou "../fiches/rse-2026.html" selon comment elle a été saisie.
   */
-  var pathname    = window.location.pathname;
-  var idxFiches   = pathname.indexOf('fiches/');
-  if (idxFiches === -1) {
-    /* Chemin inattendu — on masque le bouton par sécurité */
+  var pathname   = window.location.pathname;
+  var nomFichier = pathname.split('/').pop(); /* "rse-2026.html" */
+
+  console.log('[fiche.js] Pathname :', pathname);
+  console.log('[fiche.js] Nom de fichier extrait :', nomFichier);
+
+  if (!nomFichier || !nomFichier.endsWith('.html')) {
+    console.warn('[fiche.js] Nom de fichier invalide — bouton masqué.');
     btn.style.display = 'none';
     return;
   }
-  var cheminFiche = pathname.substring(idxFiches);
-  /* Résultat : "fiches/rse-2026.html" */
 
-  /*
-    Étape 1 : trouve la fiche dans Supabase par son URL
-  */
+  /* Étape 1 : cherche la fiche dont l'URL contient ce nom de fichier */
   var resultFiche = await db
     .from('fiches')
-    .select('id')
-    .eq('url', cheminFiche)
-    .single();
+    .select('id, titre, url')
+    .ilike('url', '%' + nomFichier); /* ilike = insensible à la casse */
 
-  if (resultFiche.error || !resultFiche.data) {
-    /* Fiche introuvable en base → masque le bouton */
+  console.log('[fiche.js] Résultat recherche fiche :', resultFiche);
+
+  if (resultFiche.error || !resultFiche.data || !resultFiche.data.length) {
+    console.warn('[fiche.js] Fiche introuvable dans Supabase pour :', nomFichier);
     btn.style.display = 'none';
     return;
   }
 
-  var ficheId = resultFiche.data.id;
+  var ficheId = resultFiche.data[0].id;
+  console.log('[fiche.js] Fiche trouvée — id :', ficheId,
+    '| titre :', resultFiche.data[0].titre);
 
-  /*
-    Étape 2 : cherche le cours original lié à cette fiche
-    On prend le plus récent si plusieurs existent (order desc)
-  */
+  /* Étape 2 : cherche le cours original lié à cette fiche */
   var resultCours = await db
     .from('cours_originaux')
     .select('fichier_url, titre')
     .eq('fiche_id', ficheId)
-    .order('date_ajout', { ascending: false })
-    .limit(1)
-    .single();
+    .order('date_ajout', { ascending: false });
 
-  if (resultCours.error || !resultCours.data) {
-    /* Aucun cours publié pour cette fiche → masque le bouton */
+  console.log('[fiche.js] Résultat cours_originaux :', resultCours);
+
+  if (resultCours.error || !resultCours.data || !resultCours.data.length) {
+    console.warn('[fiche.js] Aucun cours publié pour cette fiche.');
     btn.style.display = 'none';
     return;
   }
 
-  /*
-    Étape 3 : récupère l'URL publique du fichier dans Storage
-    Le bucket "cours-originaux" est public, donc l'URL est
-    directement accessible sans authentification.
-  */
-  var urlResult = db.storage
-    .from('cours-originaux')
-    .getPublicUrl(resultCours.data.fichier_url);
+  var cours = resultCours.data[0];
 
+  /* Étape 3 : récupère l'URL publique du fichier dans Storage */
+  var urlResult   = db.storage
+    .from('cours-originaux')
+    .getPublicUrl(cours.fichier_url);
   var urlPublique = urlResult.data && urlResult.data.publicUrl;
 
+  console.log('[fiche.js] URL publique cours :', urlPublique);
+
   if (!urlPublique) {
+    console.warn('[fiche.js] URL publique introuvable.');
     btn.style.display = 'none';
     return;
   }
 
-  /*
-    Étape 4 : injecte l'URL dans le bouton et met à jour
-    son titre pour l'accessibilité
-  */
-  btn.href  = urlPublique;
-  btn.title = 'Télécharger : ' + resultCours.data.titre;
-
-  /* S'assure que le bouton est visible */
+  /* Étape 4 : injecte l'URL dans le bouton et l'affiche */
+  btn.href         = urlPublique;
+  btn.title        = 'Télécharger : ' + cours.titre;
   btn.style.display = '';
 
-  console.log('[fiche.js] Cours original chargé :', resultCours.data.titre);
+  console.log('[fiche.js] ✅ Bouton cours original activé :', cours.titre);
 }
 
 
@@ -322,3 +322,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initialiserNavigation();
   chargerCoursOriginal(); /* ★ Nouveau — charge l'URL du cours */
 });
+   

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fiche SDO — Stratégie &amp; Développement des Organisations · Klaro</title>
+  <meta name="description" content="Fiche de révision complète sur la Stratégie &amp; Développement des Organisations : avantage concurrentiel, innovation, croissance. IBAM L2 2025–2026."/>
+
+  <!-- ── Polices Google Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- ── Feuilles de style (ordre obligatoire) ── -->
+  <link rel="stylesheet" href="../assets/css/variables.css"/>  <!-- 1. Tokens design       -->
+  <link rel="stylesheet" href="../assets/css/base.css"/>       <!-- 2. Reset & fondations  -->
+  <link rel="stylesheet" href="../assets/css/components.css"/> <!-- 3. Composants partagés -->
+  <link rel="stylesheet" href="../assets/css/fiche.css"/>      <!-- 4. Mise en page fiche  -->
+</head>
+<body class="fiche-page">
+
+
+  <!-- ═══════════════════════════════════════════
+       EN-TÊTE DE LA FICHE
+  ════════════════════════════════════════════ -->
+  <header class="fiche-header">
+
+    <!-- Cercle décoratif (purement visuel) -->
+    <div class="fiche-header__deco" aria-hidden="true"></div>
+
+    <div class="fiche-header__inner">
+
+      <!-- Ligne de marque — logo cliquable vers l'accueil -->
+      <div class="fiche-header__brand">
+        <a
+          href="../index.html"
+          style="display:flex; align-items:center; gap:12px; text-decoration:none;"
+          title="Retour à l'accueil Klaro"
+        >
+          <div class="fiche-header__brand-logo" aria-hidden="true">K</div>
+          <span class="fiche-header__brand-text">Klaro — Fiche de révision académique</span>
+        </a>
+
+        <!-- Bouton retour accueil (coin droit du header) -->
+        <a
+          href="../index.html"
+          style="margin-left:auto; font-size:11px; font-weight:600;
+                 letter-spacing:0.12em; text-transform:uppercase;
+                 color:rgba(255,255,255,0.45); text-decoration:none;
+                 border:1px solid rgba(255,255,255,0.15); border-radius:3px;
+                 padding:6px 14px; transition:all 0.2s; white-space:nowrap;"
+          onmouseover="this.style.color='var(--color-gold)'; this.style.borderColor='var(--color-gold)';"
+          onmouseout="this.style.color='rgba(255,255,255,0.45)'; this.style.borderColor='rgba(255,255,255,0.15)';"
+          title="Retour à l'accueil"
+        >
+          ← Accueil
+        </a>
+      </div>
+
+      <!-- Étiquette niveau/année -->
+      <div class="fiche-header__tag">L2 · IBAM · Année 2025–2026</div>
+
+      <!-- Titre principal -->
+      <h1 class="fiche-header__title">
+        Stratégie &amp; <em>Développement</em><br/>des Organisations
+      </h1>
+
+      <!-- Sous-titre -->
+      <p class="fiche-header__subtitle">
+        Cours IBAM · Université Joseph KI-ZERBO
+      </p>
+
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION INTERNE — Ancres vers les chapitres
+  ════════════════════════════════════════════ -->
+  <nav class="fiche-nav" aria-label="Navigation dans la fiche">
+    <div class="fiche-nav__inner">
+      <a class="fiche-nav__link" href="#apercu">Vue d'ensemble</a>
+      <a class="fiche-nav__link" href="#intro">Introduction</a>
+      <a class="fiche-nav__link" href="#chap1">Chap. I</a>
+      <a class="fiche-nav__link" href="#chap2">Chap. II</a>
+      <a class="fiche-nav__link" href="#chap3">Chap. III</a>
+      <a class="fiche-nav__link" href="#chap4">Chap. IV</a>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════
+       BARRE D'ACTIONS
+  ════════════════════════════════════════════ -->
+  <div class="fiche-actions">
+    <div class="fiche-actions__inner">
+
+      <span class="fiche-actions__label">Accès rapide :</span>
+
+      <!-- Bouton retour accueil -->
+      <a
+        class="fiche-action-btn fiche-action-btn--cours"
+        href="../index.html"
+        title="Retour à l'accueil Klaro"
+        style="background:var(--color-navy-light);"
+      >
+        <span class="fiche-action-btn__icon">🏠</span>
+        Accueil
+      </a>
+
+      <a
+        class="fiche-action-btn fiche-action-btn--cours"
+        href="#"
+        id="btnCoursOriginal"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Télécharger le cours original"
+      >
+        <span class="fiche-action-btn__icon">📄</span>
+        Cours original
+      </a>
+
+      <a
+        class="fiche-action-btn fiche-action-btn--devoirs"
+        href="../devoirs/sdo-2026.html"
+        title="Voir les anciens devoirs corrigés"
+      >
+        <span class="fiche-action-btn__icon">📝</span>
+        Anciens devoirs corrigés
+      </a>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       CONTENU PRINCIPAL
+  ════════════════════════════════════════════ -->
+  <main class="fiche-main">
+
+
+    <!-- ════════════════════════════════════════
+         VUE D'ENSEMBLE — Plan du cours
+    ════════════════════════════════════════ -->
+    <section class="overview fade-up" id="apercu">
+
+      <span class="section-label">Couche 1 · Plan Global</span>
+      <h2 class="overview__title">Le cours en 4 chapitres</h2>
+      <p class="overview__intro">
+        Ce cours vise à doter l'étudiant des outils conceptuels et analytiques pour comprendre
+        la construction d'un avantage concurrentiel, explorer des stratégies d'innovation
+        radicale, et maîtriser les axes et modalités de croissance de l'entreprise.
+      </p>
+
+      <!-- Grille des cartes chapitres -->
+      <div class="overview__grid">
+
+        <a class="chapter-card" href="#intro">
+          <div class="chapter-card__num" aria-hidden="true">0</div>
+          <div class="chapter-card__tag">Fondations</div>
+          <div class="chapter-card__title">Introduction : Origines, Définitions &amp; Diagnostic</div>
+        </a>
+
+        <a class="chapter-card" href="#chap1">
+          <div class="chapter-card__num" aria-hidden="true">I</div>
+          <div class="chapter-card__tag">Stratégie générique</div>
+          <div class="chapter-card__title">Exploiter un avantage concurrentiel classique</div>
+        </a>
+
+        <a class="chapter-card" href="#chap2">
+          <div class="chapter-card__num" aria-hidden="true">II</div>
+          <div class="chapter-card__tag">Innovation</div>
+          <div class="chapter-card__title">Explorer de nouvelles sources d'avantage</div>
+        </a>
+
+        <a class="chapter-card" href="#chap3">
+          <div class="chapter-card__num" aria-hidden="true">III</div>
+          <div class="chapter-card__tag">Axes de croissance</div>
+          <div class="chapter-card__title">Analyser les axes de croissance de l'entreprise</div>
+        </a>
+
+        <a class="chapter-card" href="#chap4">
+          <div class="chapter-card__num" aria-hidden="true">IV</div>
+          <div class="chapter-card__tag">Modalités</div>
+          <div class="chapter-card__title">Analyser les modalités de croissance</div>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         INTRODUCTION GÉNÉRALE
+    ════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="intro">
+
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">0</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Introduction générale</h2>
+          <p class="chapter-header__desc">
+            Origines militaires, trois perspectives de définition, deux niveaux de formulation et démarche de diagnostic stratégique
+          </p>
+        </div>
+      </div>
+
+      <!-- 0.1 — Origines et définitions -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">0.1 · Origines et définitions de la stratégie</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <p><strong>Étymologie :</strong> du grec <em>stratos</em> (armée) + <em>argos</em> (conduire) → conduire les armées = planifier la destruction de ses ennemis par un usage efficace des ressources. Transposée en gestion d'entreprise après la Seconde Guerre mondiale.</p>
+
+            <p><strong>Deux ouvrages fondateurs :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Sun Tzu — L'art de la guerre (Ve s. av. J.-C.) :</strong> but de la guerre = forcer l'ennemi à abandonner sans combat. Stratégie fondée sur : (i) la surprise, (ii) la ruse, (iii) l'espionnage / intelligence économique → conquête de l'information.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Carl Von Clausewitz — De la guerre (1780–1833) :</strong> but = dominer l'adversaire par escalade des moyens. 3 piliers : (i) concentration des forces, (ii) économie des moyens, (iii) liberté d'action.</span></div>
+            </div>
+
+            <p><strong>Trois perspectives de définition :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Perspective</th><th>Nature</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Trajectoire</strong></td><td>Dynamique</td><td>Suite de mouvements cohérents qui prennent sens progressivement, souvent reconstruite a posteriori par les observateurs.</td></tr>
+                <tr><td><strong>Positionnement</strong></td><td>Statique</td><td>Positionnement concurrentiel à un instant t : segments visés, valeur créée, technologie, business model.</td></tr>
+                <tr><td><strong>Plan formel</strong></td><td>Prescriptive</td><td>Ensemble de décisions formalisées sur les objectifs de long terme et les moyens d'action ; assure transparence et coordination interne.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Délibérée vs émergente :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Délibérée :</strong> développement pensé, organisé et planifié par les dirigeants selon un plan rationnel explicite.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Émergente :</strong> résulte de réactions ad hoc non planifiées à des événements non anticipés. Explique l'écart entre stratégie « officielle » et stratégie réalisée.</span></div>
+            </div>
+            <p>En pratique, la stratégie effective est toujours une <em>combinaison</em> des deux.</p>
+
+            <div class="def-box">
+              « La stratégie : l'ensemble des choix et des décisions portant sur les objectifs de long terme, les modalités d'action et l'allocation de ressources, qui ont pour but d'assurer la performance et la pérennité de l'entreprise. »
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 0.2 — Stratégie et performance -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">0.2 · Stratégie et recherche de performance : 2 niveaux</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <table class="data-table">
+              <thead>
+                <tr><th>Niveau</th><th>Nom</th><th>Objectif</th><th>Outils principaux</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1 — Activité</strong></td>
+                  <td>Stratégie d'activité / <em>Business strategy</em> / Stratégie générique</td>
+                  <td>Construire un avantage concurrentiel sur chaque activité prise indépendamment → surperformance par rapport aux concurrents.</td>
+                  <td>Domination par les coûts, différenciation, stratégie de rupture.</td>
+                </tr>
+                <tr>
+                  <td><strong>2 — Entreprise</strong></td>
+                  <td>Stratégie de croissance / <em>Corporate strategy</em></td>
+                  <td>Organiser le portefeuille d'activités pour assurer équilibre, compétitivité et pérennité de l'ensemble.</td>
+                  <td>Axes (spécialisation, expansion, diversification, internationalisation) + Modalités (interne, F/A, alliance).</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><strong>Le business model</strong> — système d'action finalisé composé de 3 éléments :</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Proposition de valeur :</strong> définition de l'offre, de la cible client et du besoin satisfait.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Modèle de profit :</strong> formule permettant de générer un CA supérieur aux coûts (arbitrage volume/marge, politique de prix).</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Système opérationnel :</strong> organisation, ressources clés, processus et partenaires qui délivrent l'offre et font fonctionner le modèle de profit.</span></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 0.3 — Stratégie et diagnostic -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">0.3 · Stratégie et diagnostic stratégique</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <p>La stratégie résulte d'une confrontation entre :</p>
+            <div class="def-box">
+              Ce que l'entreprise <strong>devrait</strong> faire (dicté par l'environnement et ses règles du jeu) vs ce qu'elle <strong>peut</strong> faire (dictée par ses ressources, technologies et savoir-faire).
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr><th>Type de diagnostic</th><th>Objectif</th><th>Résultat</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Diagnostic interne</strong></td><td>Analyser les capacités et compétences de l'entreprise.</td><td>Identification des <strong>forces</strong> et <strong>faiblesses</strong> → capacité stratégique.</td></tr>
+                <tr><td><strong>Diagnostic externe</strong></td><td>Analyser les caractéristiques de l'environnement.</td><td>Identification des <strong>opportunités</strong> et <strong>menaces</strong> + facteurs clés de succès (FCS).</td></tr>
+              </tbody>
+            </table>
+
+            <p>Ces 2 diagnostics constituent les <strong>fondements du diagnostic stratégique</strong>, servant de base à la formulation des stratégies business et corporate. Il répond aux 2 questions fondamentales : <em>Où sommes-nous ?</em> et <em>Qui sommes-nous ?</em></p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Introduction -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Introduction</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. Pour Sun Tzu, le but ultime de la guerre est de :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Dominer l'adversaire par la concentration maximale des forces.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Forcer l'ennemi à abandonner la lutte sans combat, par la surprise, la ruse et l'information.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Réduire les coûts militaires par l'économie des moyens.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. La stratégie "émergente" désigne :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Une stratégie planifiée et rationalisée par les dirigeants.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Une stratégie résultant de réactions ad hoc non planifiées à des événements non anticipés.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Une stratégie propre aux entreprises des marchés émergents.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Le diagnostic interne vise à identifier :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">A</span> Les forces et faiblesses de l'entreprise (sa capacité stratégique).</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Les opportunités et menaces de l'environnement sectoriel.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Les facteurs clés de succès du secteur d'activité.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. Les 3 composantes d'un business model sont :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Mission, Vision et Valeurs.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Produit, Prix et Distribution.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Proposition de valeur, Modèle de profit et Système opérationnel.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retenir Introduction -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Introduction</div>
+        <ul class="retenir__list">
+          <li>Étymologie militaire : Sun Tzu (ruse + information) ≠ Clausewitz (force + économie des moyens). Usage en gestion après 1945.</li>
+          <li>3 perspectives : trajectoire (dynamique), positionnement (statique), plan formel (prescriptif). En pratique : délibérée + émergente se combinent.</li>
+          <li>2 niveaux : stratégie d'activité (<em>business</em>) → avantage concurrentiel sur une activité ; stratégie de croissance (<em>corporate</em>) → portefeuille d'activités.</li>
+          <li>La stratégie = confrontation entre ce que l'entreprise <em>devrait</em> faire et ce qu'elle <em>peut</em> faire → diagnostic interne (forces/faiblesses) + externe (opportunités/menaces).</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CHAPITRE I — Avantage concurrentiel classique
+    ════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap1">
+
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">I</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Exploiter un avantage concurrentiel classique</h2>
+          <p class="chapter-header__desc">
+            Domination par les coûts, différenciation et la question de la stratégie hybride (Porter, 1986)
+          </p>
+        </div>
+      </div>
+
+      <!-- I.1 — Domination par les coûts -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">I.1 · Stratégie de domination par les coûts</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <div class="def-box">
+              Stratégie générique visant à développer un avantage concurrentiel par une meilleure maîtrise de la structure de coût que ses concurrents, généralement associée à une politique de prix très compétitifs.
+            </div>
+
+            <p><strong>Principe :</strong> proposer une offre <em>standard</em> (offre de référence du marché) à moindre coût. L'avantage de coût peut être répercuté sous deux formes :</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Baisse de prix</strong> → amélioration de l'attractivité relative → augmentation du volume de ventes.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Maintien du prix</strong> → transformation de l'avantage de coût en gain de marge.</span></div>
+            </div>
+
+            <p><strong>Leviers d'action — 3 catégories :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Catégorie</th><th>Levier</th><th>Mécanisme</th></tr>
+              </thead>
+              <tbody>
+                <tr><td rowspan="2"><strong>Inputs</strong></td><td>Effet de taille</td><td>Augmentation du volume d'achat → pouvoir de négociation accru → baisse des coûts d'achat (matières premières, composants…).</td></tr>
+                <tr><td>Délocalisation</td><td>Transfert d'une partie de la chaîne de valeur vers des zones géographiques à bas salaires.</td></tr>
+                <tr><td rowspan="4"><strong>Process</strong></td><td>Économies d'échelle</td><td>Coût unitaire ↓ grâce à l'étalement des coûts fixes sur un volume de production plus grand. Secteurs concernés : aérien, automobile, pharma…</td></tr>
+                <tr><td>Économies d'expérience</td><td>Coût unitaire ↓ grâce à la production cumulée (effet d'apprentissage) : optimisation des processus + montée en compétences.</td></tr>
+                <tr><td>Économies de variété</td><td>Réduction du nombre de composants différents → simplification du processus de production et de la logistique → moins de coûts de non-qualité.</td></tr>
+                <tr><td>Économies de champ</td><td>Utilisation de ressources (actifs, réseau, savoir-faire) déjà exploitées pour d'autres offres → meilleure rentabilisation des actifs existants.</td></tr>
+                <tr><td><strong>Outputs</strong></td><td>Stratégie low cost</td><td>Dégradation ou suppression de certains attributs de l'offre de référence pour générer des économies répercutées sur le prix final.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Cercle vertueux du volume :</strong> Augmentation de la production → effets de taille + économies d'échelle + économies d'expérience → baisse des coûts → baisse des prix → augmentation de la demande → augmentation des ventes → augmentation de la production.</p>
+
+            <p><strong>3 risques :</strong> (1) Guerre des prix — les concurrents ripostent et les marges s'effondrent pour tout le secteur. (2) Surcapacité de production — la quête de volume génère des actifs sous-utilisés. (3) Rigidités — la focalisation sur les coûts fait perdre le contact avec l'évolution du marché.</p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- I.2 — Différenciation -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">I.2 · Stratégie de différenciation</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <div class="def-box">
+              Stratégie générique visant à développer un avantage concurrentiel en proposant une offre perçue comme « unique », plus créatrice de valeur que l'offre de référence, ce qui justifie un prix supérieur et améliore la marge.
+            </div>
+
+            <p><strong>Principe :</strong> offre « améliorée » → surcoût nécessaire → valeur perçue supérieure justifie un prix premium → marge améliorée. Condition clé : les charges liées à l'amélioration doivent être <em>inférieures</em> au gain de marge généré par la hausse de prix.</p>
+
+            <p><strong>2 axes de mise en œuvre :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Axe technique :</strong> qualité et fiabilité, innovation, design original, matériaux nobles, caractère éthique ou environnemental, efficacité des services associés, compétences du personnel de contact, qualité de l'accueil.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Axe marketing :</strong> (1) identifier les attributs vraiment valorisés par le client (difficulté : les clients peinent à évaluer les innovations) ; (2) optimiser la <em>perception</em> de la différenciation (image, réputation, communication) pour que l'offre soit jugée unique.</span></div>
+            </div>
+
+            <p><strong>Différenciation réelle vs différenciation perçue :</strong> une forte différenciation réelle mal communiquée peut être surclassée par une offre objectivement moindre mais mieux perçue par les clients.</p>
+
+            <p><strong>2 risques :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Risque</th><th>Mécanisme</th><th>Exemples</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Dégradation de la différenciation</strong></td><td>Imitation par les concurrents, modification des attentes clients, risques d'image.</td><td>Contrefaçon (perte de CA + dégradation d'image), appropriation par une cible non souhaitée (détournement du cœur de cible).</td></tr>
+                <tr><td><strong>Surcoût de la différenciation</strong></td><td>Investissements de différenciation trop importants par rapport au différentiel de prix acceptable par le client.</td><td>L'entreprise améliore son offre sans que le marché accepte la hausse de prix correspondante → rentabilité dégradée.</td></tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- I.3 — Stratégie hybride -->
+      <div class="accordion">
+        <button
+          class="accordion__trigger"
+          aria-expanded="false"
+          onclick="toggleAccordion(this)"
+        >
+          <span class="accordion__title">I.3 · Combiner coût et différenciation ? La stratégie hybride</span>
+          <span class="accordion__icon" aria-hidden="true">
+            <svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg>
+          </span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <p><strong>La thèse de Porter (années 1980) — L'enlisement dans la voie médiane :</strong> poursuivre simultanément coût et différenciation sur une même activité conduit à l'échec, pour 2 raisons :</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span>La nature des investissements est incompatible (volume + automatisation pour les coûts vs R&amp;D + image pour la différenciation) → dispersion des ressources → dégradation de la performance sur les <em>deux</em> dimensions.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span>Double investissement sans recettes supplémentaires → baisse de la rentabilité. L'offre hybride est moins attractive <em>et</em> moins rentable.</span></div>
+            </div>
+
+            <p><strong>La nuance de Porter (années 1990) — Stratégie à « thème majeur » :</strong> il est possible d'avoir un <em>thème dominant</em> (coût ou différenciation) tout en intégrant des éléments mineurs de l'autre orientation. Ce n'est pas une stratégie hybride parfaite mais une stratégie à priorité claire avec un « thème mineur » non absent.</p>
+
+            <table class="data-table">
+              <thead>
+                <tr><th>Type</th><th>Description</th><th>Viabilité</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Pure coût</td><td>Offre standard au prix le plus bas. Tout centré sur la réduction des coûts.</td><td>Viable</td></tr>
+                <tr><td>Pure différenciation</td><td>Offre unique à prix premium. Tout centré sur la création de valeur perçue.</td><td>Viable</td></tr>
+                <tr><td>Hybride parfaite</td><td>Coût et différenciation à égalité.</td><td>Non viable selon Porter → enlisement</td></tr>
+                <tr><td>À thème majeur</td><td>Dominante coût (ou différenciation) avec éléments secondaires de l'autre type.</td><td>Viable — recommandée en pratique</td></tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz I -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre I</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. Dans une stratégie de domination par les coûts, l'avantage de coût peut se concrétiser sous la forme d'une :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Baisse de prix obligatoire — c'est une règle absolue de cette stratégie.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Baisse de prix (augmentation du volume) OU maintien du prix (gain de marge), selon la situation concurrentielle.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Amélioration systématique de la qualité perçue de l'offre.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. Les "économies d'expérience" se définissent comme :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Des économies dues à l'étalement des coûts fixes sur un grand volume à un instant donné.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> La baisse du coût unitaire résultant de l'accumulation de production cumulée dans le temps (effet d'apprentissage).</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Des gains liés à la réduction du nombre de composants différents dans l'offre.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Les "économies de champ" consistent à :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Étaler les coûts fixes sur un plus grand nombre d'unités produites d'une même offre.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Délocaliser la production dans des zones à bas salaires.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Utiliser, pour une offre donnée, des ressources ou compétences déjà exploitées dans d'autres offres, améliorant ainsi la rentabilisation des actifs existants.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. La "différenciation perçue" est :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Toujours identique à la différenciation réelle de l'offre.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Moins importante que la différenciation réelle pour le succès de la stratégie.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Cruciale : une offre objectivement moindre mais mieux communiquée peut surclasser une offre réellement supérieure mais mal perçue.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. Selon Porter, "s'enliser dans la voie médiane" signifie :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Se positionner sur un marché de taille moyenne.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Tenter de mener simultanément à égalité une stratégie pure de coût et une stratégie pure de différenciation, conduisant à une performance dégradée sur les deux dimensions.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Adopter une stratégie à thème majeur coût avec des éléments mineurs de différenciation.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retenir I -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Chapitre I</div>
+        <ul class="retenir__list">
+          <li><strong>Domination par les coûts :</strong> offre standard, maîtrise des coûts sur toute la chaîne de valeur. 3 catégories de leviers : inputs (taille, délocalisation), process (échelle, expérience, variété, champ), outputs (low cost).</li>
+          <li><strong>Différenciation :</strong> offre perçue comme unique. 2 axes : technique (qualité, innovation, design…) + marketing (identifier les attributs valorisés, optimiser la perception). Prix premium justifié.</li>
+          <li>Différenciation réelle ≠ différenciation perçue. La communication est aussi déterminante que la qualité objective de l'offre.</li>
+          <li><strong>Stratégie hybride :</strong> dangereuse selon Porter (enlisement). La solution viable est la stratégie à <em>thème majeur</em> : une orientation dominante claire avec des éléments secondaires de l'autre type.</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CHAPITRE II — Nouvelles sources d'avantage
+    ════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap2">
+
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">II</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Explorer de nouvelles sources d'avantage concurrentiel</h2>
+          <p class="chapter-header__desc">Effet Reine Rouge, innovation stratégique et stratégie Océan Bleu</p>
+        </div>
+      </div>
+
+      <!-- II.1 — Reine Rouge -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.1 · L'effet « Reine Rouge » et la volatilité des positions concurrentielles</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>Sur les 100 premières entreprises américaines (Fortune 100) en 1965, <strong>moins de 20</strong> figuraient encore dans ce classement 50 ans plus tard. 3 explications à cette volatilité :</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Régression vers la moyenne :</strong> une performance très élevée à l'instant t augmente la probabilité statistique d'une régression à t+1 (effet aléatoire inhérent au processus).</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Accélération des changements environnementaux :</strong> l'entreprise guidée par les FCS d'aujourd'hui se retrouve en inadéquation avec les FCS de demain, modifiés par la technologie, la demande et la réglementation.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Action de la concurrence :</strong> l'avantage est fondamentalement <em>relatif</em>. Si les concurrents progressent plus vite sur les mêmes FCS, une amélioration absolue ne suffit pas à consolider la position.</span></div>
+            </div>
+
+            <div class="def-box">
+              Effet « Reine Rouge » (Lewis Carroll, <em>De l'autre côté du miroir</em>) :
+              « Il faut courir le plus vite possible pour rester au même endroit. Si vous voulez aller ailleurs, il vous faut courir deux fois plus vite. »
+            </div>
+
+            <p>La convergence stratégique des acteurs d'un secteur (mêmes FCS, mêmes business models, mêmes efforts incrémentaux) génère un <strong>« océan rouge »</strong> : concurrence frontale intense, banalisation des offres, pression sur les prix, marges érodées.</p>
+            <p><strong>Solution :</strong> substituer à l'approche <em>adaptative</em> (exploitation des règles du jeu existantes) une approche <em>proactive</em> fondée sur l'innovation stratégique et l'exploration de nouvelles règles du jeu.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- II.2 — Innovation et rupture -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.2 · Innovation stratégique et stratégie de rupture</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>La <strong>stratégie de rupture</strong> remet en cause les 3 composantes du business model traditionnel : la <em>nature des clients ciblés</em>, les <em>caractéristiques de l'offre</em> et la <em>mise à disposition de cette offre</em>.</p>
+
+            <p><strong>8 caractéristiques d'une stratégie de rupture</strong> (Lehmann-Ortega &amp; Roy, 2009) :</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>#</th><th>Caractéristique</th><th>Implication</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Recours à la technologie non obligatoire</td><td>La rupture peut porter sur la conception de l'offre ou le mode de consommation, pas forcément sur une innovation technologique.</td></tr>
+                <tr><td>2</td><td>Valeur unique proposée au client</td><td>L'innovation crée une valeur originale, clairement distincte de l'offre de référence du secteur.</td></tr>
+                <tr><td>3</td><td>Démarche proactive</td><td>Résulte d'une intention forte et d'un choix délibéré — non d'une adaptation subie ou d'un hasard.</td></tr>
+                <tr><td>4</td><td>Objectif d'amélioration de la rentabilité</td><td>Vise à capter la valeur supplémentaire créée ; innover sans rentabiliser n'est pas une stratégie de rupture aboutie.</td></tr>
+                <tr><td>5</td><td>Changements radicaux du business model</td><td>Refonte profonde des 3 composantes — non une simple modification marginale assimilable à de la différenciation.</td></tr>
+                <tr><td>6</td><td>Remise en question des FCS traditionnels</td><td>L'entreprise fait émerger de nouveaux facteurs clés de succès qui remplacent ou supplantent les anciens.</td></tr>
+                <tr><td>7</td><td>Concurrents déstabilisés</td><td>Les acteurs traditionnels, figés dans leurs schémas, sont incapables de s'adapter rapidement aux nouvelles règles du jeu.</td></tr>
+                <tr><td>8</td><td>Émergence d'un nouveau marché</td><td>Un nouveau segment stratégique apparaît. Il peut devenir dominant (supplantant les anciens modèles) ou coexister avec eux.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- II.3 — Océan bleu -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.3 · La stratégie « Océan Bleu » (Kim &amp; Mauborgne, 2005)</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="def-box">
+              Stratégie de rupture visant à positionner l'entreprise sur un territoire concurrentiel radicalement nouveau, vierge de toute concurrence directe, en remettant en question le périmètre traditionnel du marché, la nature de l'activité et les FCS établis.
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr><th>Concept</th><th>Caractéristiques</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Océan rouge</strong></td><td>Marché saturé, concurrence frontale, banalisation des offres, pression sur les prix, rentabilité érodée.</td></tr>
+                <tr><td><strong>Océan bleu</strong></td><td>Nouveau territoire sans concurrence directe, création d'une demande nouvelle, forte rentabilité potentielle à court terme.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>La matrice ERAC — 4 actions sur les attributs traditionnels de l'offre :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Action</th><th>Objectif</th><th>Exemple (Cirque du Soleil)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Exclure</strong></td><td>Supprimer les attributs qui n'apportent plus de valeur comparative au regard des coûts engagés.</td><td>Animaux, numéros de piste traditionnels exclus.</td></tr>
+                <tr><td><strong>Atténuer</strong></td><td>Réduire certains attributs en-deçà du standard sectoriel pour diminuer les coûts.</td><td>Nombre de vedettes réduit.</td></tr>
+                <tr><td><strong>Renforcer</strong></td><td>Élever certains attributs bien au-dessus du standard sectoriel.</td><td>Qualité de la mise en scène et des costumes.</td></tr>
+                <tr><td><strong>Créer</strong></td><td>Introduire des attributs jamais offerts dans le secteur, créant une demande nouvelle.</td><td>Thèmes artistiques, narration, expérience émotionnelle.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Double objectif :</strong> améliorer la proposition de valeur (valeur différente et attractive pour le client) ET optimiser le modèle de profit (réduction des coûts + augmentation des marges). Ces deux objectifs se traduisent nécessairement par une modification substantielle du système opérationnel.</p>
+            <p><strong>Lutter contre la « fausse majorité » :</strong> ne pas accepter la définition traditionnelle du secteur, du client et du besoin tels qu'ils sont communément et implicitement admis dans l'industrie.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz II -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre II</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. L'effet « Reine Rouge » désigne :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La domination durable d'un leader sur un marché stabilisé.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> L'impossibilité d'améliorer durablement sa position relative du fait des efforts simultanés et équivalents de tous les concurrents sur les mêmes FCS.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> La stratégie d'une entreprise qui réduit ses coûts deux fois plus vite que ses concurrents.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. Un "océan rouge" se caractérise par :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Un nouveau marché vierge de toute concurrence et à forte rentabilité potentielle.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Une concurrence frontale et saturée, une banalisation des offres, une pression sur les prix et des marges dégradées.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Un marché géographiquement limité à une zone régionale ou nationale.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Parmi les 8 caractéristiques d'une stratégie de rupture (Lehmann-Ortega &amp; Roy), laquelle est correcte ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Elle implique obligatoirement le recours à une innovation technologique numérique.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Elle vise uniquement à réduire les coûts pour les répercuter sur les prix.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Elle remet radicalement en question les FCS traditionnels et fait émerger un nouveau segment stratégique.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. Les 4 actions de la matrice Océan Bleu (ERAC) sont :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Analyser, Planifier, Exécuter, Contrôler.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Exclure, Atténuer, Renforcer, Créer.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Coût, Qualité, Service, Innovation.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. La principale différence entre stratégie d'exploitation et d'exploration est :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> L'exploitation cible les marchés internationaux ; l'exploration cible les marchés locaux.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> L'exploitation optimise les règles du jeu existantes du secteur ; l'exploration vise à modifier ces règles pour créer un avantage concurrentiel inédit.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> L'exploration est réservée aux grandes entreprises disposant de ressources abondantes.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retenir II -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Chapitre II</div>
+        <ul class="retenir__list">
+          <li>Moins de 20 entreprises sur 100 du Fortune 500 de 1965 figuraient encore dans ce classement 50 ans plus tard → la volatilité concurrentielle est inexorable.</li>
+          <li>L'effet Reine Rouge : courir pour rester sur place. La convergence stratégique crée des océans rouges. Solution : passer à l'exploration.</li>
+          <li>La stratégie de rupture recompose radicalement le business model (8 caractéristiques). Elle n'exige pas de technologie nouvelle — elle peut porter sur la cible, l'offre ou son mode de livraison.</li>
+          <li>La stratégie Océan Bleu utilise la matrice ERAC pour créer une offre de valeur inédite. Double objectif : améliorer la proposition de valeur <em>et</em> optimiser le modèle de profit simultanément.</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CHAPITRE III — Axes de croissance
+    ════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap3">
+
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">III</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Analyser les axes de croissance de l'entreprise</h2>
+          <p class="chapter-header__desc">Spécialisation, diversification, expansion et internationalisation</p>
+        </div>
+      </div>
+
+      <!-- III.1 — Spécialisation -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">III.1 · Croissance et spécialisation</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p><strong>Définition :</strong> concentrer ses investissements sur une activité préexistante sans modifier la nature du périmètre d'activité → stratégie de pénétration de marché. Peut s'accompagner d'un <em>recentrage stratégique</em> (désinvestissement d'activités périphériques pour se concentrer sur le cœur de métier).</p>
+            <p><strong>Important :</strong> distinguer la <em>manœuvre</em> (décision d'investir sur une activité existante) de la <em>situation</em> (degré de diversité du portefeuille). Une entreprise diversifiée peut choisir la spécialisation comme manœuvre.</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>3 Avantages</th><th>2 Risques</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Réduction du risque fondamental : expertise accrue sur un territoire connu → moins de chances d'échec par mauvaise maîtrise des FCS.</td><td>Risque sectoriel : dépendance étroite à la conjoncture d'un seul secteur.</td></tr>
+                <tr><td>Domination de marché → avantage technologique, de notoriété/réputation, d'implantation → support de différenciation.</td><td>Rigidités : renforcement progressif des schémas de pensée et de fonctionnement → difficulté de réorientation si le secteur décline.</td></tr>
+                <tr><td>Taille critique sur une activité → économies d'échelle et effets de taille → avantage de coût possible.</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- III.2 — Diversification -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">III.2 · Croissance et diversification</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p><strong>Définition :</strong> s'engager sur un secteur d'activité ou segment stratégique sur lequel l'entreprise n'est pas encore présente → manœuvre plus radicale et plus risquée que la spécialisation (territoire inconnu).</p>
+
+            <p><strong>2 directions :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Direction</th><th>Cible</th><th>Exemple</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Verticale amont</td><td>Secteur des fournisseurs</td><td>Un fabricant qui rachète son fournisseur de matières premières.</td></tr>
+                <tr><td>Verticale aval</td><td>Secteur des clients / distribution</td><td>Un fabricant qui ouvre ses propres boutiques.</td></tr>
+                <tr><td>Horizontale</td><td>Nouveau domaine (ni fournisseur ni client)</td><td>Un groupe alimentaire qui entre dans l'hôtellerie.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Reliée vs conglomérale :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Diversification reliée :</strong> des <em>compétences pivots</em> sont communes à l'activité de base et à la nouvelle activité → effets de synergie (gain issu de la gestion commune de 2 activités). Supérieure selon les études.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Diversification conglomérale :</strong> aucun point commun entre les activités. Risque de dispersion des ressources et de « décote conglomérale » sur les marchés boursiers.</span></div>
+            </div>
+
+            <p><strong>3 avantages :</strong> (1) Réduction du risque sectoriel (activités non corrélées protègent contre les crises sectorielles). (2) Saisir une opportunité de marché porteur (logique défensive ou offensive). (3) Exploiter les synergies issues des compétences pivots.</p>
+            <p><strong>2 risques :</strong> (1) Dispersion des ressources → déficit d'expertise (quantité au détriment de la qualité). (2) Surcoût de la structure centrale de coordination → désavantage face à des spécialistes purs.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- III.3 — Expansion -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">III.3 · Croissance et expansion</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p><strong>Définition :</strong> axe intermédiaire entre spécialisation et diversification. L'entreprise étend son périmètre au-delà des activités existantes mais en s'appuyant sur une partie de son activité actuelle (produits ou clients).</p>
+
+            <table class="data-table">
+              <thead>
+                <tr><th>Type</th><th>Mécanisme</th><th>Exemple</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Expansion métier</strong> (produit)</td><td>Nouveaux produits/services proposés aux clients existants → extension de gamme.</td><td>Un fabricant de smartphones qui lance des montres connectées pour ses clients existants.</td></tr>
+                <tr><td><strong>Expansion marché</strong> (mission)</td><td>Produits existants proposés à une nouvelle clientèle → élargissement de la cible.</td><td>Passer d'un marché professionnel (B2B) à un marché grand public (B2C). Souvent la suite logique d'une spécialisation.</td></tr>
+              </tbody>
+            </table>
+
+            <p>Les 2 types peuvent être menés de front, de manière successive ou simultanée, ce qui permet un développement du volume important sans le risque d'éloignement brutal de la diversification.</p>
+
+            <p><strong>2 avantages :</strong> (1) Atteindre la taille critique lorsque le marché principal est saturé, sans prendre le risque de la diversification radicale. (2) Générer des <strong>économies de champ</strong> — gains issus de la mobilisation de ressources ou compétences communes à plusieurs produits ou activités.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- III.4 — Internationalisation -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">III.4 · Croissance et internationalisation</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p><strong>Définition :</strong> se développer dans des pays ou zones géographiques où l'entreprise n'est pas encore présente. Axe <em>non exclusif</em> : se superpose à la spécialisation, l'expansion ou la diversification. Essor massif à partir des années 1980 (mondialisation, baisse des coûts de transport et de communication, déréglementation).</p>
+
+            <p><strong>Matrice de caractérisation — 4 questions :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Question</th><th>Réponse synthétique</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Pourquoi ?</strong></td><td><strong>3 catégories de facteurs :</strong> (1) Facteurs de marché (nouvelles clientèles, compenser un marché local en stagnation). (2) Facteurs de coût (économies d'échelle, zones à bas salaires, incitations fiscales). (3) Facteurs concurrentiels (concurrence multipoints : attaquer ou riposter sur plusieurs zones géographiques — stratégie de dissuasion).</td></tr>
+                <tr><td><strong>Quand ?</strong></td><td><strong>Théorie des étapes (Uppsala) :</strong> progression par « petits pas » en s'appuyant sur l'expérience cumulée à l'étranger. <strong>Born global :</strong> internationalisation rapide et brutale sans passer par les étapes — équipes à forte sensibilité internationale, stratégie de différenciation compensant le déficit d'information locale.</td></tr>
+                <tr><td><strong>Où ?</strong></td><td>Privilégier les zones à <em>faible distance psychique</em> (école suédoise d'Uppsala) : faible écart géographique, économique, social, institutionnel, culturel et linguistique entre la zone d'origine et la zone cible.</td></tr>
+                <tr><td><strong>Comment ?</strong></td><td>Équilibrer <em>efficacité globale</em> (standardisation mondiale → effets de volume) et <em>adaptation locale</em> (personnalisation de l'offre par pays → différenciation). Ces deux impératifs sont antagonistes.</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>4 stratégies internationales (matrice efficacité globale / adaptation locale) :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Stratégie</th><th>Efficacité globale</th><th>Adaptation locale</th><th>Logique</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Export</strong></td><td>Faible</td><td>Faible</td><td>Vente du produit domestique tel quel à l'étranger.</td></tr>
+                <tr><td><strong>Multidomestique</strong></td><td>Faible</td><td>Fort</td><td>Forte autonomie des filiales locales, offres adaptées par marché.</td></tr>
+                <tr><td><strong>Globale</strong></td><td>Fort</td><td>Faible</td><td>Produit standardisé mondial, coordination centrale forte.</td></tr>
+                <tr><td><strong>« Glocale »</strong></td><td>Fort</td><td>Fort</td><td>Combiner standardisation et adaptation locale → le plus ambitieux et le plus complexe.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz III -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre III</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. La stratégie de spécialisation peut s'accompagner d'un recentrage stratégique. Cela signifie :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Se lancer sur de nouvelles activités radicalement différentes du cœur de métier.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Abandonner certaines activités périphériques (désinvestissement) pour concentrer les ressources sur le cœur de métier existant.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Développer de nouveaux produits pour une nouvelle clientèle.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. Les "compétences pivots" interviennent dans quelle forme de diversification ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La diversification conglomérale.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> La diversification reliée — elles font le lien entre l'activité de base et la nouvelle activité en générant des synergies.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> La diversification verticale aval uniquement.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Une "expansion marché" (ou expansion mission) consiste à :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Proposer de nouveaux produits aux clients existants de l'entreprise.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Utiliser des produits existants pour conquérir une nouvelle clientèle (ex : passer du B2B au B2C).</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Racheter un concurrent pour augmenter les parts de marché sur l'activité existante.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. La "distance psychique" selon l'école suédoise d'Uppsala désigne :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La distance géographique en kilomètres entre deux pays.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> L'écart entre deux zones en termes de langue, valeurs, culture, systèmes économique, politique, légal et managérial.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Le temps nécessaire pour comprendre les attentes d'un marché étranger.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. Une stratégie internationale "glocale" combine :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Forte adaptation locale et faible efficacité globale.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Faible adaptation locale et forte efficacité globale.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Forte efficacité globale (standardisation) ET forte adaptation locale (personnalisation) simultanément — la combinaison la plus ambitieuse.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">6. Une entreprise "born global" se distingue de la théorie des étapes par :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Son refus total de s'implanter sur les marchés étrangers.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Sa progression progressive et prudente à l'international, marché par marché.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Son internationalisation rapide, voire brutale, sans respecter les étapes progressives — souvent portée par des équipes à forte sensibilité internationale et une stratégie de différenciation.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retenir III -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Chapitre III</div>
+        <ul class="retenir__list">
+          <li><strong>Spécialisation :</strong> concentration sur l'activité existante. 3 avantages (expertise, domination, taille critique). 2 risques (sectoriel, rigidités). Peut s'accompagner d'un recentrage (désinvestissements).</li>
+          <li><strong>Diversification :</strong> nouvelle activité. Reliée (compétences pivots → synergies) supérieure à la conglomérale. Risques : dispersion des ressources + surcoût structure centrale.</li>
+          <li><strong>Expansion :</strong> voie intermédiaire. Expansion métier (nouveaux produits, clients existants) + expansion marché (produits existants, nouveaux clients). Génère des économies de champ.</li>
+          <li><strong>Internationalisation :</strong> axe non exclusif (se superpose aux 3 autres). 4 questions : Pourquoi (marché, coût, concurrentiel) / Quand (étapes vs born global) / Où (distance psychique) / Comment (export, multidomestique, globale, glocale).</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CHAPITRE IV — Modalités de croissance
+    ════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap4">
+
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">IV</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Analyser les modalités de croissance de l'entreprise</h2>
+          <p class="chapter-header__desc">Développement interne, fusion-acquisition, alliance et choix selon les axes</p>
+        </div>
+      </div>
+
+      <!-- IV.1 — Développement interne -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IV.1 · Croissance et développement interne (organique)</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="def-box">
+              Modalité de croissance consistant pour l'entreprise à s'appuyer, de manière autonome, sur ses propres compétences, ressources et actifs (embauche, achat de matériel, licence, emprunt…) pour mettre en œuvre ses choix de croissance.
+            </div>
+            <p>Modalité centrale des PME — moins visible que la F/A ou l'alliance mais <em>prépondérante en pratique</em>. Elle permet à l'entreprise de constituer progressivement un stock d'actifs qu'elle combine pour faire émerger des ressources stratégiques (image, marque, innovation…).</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Avantages :</strong> meilleur contrôle des ressources, maîtrise du rythme de croissance « à son rythme », absence de conflits externes (partage de pouvoir) et de risques sociaux liés à la restructuration.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Limite :</strong> plus lente que la F/A ou l'alliance, accès limité aux ressources nouvelles en situation d'autonomie, ce qui peut freiner ou bloquer le développement souhaité.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IV.2 — Fusion-acquisition -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IV.2 · Croissance et fusion-acquisition (F/A)</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="def-box">
+              Rachat ou prise de contrôle d'une entreprise cible par un acquéreur. La cible passe sous contrôle de l'acquéreur → ligne hiérarchique unique et prise de décision unifiée (≠ alliance).
+            </div>
+
+            <p><strong>3 directions de la F/A :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Direction</th><th>Cible rachetée</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Horizontale</td><td>Un concurrent du même secteur d'activité.</td></tr>
+                <tr><td>Verticale</td><td>Un fournisseur (amont) ou un client (aval).</td></tr>
+                <tr><td>Conglomérale</td><td>Une entreprise d'un autre secteur (ni concurrent, ni fournisseur, ni client).</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>3 catégories d'objectifs :</strong> (1) Accès à des compétences (brevets, marques, savoir-faire spécialisés, réputation). (2) Accès à de nouveaux marchés (parts de marché, contourner barrières réglementaires ou culturelles). (3) Maîtrise des coûts (taille critique, économies d'échelle et effets de taille, synergies par similarité ou complémentarité).</p>
+
+            <p><strong>Bilan mitigé :</strong> plus de <strong>50 % d'échecs</strong> (scission, revente rapide, dégradation boursière). 3 causes :</p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span>Augmentation brutale des coûts de coordination (taille + divergences culturelles entre entités fusionnées).</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span>Ressources contraintes après le rachat : financement lourd + honoraires des intermédiaires (banques d'affaires, avocats…) → rentabilité pénalisée dès l'origine.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span>Impact social négatif : anxiété, départ de compétences clés, conflits sociaux, démotivation → baisse de productivité.</span></div>
+            </div>
+
+            <p><strong>3 règles d'intégration réussie :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Règle</th><th>Contenu</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Formalisation du processus</strong></td><td>Étapes clairement définies, suivi précis de l'avancement, objectifs fixés pour mobiliser les équipes et réduire les périodes d'instabilité.</td></tr>
+                <tr><td><strong>Communication permanente</strong></td><td>Information complète, fiable, cohérente, réactive et diffusée à tous les niveaux pour limiter l'anxiété et la démotivation.</td></tr>
+                <tr><td><strong>Vision de la direction générale</strong></td><td>Vision stratégique forte permettant à tous les salariés d'adhérer à la nouvelle entité et de construire une identité commune.</td></tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- IV.3 — Alliance -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IV.3 · Croissance et alliance stratégique</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="def-box">
+              Association d'entreprises juridiquement indépendantes mettant en commun des ressources pour poursuivre des objectifs conjoints, tout en préservant leur autonomie de décision en dehors du périmètre de l'accord.
+            </div>
+
+            <p><strong>3 caractéristiques fondamentales :</strong> (1) indépendance juridique des partenaires ; (2) engagement sur le long terme (≠ relation marchande ponctuelle) ; (3) partenaires de cultures différentes (histoire, secteur ou nationalité).</p>
+
+            <p><strong>Typologies — 4 dimensions :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Dimension</th><th>Types</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Nombre de partenaires</td><td>Bilatérale (2 entreprises) vs Multilatérale / Consortium (3+)</td></tr>
+                <tr><td>Capitalistique</td><td>Capitalistique (prise de participation mutuelle ou joint-venture) vs Non capitalistique (contrat de long terme)</td></tr>
+                <tr><td>Origine géographique</td><td>Domestique (même pays) vs Internationale (nationalités différentes — majoritaires aujourd'hui)</td></tr>
+                <tr><td>Position dans la filière</td><td>Horizontale (même secteur) vs Verticale (fournisseur-acheteur) vs Intersectorielle</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>2 logiques d'alliance (Garette &amp; Dussauge, 1995) :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Alliance endogène (d'échelle) :</strong> partenaires similaires cumulant leurs actifs pour atteindre une taille critique ou améliorer leur expertise commune → effets de volume. Support principal de la <em>spécialisation</em>.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Alliance exogène (complémentaire) :</strong> partenaires aux ressources différentes tirant parti de leur complémentarité → synergies et transferts de connaissance. Support principal de la <em>diversification</em> et de l'<em>internationalisation</em>.</span></div>
+            </div>
+
+            <p><strong>3 écueils majeurs :</strong></p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Écueil</th><th>Mécanisme</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Comportements opportunistes</strong></td><td>Un partenaire poursuit son intérêt propre aux dépens de l'autre : captation de savoir-faire, absence d'équité dans le partage coûts/gains, tricherie.</td></tr>
+                <tr><td><strong>Incertitude forte</strong></td><td>Évolution de l'environnement (technologie, demande, concurrents) + asymétrie d'information sur les intentions du partenaire → modification de l'engagement.</td></tr>
+                <tr><td><strong>Incompréhension culturelle</strong></td><td>Différences de culture et de management → rigidités, conflits, méfiance → dégradation de la confiance entre partenaires.</td></tr>
+              </tbody>
+            </table>
+            <p>Ces 3 écueils se combinent et s'amplifient mutuellement dans un cercle vicieux : incertitude + incompréhension → méfiance → opportunisme → rupture.</p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- IV.4 — Quelle modalité ? -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IV.4 · Quelle modalité pour quel axe de croissance ?</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>Aucun axe de croissance ne conditionne mécaniquement une modalité. 6 critères guident le choix :</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Critère</th><th>Développement interne</th><th>Fusion-Acquisition</th><th>Alliance</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Rapidité de mise en œuvre</strong></td><td>Lente — ressources à construire soi-même.</td><td>Immédiate ✓ — actifs disponibles dès le rachat.</td><td>Rapide, mais la coordination post-accord peut ralentir.</td></tr>
+                <tr><td><strong>Investissement initial</strong></td><td>Élevé (supporte seul).</td><td>Très élevé (rachat + honoraires).</td><td>Réduit ✓ (actifs partagés entre partenaires).</td></tr>
+                <tr><td><strong>Coûts de transaction</strong></td><td>Nuls ✓</td><td>Élevés ex ante (négociation, due diligence).</td><td>Maximaux — coordination continue post-accord.</td></tr>
+                <tr><td><strong>Contrôle des opérations</strong></td><td>Maximum ✓</td><td>Élevé si intégration réussie.</td><td>Réduit — gestion conjointe et négociée.</td></tr>
+                <tr><td><strong>Protection des savoir-faire</strong></td><td>Maximum ✓</td><td>Fort ✓</td><td>Risque élevé de captation par le partenaire.</td></tr>
+                <tr><td><strong>Réversibilité</strong></td><td>Faible — coûts de sortie importants.</td><td>Très faible — la moins réversible.</td><td>Plus élevée ✓ (cession des activités communes à un partenaire).</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>La myopie de la modalité unique :</strong> certaines entreprises développent une « routine » qui les pousse à toujours utiliser la même modalité, quelle que soit la situation → choix non optimaux.</p>
+
+            <div class="def-box">
+              Capron &amp; Mitchell (2012) : les entreprises qui <em>mixent</em> les 3 modalités ont <strong>46 %</strong> de chances supplémentaires de rester en activité 5 ans plus tard que celles ne recourant qu'aux alliances, <strong>26 %</strong> de plus que celles ne faisant que des F/A, et <strong>12 %</strong> de plus que celles ne comptant que sur la croissance interne.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz IV -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre IV</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. La différence fondamentale entre une fusion-acquisition et une alliance est :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La F/A est plus rapide ; l'alliance est toujours plus lente à mettre en œuvre.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> La F/A implique la prise de contrôle et une ligne hiérarchique unique ; l'alliance préserve l'indépendance juridique des partenaires et implique une gestion négociée des activités communes.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> La F/A ne concerne que les entreprises d'un même secteur ; l'alliance peut impliquer des secteurs différents.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. Les 3 catégories d'objectifs d'une fusion-acquisition sont :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Motivation fiscale, réduction de la main-d'œuvre, diversification financière.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Accès à des compétences, accès à de nouveaux marchés, maîtrise des coûts (taille critique et synergies).</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Amélioration de l'image, conquête de talents, standardisation des processus.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Une "alliance endogène" (ou alliance d'échelle) se caractérise par :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">A</span> Des partenaires similaires cumulant leurs actifs communs pour atteindre une taille critique ou améliorer leur expertise partagée → effets de volume.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Des partenaires aux ressources différentes qui exploitent leur complémentarité pour créer des synergies.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Une alliance uniquement entre entreprises d'un même pays.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. Quel critère favorise le choix de l'alliance par rapport à la F/A ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La rapidité de mise en œuvre et le contrôle maximum des décisions.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> La protection maximale des savoir-faire et des compétences stratégiques.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> La réduction de l'investissement initial (actifs partagés) et une plus grande réversibilité de la manœuvre.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. Parmi les 3 écueils d'une alliance, "l'opportunisme" désigne :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> L'incapacité des partenaires à coordonner leurs activités communes.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> Les divergences de culture entre les équipes des deux entreprises partenaires.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> Le risque qu'un partenaire poursuive son intérêt propre aux dépens de l'autre (captation de savoir-faire, iniquité dans le partage des coûts et gains, tricherie ou dissimulation).</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">6. Selon Capron &amp; Mitchell (2012), les entreprises qui mixent les 3 modalités ont, par rapport à celles ne recourant qu'aux alliances :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> 12 % de chances supplémentaires de survie à 5 ans.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">B</span> 26 % de chances supplémentaires de survie à 5 ans.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">C</span> 46 % de chances supplémentaires de survie à 5 ans.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">7. Les 3 règles d'une intégration réussie après une F/A sont :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Réduction des effectifs, harmonisation des salaires, standardisation des outils.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Formalisation du processus, communication permanente et cohérente, vision stratégique forte de la direction générale pour construire une identité commune.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Vitesse d'exécution maximale, centralisation des décisions, audit des synergies.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Retenir IV -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Chapitre IV</div>
+        <ul class="retenir__list">
+          <li><strong>3 modalités :</strong> développement interne (autonomie, lenteur, contrôle maximal), fusion-acquisition (rapidité, coût élevé, risque social), alliance (investissement réduit, réversibilité, risque de captation des savoir-faire).</li>
+          <li><strong>F/A :</strong> 3 objectifs (compétences, marchés, coûts). Plus de 50 % d'échecs. 3 règles d'intégration réussie : formalisation, communication permanente, vision DG.</li>
+          <li><strong>Alliance :</strong> endogène (taille critique, similitude des partenaires) vs exogène (complémentarité des ressources). 3 écueils : opportunisme, incertitude (asymétrie d'information), incompréhension culturelle.</li>
+          <li><strong>Choix de la modalité :</strong> aucun lien automatique avec l'axe de croissance. 6 critères : rapidité, investissement initial, coûts de transaction, contrôle, protection savoir-faire, réversibilité.</li>
+          <li>Éviter la <em>myopie de la modalité unique</em>. Mixer les 3 modalités augmente de <strong>46 %</strong> les chances de survie à 5 ans (Capron &amp; Mitchell, 2012).</li>
+        </ul>
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="site-footer__logo">Klaro</div>
+    <p>
+      Fiche proposée par <strong>WindJos Digital</strong> ·
+      CEO : <strong>Josué ILBOUDO</strong>
+    </p>
+    <p>
+      Contenu extrait du cours Stratégie &amp; Développement des Organisations ·
+      IBAM · 2025–2026
+    </p>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS — Ordre obligatoire :
+         1. supabase.min.js     (librairie Supabase locale)
+         2. supabase-client.js  (initialise window.KlaroDB)
+         3. fiche.js            (accordéon, quiz, cours original)
+  ════════════════════════════════════════════ -->
+  <script src="../assets/lib/supabase.min.js"></script>
+  <script src="../assets/js/supabase-client.js"></script>
+  <script src="../assets/js/fiche.js"></script>
+
+</body>
+</html>

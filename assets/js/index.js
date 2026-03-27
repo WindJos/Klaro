@@ -8,6 +8,15 @@ var DOM = {
   fichesGrid:      document.getElementById('fichesGrid'),
   countBadge:      document.getElementById('countBadge'),
   searchInput:     document.getElementById('searchInput'),
+  // Panneau filtres
+  panneauFiltres:  document.getElementById('panneauFiltres'),
+  btnFiltrer:      document.getElementById('btnFiltrer'),
+  btnReinit:       document.getElementById('btnReinitFiltres'),
+  filtresBadge:    document.getElementById('filtresBadge'),
+  filtreNiveau:    document.getElementById('filtreNiveau'),
+  filtreEcole:     document.getElementById('filtreEcole'),
+  filtreFiliere:   document.getElementById('filtreFiliere'),
+  // Formulaire demande
   reqForm:         document.getElementById('reqForm'),
   reqNom:          document.getElementById('r_nom'),
   reqEmail:        document.getElementById('r_email'),
@@ -35,9 +44,9 @@ var DOM = {
 // ─────────────────────────────────────────
 var AppState = {
   fiches:    [],
-  niveau:    'all',
-  etab:      'all',
-  filiere:   'all',
+  niveau:    '',   // vide = tous
+  etab:      '',   // vide = toutes
+  filiere:   '',   // vide = toutes
   recherche: ''
 };
 
@@ -94,14 +103,14 @@ function filtrerFiches(fiches) {
 
   return fiches.filter(function(f) {
 
-    // Filtre niveau
-    var niveauOk = AppState.niveau === 'all' || f.niveau === AppState.niveau;
+    // Filtre niveau — vide = tous
+    var niveauOk = !AppState.niveau || f.niveau === AppState.niveau;
 
-    // Filtre établissement
-    var etabOk = AppState.etab === 'all' || f.etablissement === AppState.etab;
+    // Filtre établissement — vide = toutes
+    var etabOk = !AppState.etab || f.etablissement === AppState.etab;
 
-    // Filtre filière
-    var filiereOk = AppState.filiere === 'all' || f.filiere === AppState.filiere;
+    // Filtre filière — vide = toutes
+    var filiereOk = !AppState.filiere || f.filiere === AppState.filiere;
 
     // Filtre recherche texte
     var rechercheOk = terme === '' ||
@@ -167,38 +176,125 @@ function construireCarte(f) {
 
 
 // ─────────────────────────────────────────
-// 7. FILTRES
+// 7. PANNEAU DE FILTRES
 // ─────────────────────────────────────────
-function filtrerParNiveau(btn) {
-  document.querySelectorAll('[data-niveau]').forEach(function(b) {
-    b.classList.remove('filter-btn--active');
-  });
-  btn.classList.add('filter-btn--active');
-  AppState.niveau = btn.dataset.niveau;
-  rendreGrille();
+
+// Ouvre/ferme le panneau de filtres
+function togglePanneauFiltres() {
+  var visible = DOM.panneauFiltres.style.display === 'block';
+  DOM.panneauFiltres.style.display = visible ? 'none' : 'block';
 }
 
-function filtrerParEtab(btn) {
-  document.querySelectorAll('[data-etab]').forEach(function(b) {
-    b.classList.remove('filter-btn--active');
-  });
-  btn.classList.add('filter-btn--active');
-  AppState.etab = btn.dataset.etab;
+// Applique les 3 filtres depuis les selects
+function appliquerFiltres() {
+  AppState.niveau  = DOM.filtreNiveau.value;
+  AppState.etab    = DOM.filtreEcole.value;
+  AppState.filiere = DOM.filtreFiliere.value;
   rendreGrille();
+  mettreAJourBadgeFiltres();
 }
 
-function filtrerParFiliere(btn) {
-  document.querySelectorAll('[data-filiere]').forEach(function(b) {
-    b.classList.remove('filter-btn--active');
-  });
-  btn.classList.add('filter-btn--active');
-  AppState.filiere = btn.dataset.filiere;
+// Réinitialise tous les filtres
+function reinitialiserFiltres() {
+  DOM.filtreNiveau.value  = '';
+  DOM.filtreEcole.value   = '';
+  DOM.filtreFiliere.value = '';
+  AppState.niveau  = '';
+  AppState.etab    = '';
+  AppState.filiere = '';
   rendreGrille();
+  mettreAJourBadgeFiltres();
 }
 
-window.filtrerParNiveau  = filtrerParNiveau;
-window.filtrerParEtab    = filtrerParEtab;
-window.filtrerParFiliere = filtrerParFiliere;
+// Met à jour le badge qui indique combien de filtres sont actifs
+function mettreAJourBadgeFiltres() {
+  var nb = [AppState.niveau, AppState.etab, AppState.filiere]
+    .filter(function(v) { return v !== ''; }).length;
+
+  if (nb > 0) {
+    DOM.filtresBadge.textContent   = nb;
+    DOM.filtresBadge.style.display = 'inline-flex';
+    DOM.btnReinit.style.display    = 'inline-block';
+  } else {
+    DOM.filtresBadge.style.display = 'none';
+    DOM.btnReinit.style.display    = 'none';
+  }
+}
+
+window.togglePanneauFiltres = togglePanneauFiltres;
+window.appliquerFiltres     = appliquerFiltres;
+window.reinitialiserFiltres = reinitialiserFiltres;
+
+
+// ─────────────────────────────────────────
+// 8. CHARGEMENT ÉCOLES ET FILIÈRES DEPUIS SUPABASE
+// ─────────────────────────────────────────
+
+// Charge les écoles actives et remplit :
+//   - le select du panneau de filtres (#filtreEcole)
+//   - le select du formulaire de demande (#r_etablissement)
+async function chargerEcoles() {
+  if (!window.KlaroDB || !window.KlaroDB.pret) return;
+
+  var db = window.KlaroDB.db;
+
+  var result = await db
+    .from('ecoles')
+    .select('nom')
+    .eq('actif', true)
+    .order('nom', { ascending: true });
+
+  if (result.error || !result.data) return;
+
+  var options = result.data.map(function(e) {
+    return '<option value="' + e.nom + '">' + e.nom + '</option>';
+  }).join('');
+
+  // Filtre — ajoute après "Toutes les écoles"
+  if (DOM.filtreEcole) {
+    DOM.filtreEcole.innerHTML =
+      '<option value="">Toutes les écoles</option>' + options;
+  }
+
+  // Formulaire demande — insère avant l'option "Autre…"
+  if (DOM.reqEtablissement) {
+    DOM.reqEtablissement.innerHTML =
+      '<option value="">Choisir…</option>' + options +
+      '<option value="autre">Autre…</option>';
+  }
+}
+
+// Charge les filières actives et remplit les deux selects
+async function chargerFilieres() {
+  if (!window.KlaroDB || !window.KlaroDB.pret) return;
+
+  var db = window.KlaroDB.db;
+
+  var result = await db
+    .from('filieres')
+    .select('nom')
+    .eq('actif', true)
+    .order('nom', { ascending: true });
+
+  if (result.error || !result.data) return;
+
+  var options = result.data.map(function(f) {
+    return '<option value="' + f.nom + '">' + f.nom + '</option>';
+  }).join('');
+
+  // Filtre
+  if (DOM.filtreFiliere) {
+    DOM.filtreFiliere.innerHTML =
+      '<option value="">Toutes les filières</option>' + options;
+  }
+
+  // Formulaire demande
+  if (DOM.reqFiliere) {
+    DOM.reqFiliere.innerHTML =
+      '<option value="">Choisir…</option>' + options +
+      '<option value="autre">Autre…</option>';
+  }
+}
 
 
 // ─────────────────────────────────────────
@@ -389,7 +485,12 @@ function initialiserAnimations() {
 // 13. INITIALISATION
 // ─────────────────────────────────────────
 async function initialiser() {
-  await chargerFiches();
+  // Lance en parallèle : fiches + écoles + filières
+  await Promise.all([
+    chargerFiches(),
+    chargerEcoles(),
+    chargerFilieres()
+  ]);
   initialiserAnimations();
 }
 

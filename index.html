@@ -46,47 +46,115 @@
   <!-- ═══ CONTENU PRINCIPAL ═══ -->
   <main class="container" style="padding-top: 36px; padding-bottom: 80px;">
 
-    <!-- ── Filtre Niveau ── -->
-    <div class="filters">
-      <span class="filters__label">Niveau :</span>
-      <button class="filter-btn filter-btn--active" data-niveau="all"    onclick="filtrerParNiveau(this)">Tous</button>
-      <button class="filter-btn" data-niveau="L1"     onclick="filtrerParNiveau(this)">L1</button>
-      <button class="filter-btn" data-niveau="L2"     onclick="filtrerParNiveau(this)">L2</button>
-      <button class="filter-btn" data-niveau="L3"     onclick="filtrerParNiveau(this)">L3</button>
-      <button class="filter-btn" data-niveau="Master" onclick="filtrerParNiveau(this)">Master</button>
-      <button class="filter-btn" data-niveau="BTS"    onclick="filtrerParNiveau(this)">BTS</button>
+    <!-- ── Barre de recherche + bouton Filtrer ── -->
+    <div style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+
+      <!-- Bouton Filtrer -->
+      <button
+        id="btnFiltrer"
+        onclick="togglePanneauFiltres()"
+        style="display:inline-flex; align-items:center; gap:6px;
+               background:var(--color-navy-dark); color:var(--color-gold);
+               border:1px solid var(--color-gold); border-radius:4px;
+               padding:9px 18px; font-family:var(--font-body);
+               font-size:12px; font-weight:600; letter-spacing:0.1em;
+               text-transform:uppercase; cursor:pointer; white-space:nowrap;
+               transition:all 0.2s;"
+      >
+        <span>⚙</span> Filtrer
+        <!-- Badge actif — affiché si au moins un filtre est actif -->
+        <span
+          id="filtresBadge"
+          style="display:none; background:var(--color-gold);
+                 color:var(--color-navy-dark); border-radius:50%;
+                 width:18px; height:18px; font-size:10px; font-weight:700;
+                 align-items:center; justify-content:center;"
+        >0</span>
+      </button>
+
+      <!-- Bouton réinitialiser (visible si filtres actifs) -->
+      <button
+        id="btnReinitFiltres"
+        onclick="reinitialiserFiltres()"
+        style="display:none; font-size:11px; color:var(--color-text-muted);
+               background:none; border:none; cursor:pointer; text-decoration:underline;
+               font-family:var(--font-body); padding:0;"
+      >
+        Tout afficher
+      </button>
     </div>
 
-    <!-- ── Filtre Établissement ── -->
-    <div class="filters" style="margin-top: -4px;">
-      <span class="filters__label">École :</span>
-      <button class="filter-btn filter-btn--active" data-etab="all"     onclick="filtrerParEtab(this)">Toutes</button>
-      <button class="filter-btn" data-etab="IBAM"    onclick="filtrerParEtab(this)">IBAM</button>
-      <button class="filter-btn" data-etab="UJKZ"    onclick="filtrerParEtab(this)">UJKZ</button>
-      <button class="filter-btn" data-etab="IST"     onclick="filtrerParEtab(this)">IST</button>
-      <button class="filter-btn" data-etab="ISTAPEM" onclick="filtrerParEtab(this)">ISTAPEM</button>
-      <button class="filter-btn" data-etab="U-AUBEN" onclick="filtrerParEtab(this)">U-AUBEN</button>
-      <button class="filter-btn" data-etab="ISTIC"   onclick="filtrerParEtab(this)">ISTIC</button>
-      <button class="filter-btn" data-etab="IPERMIC" onclick="filtrerParEtab(this)">IPERMIC</button>
-      <button class="filter-btn" data-etab="UV-BF"   onclick="filtrerParEtab(this)">UV-BF</button>
-      <button class="filter-btn" data-etab="USTA"    onclick="filtrerParEtab(this)">USTA</button>
-      <button class="filter-btn" data-etab="ESTA"    onclick="filtrerParEtab(this)">ESTA</button>
-      <button class="filter-btn" data-etab="ESC"     onclick="filtrerParEtab(this)">ESC</button>
-      <button class="filter-btn" data-etab="ULB"     onclick="filtrerParEtab(this)">ULB</button>
-      <button class="filter-btn" data-etab="UPG"     onclick="filtrerParEtab(this)">UPG</button>
-    </div>
+    <!-- ── Panneau de filtres (masqué par défaut) ── -->
+    <div
+      id="panneauFiltres"
+      style="display:none; background:var(--color-beige-card);
+             border:1px solid var(--color-beige-border); border-radius:8px;
+             padding:20px; margin-bottom:20px;"
+    >
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px;">
 
-    <!-- ── Filtre Filière ── -->
-    <div class="filters" style="margin-top: -4px;">
-      <span class="filters__label">Filière :</span>
-      <button class="filter-btn filter-btn--active" data-filiere="all"   onclick="filtrerParFiliere(this)">Toutes</button>
-      <button class="filter-btn" data-filiere="MGC"   onclick="filtrerParFiliere(this)">MGC</button>
-      <button class="filter-btn" data-filiere="MID"   onclick="filtrerParFiliere(this)">MID</button>
-      <button class="filter-btn" data-filiere="ADB"   onclick="filtrerParFiliere(this)">ADB</button>
-      <button class="filter-btn" data-filiere="ADC"   onclick="filtrerParFiliere(this)">ADC</button>
-      <button class="filter-btn" data-filiere="MIAGE" onclick="filtrerParFiliere(this)">MIAGE</button>
-      <button class="filter-btn" data-filiere="CCA"   onclick="filtrerParFiliere(this)">CCA</button>
-      <button class="filter-btn" data-filiere="Droit" onclick="filtrerParFiliere(this)">Droit</button>
+        <!-- Select Niveau -->
+        <div>
+          <label style="display:block; font-size:10px; font-weight:600;
+                         letter-spacing:0.14em; text-transform:uppercase;
+                         color:var(--color-text-muted); margin-bottom:6px;">
+            Niveau
+          </label>
+          <select
+            id="filtreNiveau"
+            onchange="appliquerFiltres()"
+            style="width:100%; background:white; border:1px solid var(--color-beige-border);
+                   border-radius:4px; padding:9px 12px; font-family:var(--font-body);
+                   font-size:13px; color:var(--color-text-primary); outline:none; cursor:pointer;"
+          >
+            <option value="">Tous les niveaux</option>
+            <option>L1</option>
+            <option>L2</option>
+            <option>L3</option>
+            <option>Master</option>
+            <option>BTS</option>
+          </select>
+        </div>
+
+        <!-- Select École — rempli dynamiquement depuis Supabase -->
+        <div>
+          <label style="display:block; font-size:10px; font-weight:600;
+                         letter-spacing:0.14em; text-transform:uppercase;
+                         color:var(--color-text-muted); margin-bottom:6px;">
+            École
+          </label>
+          <select
+            id="filtreEcole"
+            onchange="appliquerFiltres()"
+            style="width:100%; background:white; border:1px solid var(--color-beige-border);
+                   border-radius:4px; padding:9px 12px; font-family:var(--font-body);
+                   font-size:13px; color:var(--color-text-primary); outline:none; cursor:pointer;"
+          >
+            <option value="">Toutes les écoles</option>
+            <!-- Options chargées par index.js depuis la table ecoles -->
+          </select>
+        </div>
+
+        <!-- Select Filière — rempli dynamiquement depuis Supabase -->
+        <div>
+          <label style="display:block; font-size:10px; font-weight:600;
+                         letter-spacing:0.14em; text-transform:uppercase;
+                         color:var(--color-text-muted); margin-bottom:6px;">
+            Filière
+          </label>
+          <select
+            id="filtreFiliere"
+            onchange="appliquerFiltres()"
+            style="width:100%; background:white; border:1px solid var(--color-beige-border);
+                   border-radius:4px; padding:9px 12px; font-family:var(--font-body);
+                   font-size:13px; color:var(--color-text-primary); outline:none; cursor:pointer;"
+          >
+            <option value="">Toutes les filières</option>
+            <!-- Options chargées par index.js depuis la table filieres -->
+          </select>
+        </div>
+
+      </div>
     </div>
 
     <!-- ── En-tête section + compteur ── -->
@@ -133,19 +201,7 @@
             <label for="r_etablissement">Ton établissement *</label>
             <select id="r_etablissement" required>
               <option value="">Choisir…</option>
-              <option>IBAM</option>
-              <option>UJKZ</option>
-              <option>IST</option>
-              <option>ISTAPEM</option>
-              <option>U-AUBEN</option>
-              <option>ISTIC</option>
-              <option>IPERMIC</option>
-              <option>UV-BF</option>
-              <option>USTA</option>
-              <option>ESTA</option>
-              <option>ESC</option>
-              <option>ULB</option>
-              <option>UPG</option>
+              <!-- Options chargées dynamiquement depuis Supabase par index.js -->
               <option value="autre">Autre…</option>
             </select>
           </div>
@@ -175,13 +231,7 @@
             <label for="r_filiere">Filière *</label>
             <select id="r_filiere" required>
               <option value="">Choisir…</option>
-              <option>MGC</option>
-              <option>MID</option>
-              <option>ADB</option>
-              <option>ADC</option>
-              <option>MIAGE</option>
-              <option>CCA</option>
-              <option>Droit</option>
+              <!-- Options chargées dynamiquement depuis Supabase par index.js -->
               <option value="autre">Autre…</option>
             </select>
           </div>
@@ -199,12 +249,12 @@
 
         <!-- Fichier du cours -->
         <div class="form-group form-group--dark">
-          <label for="r_fichier">Fichier du cours — PDF ou Word (Utile pour la fiche)</label>
+          <label for="r_fichier">Fichier du cours — PDF ou Word (optionnel)</label>
           <input
             type="file"
             id="r_fichier"
             accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            style="color:rgba(255,255,255,0.7); padding:8px 0;" required
+            style="color:rgba(255,255,255,0.7); padding:8px 0;"
           />
           <span class="form-hint">Max 10 Mo · Formats acceptés : PDF, DOC, DOCX</span>
         </div>

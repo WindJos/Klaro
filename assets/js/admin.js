@@ -239,8 +239,9 @@ function afficherOnglet(id, btn) {
 
   // Chargements spécifiques à chaque onglet
   if (id === 'gerer')   chargerGestionFiches();
-  if (id === 'cours')   chargerCours();    // ★ NOUVEAU
-  if (id === 'devoirs') chargerDevoirs();  // ★ NOUVEAU
+  if (id === 'cours')   chargerCours();
+  if (id === 'devoirs') chargerDevoirs();
+  if (id === 'ecoles')  chargerEcolesAdmin(); // ★ NOUVEAU
 }
 
 window.afficherOnglet = afficherOnglet;
@@ -1057,3 +1058,282 @@ document.addEventListener('DOMContentLoaded', function() {
   verifierSession();
   console.log('[admin.js] Interface prête.');
 });
+
+
+// ═════════════════════════════════════════════════════════════
+// ★★★ SECTION 14 — ÉCOLES & FILIÈRES ★★★
+// ═════════════════════════════════════════════════════════════
+
+// Références DOM écoles & filières
+var DOM_EF = {
+  ecoleForm:    document.getElementById('ecoleForm'),
+  ecoleNom:     document.getElementById('ecoleNom'),
+  ecoleBtn:     document.getElementById('ecoleBtn'),
+  ecoleMsg:     document.getElementById('ecoleMsg'),
+  ecolesTbody:  document.getElementById('ecolesTbody'),
+  filiereForm:  document.getElementById('filiereForm'),
+  filiereNom:   document.getElementById('filiereNom'),
+  filiereBtn:   document.getElementById('filiereBtn'),
+  filiereMsg:   document.getElementById('filiereMsg'),
+  filieresTbody: document.getElementById('filieresTbody')
+};
+
+
+// ── 14a. Chargement de l'onglet ──────────
+//
+// Appelée quand l'admin clique sur "Écoles & Filières".
+// Lance les deux chargements en parallèle.
+//
+async function chargerEcolesAdmin() {
+  await Promise.all([
+    chargerListeEcoles(),
+    chargerListeFilieres()
+  ]);
+}
+
+window.chargerEcolesAdmin  = chargerEcolesAdmin;
+
+
+// ── 14b. Liste des écoles ─────────────────
+//
+// Charge toutes les écoles (actives et inactives)
+// et les affiche dans le tableau de l'onglet.
+//
+async function chargerListeEcoles() {
+  if (!DOM_EF.ecolesTbody) return;
+
+  var db = window.KlaroDB.db;
+
+  var result = await db
+    .from('ecoles')
+    .select('*')
+    .order('nom', { ascending: true });
+
+  if (result.error || !result.data) {
+    DOM_EF.ecolesTbody.innerHTML =
+      '<tr><td colspan="3" class="table-empty"><p>Erreur de chargement.</p></td></tr>';
+    return;
+  }
+
+  if (!result.data.length) {
+    DOM_EF.ecolesTbody.innerHTML =
+      '<tr><td colspan="3" class="table-empty"><p>Aucune école enregistrée.</p></td></tr>';
+    return;
+  }
+
+  DOM_EF.ecolesTbody.innerHTML = result.data.map(function(e) {
+
+    // Pill statut actif/inactif
+    var pill = e.actif
+      ? '<span class="pill pill--done">Active</span>'
+      : '<span class="pill pill--pending">Inactive</span>';
+
+    // Bouton bascule actif/inactif
+    var btnToggle = e.actif
+      ? '<button class="btn btn--sm btn--danger" ' +
+          'onclick="toggleEcole(\'' + e.id + '\', false)">' +
+          'Désactiver</button>'
+      : '<button class="btn btn--sm btn--success" ' +
+          'onclick="toggleEcole(\'' + e.id + '\', true)">' +
+          'Activer</button>';
+
+    // Bouton suppression définitive
+    var btnSuppr =
+      '<button class="btn btn--sm btn--danger" ' +
+        'onclick="supprimerEcole(\'' + e.id + '\', \'' + e.nom + '\')">' +
+        '✕</button>';
+
+    return '<tr>' +
+      '<td><div class="cell-primary">' + e.nom + '</div></td>' +
+      '<td>' + pill + '</td>' +
+      '<td><div class="btn-actions">' + btnToggle + ' ' + btnSuppr + '</div></td>' +
+    '</tr>';
+
+  }).join('');
+}
+
+window.chargerListeEcoles = chargerListeEcoles;
+
+
+// ── 14c. Ajouter une école ───────────────
+//
+// Insère un nouvel enregistrement dans la table ecoles.
+// Le nom est unique — Supabase retournera une erreur
+// si l'école existe déjà (contrainte UNIQUE sur nom).
+//
+async function ajouterEcole(e) {
+  e.preventDefault();
+
+  var nom = DOM_EF.ecoleNom.value.trim();
+  if (!nom) return;
+
+  DOM_EF.ecoleBtn.disabled = true;
+  cacherMsg(DOM_EF.ecoleMsg);
+
+  var db     = window.KlaroDB.db;
+  var result = await db.from('ecoles').insert([{ nom: nom }]);
+
+  if (result.error) {
+    // Erreur 23505 = violation unicité (école déjà existante)
+    var msg = result.error.code === '23505'
+      ? 'Cette école existe déjà.'
+      : 'Erreur : ' + result.error.message;
+    afficherMsg(DOM_EF.ecoleMsg, 'error', msg);
+  } else {
+    afficherMsg(DOM_EF.ecoleMsg, 'success', '✓ École "' + nom + '" ajoutée.');
+    DOM_EF.ecoleForm.reset();
+    await chargerListeEcoles();
+  }
+
+  DOM_EF.ecoleBtn.disabled = false;
+}
+
+if (DOM_EF.ecoleForm) {
+  DOM_EF.ecoleForm.addEventListener('submit', ajouterEcole);
+}
+
+
+// ── 14d. Activer / Désactiver une école ──
+//
+// Met à jour le champ "actif" sans supprimer l'enregistrement.
+// Une école inactive n'apparaît plus dans les filtres et
+// les formulaires du site public.
+//
+async function toggleEcole(id, actif) {
+  var db = window.KlaroDB.db;
+  await db.from('ecoles').update({ actif: actif }).eq('id', id);
+  await chargerListeEcoles();
+}
+
+window.toggleEcole = toggleEcole;
+
+
+// ── 14e. Supprimer une école ─────────────
+//
+// Suppression définitive après confirmation.
+// Attention : les fiches liées gardent leur valeur
+// d'établissement mais elle n'apparaîtra plus dans
+// les filtres.
+//
+async function supprimerEcole(id, nom) {
+  if (!confirm('Supprimer définitivement "' + nom + '" ?\n' +
+    'Les fiches liées conserveront leur valeur mais elle\n' +
+    'n\'apparaîtra plus dans les filtres.')) return;
+
+  var db = window.KlaroDB.db;
+  await db.from('ecoles').delete().eq('id', id);
+  await chargerListeEcoles();
+}
+
+window.supprimerEcole = supprimerEcole;
+
+
+// ── 14f. Liste des filières ──────────────
+async function chargerListeFilieres() {
+  if (!DOM_EF.filieresTbody) return;
+
+  var db = window.KlaroDB.db;
+
+  var result = await db
+    .from('filieres')
+    .select('*')
+    .order('nom', { ascending: true });
+
+  if (result.error || !result.data) {
+    DOM_EF.filieresTbody.innerHTML =
+      '<tr><td colspan="3" class="table-empty"><p>Erreur de chargement.</p></td></tr>';
+    return;
+  }
+
+  if (!result.data.length) {
+    DOM_EF.filieresTbody.innerHTML =
+      '<tr><td colspan="3" class="table-empty"><p>Aucune filière enregistrée.</p></td></tr>';
+    return;
+  }
+
+  DOM_EF.filieresTbody.innerHTML = result.data.map(function(f) {
+
+    var pill = f.actif
+      ? '<span class="pill pill--done">Active</span>'
+      : '<span class="pill pill--pending">Inactive</span>';
+
+    var btnToggle = f.actif
+      ? '<button class="btn btn--sm btn--danger" ' +
+          'onclick="toggleFiliere(\'' + f.id + '\', false)">' +
+          'Désactiver</button>'
+      : '<button class="btn btn--sm btn--success" ' +
+          'onclick="toggleFiliere(\'' + f.id + '\', true)">' +
+          'Activer</button>';
+
+    var btnSuppr =
+      '<button class="btn btn--sm btn--danger" ' +
+        'onclick="supprimerFiliere(\'' + f.id + '\', \'' + f.nom + '\')">' +
+        '✕</button>';
+
+    return '<tr>' +
+      '<td><div class="cell-primary">' + f.nom + '</div></td>' +
+      '<td>' + pill + '</td>' +
+      '<td><div class="btn-actions">' + btnToggle + ' ' + btnSuppr + '</div></td>' +
+    '</tr>';
+
+  }).join('');
+}
+
+window.chargerListeFilieres = chargerListeFilieres;
+
+
+// ── 14g. Ajouter une filière ─────────────
+async function ajouterFiliere(e) {
+  e.preventDefault();
+
+  var nom = DOM_EF.filiereNom.value.trim();
+  if (!nom) return;
+
+  DOM_EF.filiereBtn.disabled = true;
+  cacherMsg(DOM_EF.filiereMsg);
+
+  var db     = window.KlaroDB.db;
+  var result = await db.from('filieres').insert([{ nom: nom }]);
+
+  if (result.error) {
+    var msg = result.error.code === '23505'
+      ? 'Cette filière existe déjà.'
+      : 'Erreur : ' + result.error.message;
+    afficherMsg(DOM_EF.filiereMsg, 'error', msg);
+  } else {
+    afficherMsg(DOM_EF.filiereMsg, 'success', '✓ Filière "' + nom + '" ajoutée.');
+    DOM_EF.filiereForm.reset();
+    await chargerListeFilieres();
+  }
+
+  DOM_EF.filiereBtn.disabled = false;
+}
+
+if (DOM_EF.filiereForm) {
+  DOM_EF.filiereForm.addEventListener('submit', ajouterFiliere);
+}
+
+
+// ── 14h. Activer / Désactiver une filière ─
+async function toggleFiliere(id, actif) {
+  var db = window.KlaroDB.db;
+  await db.from('filieres').update({ actif: actif }).eq('id', id);
+  await chargerListeFilieres();
+}
+
+window.toggleFiliere = toggleFiliere;
+
+
+// ── 14i. Supprimer une filière ───────────
+async function supprimerFiliere(id, nom) {
+  if (!confirm('Supprimer définitivement "' + nom + '" ?')) return;
+  var db = window.KlaroDB.db;
+  await db.from('filieres').delete().eq('id', id);
+  await chargerListeFilieres();
+}
+
+window.supprimerFiliere = supprimerFiliere;
+
+// ═════════════════════════════════════════
+// FIN SECTION 14
+// ═════════════════════════════════════════

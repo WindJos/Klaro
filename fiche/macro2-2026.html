@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fiche Macroéconomie 2 — IS-LM &amp; Mundell-Fleming · Klaro</title>
+  <meta name="description" content="Fiche de révision Macroéconomie 2 : courbes IS-LM, économie ouverte, Mundell-Fleming, politiques budgétaire et monétaire. IBAM L2 2025–2026."/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/fiche.css"/>
+
+  <style>
+    /* ── Blocs spéciaux pour la fiche maths ── */
+    .formula-box {
+      background: var(--color-navy-light, #0f2545);
+      border: 1px solid var(--color-gold, #c9a84c);
+      border-radius: 6px;
+      padding: 18px 22px;
+      margin: 18px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: #f0e8d0;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+    .formula-box .formula-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-gold, #c9a84c);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .example-block {
+      border-left: 3px solid #4a90d9;
+      background: rgba(74,144,217,0.07);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+    .example-block .example-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4a90d9;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .correction-block {
+      border-left: 3px solid #2ecc71;
+      background: rgba(46,204,113,0.07);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+    .correction-block .correction-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #2ecc71;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .correction-block .step {
+      margin: 8px 0;
+      padding-left: 14px;
+      border-left: 2px solid rgba(46,204,113,0.3);
+    }
+    .correction-block .result {
+      margin-top: 12px;
+      font-weight: 600;
+      color: #2ecc71;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+    }
+    .graph-container {
+      margin: 22px 0;
+      background: #0a1628;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .graph-container .graph-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-gold, #c9a84c);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .graph-container svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+    .graph-legend {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .graph-legend span {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #c8d8f0;
+    }
+    .graph-legend span::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .graph-legend .leg-is::before { background: #4a90d9; }
+    .graph-legend .leg-lm::before { background: #e74c3c; }
+    .graph-legend .leg-bp::before { background: #2ecc71; }
+    .graph-legend .leg-invest::before { background: #f39c12; }
+    .graph-note {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.8rem;
+      color: #8aa8cc;
+      margin-top: 10px;
+      text-align: center;
+      font-style: italic;
+    }
+    .mecanism-chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin: 14px 0;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+    }
+    .mecanism-chain .mec-item {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      color: #e8d5a0;
+    }
+    .mecanism-chain .mec-arrow {
+      color: var(--color-gold, #c9a84c);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .policy-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+    }
+    .policy-table th {
+      background: rgba(201,168,76,0.15);
+      color: var(--color-gold, #c9a84c);
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+    .policy-table td {
+      padding: 9px 14px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #c8d8f0;
+    }
+    .policy-table td.efficace { color: #2ecc71; font-weight: 600; }
+    .policy-table td.inefficace { color: #e74c3c; font-weight: 600; }
+    .policy-table td.nuancee { color: #f39c12; font-weight: 600; }
+    .policy-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <!-- EN-TÊTE -->
+  <header class="fiche-header">
+    <div class="fiche-header__deco" aria-hidden="true"></div>
+    <div class="fiche-header__inner">
+      <div class="fiche-header__brand">
+        <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;" title="Retour à l'accueil Klaro">
+          <div class="fiche-header__brand-logo" aria-hidden="true">K</div>
+          <span class="fiche-header__brand-text">Klaro — Fiche de révision académique</span>
+        </a>
+        <a href="../index.html"
+          style="margin-left:auto;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;border:1px solid rgba(255,255,255,0.15);border-radius:3px;padding:6px 14px;transition:all 0.2s;white-space:nowrap;"
+          onmouseover="this.style.color='var(--color-gold)';this.style.borderColor='var(--color-gold)';"
+          onmouseout="this.style.color='rgba(255,255,255,0.45)';this.style.borderColor='rgba(255,255,255,0.15)';">
+          ← Accueil
+        </a>
+      </div>
+      <div class="fiche-header__tag">L2 · IBAM · Année 2025–2026</div>
+      <h1 class="fiche-header__title">Macroéconomie 2 — <em>IS-LM &amp; Mundell-Fleming</em></h1>
+      <p class="fiche-header__subtitle">Cours IBAM · Dr TRAORE INOUSSA</p>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="fiche-nav" aria-label="Navigation dans la fiche">
+    <div class="fiche-nav__inner">
+      <a class="fiche-nav__link" href="#apercu">Vue d'ensemble</a>
+      <a class="fiche-nav__link" href="#chap1">Chap. I — IS-LM</a>
+      <a class="fiche-nav__link" href="#sec-is">Courbe IS</a>
+      <a class="fiche-nav__link" href="#sec-lm">Courbe LM</a>
+      <a class="fiche-nav__link" href="#sec-islm">IS-LM &amp; Politiques</a>
+      <a class="fiche-nav__link" href="#chap2">Chap. II — Économie ouverte</a>
+    </div>
+  </nav>
+
+  <!-- BARRE D'ACTIONS -->
+  <div class="fiche-actions">
+    <div class="fiche-actions__inner">
+      <span class="fiche-actions__label">Accès rapide :</span>
+      <a class="fiche-action-btn fiche-action-btn--cours" href="../index.html" style="background:var(--color-navy-light);">
+        <span class="fiche-action-btn__icon">🏠</span>Accueil
+      </a>
+      <a class="fiche-action-btn fiche-action-btn--cours" href="#" id="btnCoursOriginal" target="_blank" rel="noopener noreferrer">
+        <span class="fiche-action-btn__icon">📄</span>Cours original
+      </a>
+      <a class="fiche-action-btn fiche-action-btn--devoirs" href="../devoirs/macro2-ibam-2026.html">
+        <span class="fiche-action-btn__icon">📝</span>Anciens devoirs corrigés
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="fiche-main">
+
+    <!-- VUE D'ENSEMBLE -->
+    <section class="overview fade-up" id="apercu">
+      <span class="section-label">Couche 1 · Plan Global</span>
+      <h2 class="overview__title">Le cours en 2 chapitres</h2>
+      <p class="overview__intro">
+        Ce cours étudie les conditions de l'équilibre macroéconomique <em>ex-ante</em> : d'abord en économie fermée à travers
+        le modèle IS-LM (Keynes), puis en économie ouverte à travers le modèle de Mundell-Fleming. On y analyse l'efficacité
+        des politiques budgétaire et monétaire selon le régime de change.
+      </p>
+      <div class="overview__grid">
+        <a class="chapter-card" href="#chap1">
+          <div class="chapter-card__num" aria-hidden="true">I</div>
+          <div class="chapter-card__tag">Économie fermée</div>
+          <div class="chapter-card__title">Équilibre IS-LM et politiques économiques</div>
+        </a>
+        <a class="chapter-card" href="#sec-is">
+          <div class="chapter-card__num" aria-hidden="true">IS</div>
+          <div class="chapter-card__tag">Marché des biens</div>
+          <div class="chapter-card__title">Construction et déplacements de la courbe IS</div>
+        </a>
+        <a class="chapter-card" href="#sec-lm">
+          <div class="chapter-card__num" aria-hidden="true">LM</div>
+          <div class="chapter-card__tag">Marché de la monnaie</div>
+          <div class="chapter-card__title">Demande de monnaie, offre et courbe LM</div>
+        </a>
+        <a class="chapter-card" href="#sec-islm">
+          <div class="chapter-card__num" aria-hidden="true">≡</div>
+          <div class="chapter-card__tag">Équilibre conjoint</div>
+          <div class="chapter-card__title">Intersection IS-LM et efficacité des politiques</div>
+        </a>
+        <a class="chapter-card" href="#chap2">
+          <div class="chapter-card__num" aria-hidden="true">II</div>
+          <div class="chapter-card__tag">Économie ouverte</div>
+          <div class="chapter-card__title">Mundell-Fleming : IS-LM-BP et régimes de change</div>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         CHAPITRE I — IS-LM
+    ══════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap1">
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">I</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Équilibre macroéconomique en économie fermée</h2>
+          <p class="chapter-header__desc">Le modèle IS-LM : marché des biens + marché de la monnaie</p>
+        </div>
+      </div>
+
+      <!-- Approche classique vs keynésienne -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">I.0 · Approche classique vs approche keynésienne — les deux visions</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>Avant d'entrer dans les maths, il faut comprendre pourquoi il existe deux grandes approches opposées de l'équilibre.</p>
+
+            <table class="data-table">
+              <thead><tr><th>Critère</th><th>Approche classique</th><th>Approche keynésienne</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Point de départ</strong></td><td>L'offre — inspirée de la loi de Say : « l'offre crée sa propre demande ».</td><td>La demande — c'est la demande effective qui détermine le niveau de production.</td></tr>
+                <tr><td><strong>Prix</strong></td><td>Flexibles : le marché s'ajuste automatiquement via les prix.</td><td>Rigides à court terme : les quantités s'ajustent, pas les prix.</td></tr>
+                <tr><td><strong>Rôle du marché</strong></td><td>Seul mécanisme d'allocation optimale des ressources.</td><td>Le marché peut rester bloqué en sous-emploi → rôle de l'État.</td></tr>
+                <tr><td><strong>Fonction de production</strong></td><td>Y = f(K, L) — offre déterminée par le capital et le travail.</td><td>Y = C + I + G — revenu déterminé par les dépenses.</td></tr>
+              </tbody>
+            </table>
+
+            <div class="def-box">
+              Ce cours suit l'approche keynésienne : le revenu d'équilibre est déterminé par la demande, et le taux d'intérêt joue un rôle central dans la coordination entre le marché des biens (IS) et le marché de la monnaie (LM).
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         SECTION IS
+    ══════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="sec-is">
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">IS</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">La courbe IS — marché des biens et services</h2>
+          <p class="chapter-header__desc">Investment = Saving : tous les couples (i, Y) qui équilibrent le marché des biens</p>
+        </div>
+      </div>
+
+      <!-- IS : construction -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS.1 · Pourquoi IS a une pente négative — la logique économique</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>L'investissement I dépend du taux d'intérêt i parce que <strong>le taux d'intérêt est le coût de l'emprunt</strong> que les entreprises contractent pour financer leurs projets. Si emprunter coûte cher (i élevé), les entreprises investissent moins. C'est la logique de base.</p>
+
+            <div class="formula-box">
+              <span class="formula-label">Fonction d'investissement</span>
+              I = I₀ – g·i &nbsp;&nbsp; avec g &gt; 0
+            </div>
+
+            <p>Ici : <strong>I₀</strong> est l'investissement autonome (ce qu'on investirait même si i = 0), <strong>g</strong> mesure la sensibilité de l'investissement au taux d'intérêt, et <strong>i</strong> est le taux d'intérêt. Le signe négatif confirme que quand i monte, I baisse.</p>
+
+            <p><strong>La chaîne de causalité qui explique la pente négative de IS :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ taux d'intérêt i</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ investissement I</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ dépense prévue D</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ revenu d'équilibre Y</span>
+            </div>
+
+            <p>En combinant la fonction d'investissement et l'équilibre keynésien (Y = C + I + G), on obtient l'équation IS. Dans un modèle bisectoriel (sans État : Y = C + I) :</p>
+
+            <div class="formula-box">
+              <span class="formula-label">Équation IS — modèle bisectoriel</span>
+              Y = (C₀ + I₀ – g·i) / (1 – c)
+            </div>
+
+            <p>Avec : <strong>c</strong> = propension marginale à consommer (0 &lt; c &lt; 1), <strong>C₀</strong> = consommation autonome, <strong>1/(1–c)</strong> = le multiplicateur keynésien.</p>
+
+            <!-- Graphique IS -->
+            <div class="graph-container">
+              <div class="graph-title">📈 Graphique IS — pente négative dans le plan (Y, i)</div>
+              <svg viewBox="0 0 420 260" width="420" height="260" aria-label="Courbe IS à pente négative">
+                <!-- Axes -->
+                <line x1="50" y1="220" x2="390" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <!-- Flèches axes -->
+                <polygon points="390,216 398,220 390,224" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <!-- Labels axes -->
+                <text x="400" y="224" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <!-- Origine -->
+                <text x="38" y="232" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- Courbe IS (ligne du haut-gauche vers bas-droite) -->
+                <line x1="80" y1="60" x2="360" y2="200" stroke="#4a90d9" stroke-width="2.5"/>
+                <text x="362" y="205" fill="#4a90d9" font-size="14" font-family="Jost,sans-serif" font-weight="600">IS</text>
+                <!-- Point i1, Y1 -->
+                <line x1="50" y1="150" x2="240" y2="150" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="240" y1="150" x2="240" y2="220" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <circle cx="240" cy="150" r="4" fill="#4a90d9"/>
+                <text x="34" y="154" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">i₁</text>
+                <text x="234" y="234" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">Y₁</text>
+                <!-- Point i2, Y2 -->
+                <line x1="50" y1="100" x2="160" y2="100" stroke="#e74c3c" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="160" y1="100" x2="160" y2="220" stroke="#e74c3c" stroke-width="1" stroke-dasharray="5,3"/>
+                <circle cx="160" cy="100" r="4" fill="#4a90d9"/>
+                <text x="34" y="104" fill="#e74c3c" font-size="11" font-family="Jost,sans-serif">i₂</text>
+                <text x="154" y="234" fill="#e74c3c" font-size="11" font-family="Jost,sans-serif">Y₂</text>
+                <!-- Flèche i hausse -->
+                <text x="55" y="130" fill="#e74c3c" font-size="10" font-family="Jost,sans-serif">↑ i</text>
+                <!-- Flèche Y baisse -->
+                <text x="185" y="215" fill="#e74c3c" font-size="10" font-family="Jost,sans-serif">↓ Y</text>
+              </svg>
+              <div class="graph-legend">
+                <span class="leg-is">Courbe IS (pente négative)</span>
+              </div>
+              <p class="graph-note">Quand le taux d'intérêt monte de i₁ à i₂, le revenu d'équilibre tombe de Y₁ à Y₂. La courbe IS relie tous ces couples (Y, i) compatibles avec l'équilibre du marché des biens.</p>
+            </div>
+
+            <p><strong>Comment tracer IS :</strong> on choisit deux valeurs de i, on calcule le Y correspondant via l'équation IS pour chacune, on place les deux points dans le plan (Y, i), et on les relie. La pente est toujours négative (descente de gauche à droite).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- IS : déplacements -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS.2 · Déplacements de IS — quand la courbe bouge (politique budgétaire)</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>La courbe IS représente une relation fixe entre i et Y <em>pour une politique budgétaire donnée</em>. Si cette politique change, toute la courbe se déplace. Voici les trois cas :</p>
+
+            <table class="data-table">
+              <thead><tr><th>Choc</th><th>Sens du déplacement</th><th>Amplitude du déplacement</th></tr></thead>
+              <tbody>
+                <tr><td>↑ Investissement autonome ΔI₀</td><td>IS se déplace vers la <strong>droite</strong></td><td>ΔI₀ / (1–c)</td></tr>
+                <tr><td>↑ Dépenses publiques ΔG</td><td>IS se déplace vers la <strong>droite</strong></td><td>ΔG / (1–c)</td></tr>
+                <tr><td>↓ Impôts (–ΔT)</td><td>IS se déplace vers la <strong>droite</strong></td><td>c·ΔT / (1–c)</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Pourquoi vers la droite ?</strong> Une hausse de G (dépenses publiques) injecte directement de la demande dans l'économie. Le multiplicateur 1/(1–c) amplifie cet effet initial : pour tout taux d'intérêt i donné, le revenu d'équilibre Y est maintenant plus élevé. Donc chaque point de IS se déplace vers la droite.</p>
+
+            <!-- Graphique déplacement IS -->
+            <div class="graph-container">
+              <div class="graph-title">📈 Déplacement de IS suite à une hausse de G</div>
+              <svg viewBox="0 0 420 260" width="420" height="260" aria-label="Déplacement IS vers la droite">
+                <line x1="50" y1="220" x2="390" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <polygon points="390,216 398,220 390,224" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <text x="400" y="224" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <text x="38" y="232" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- IS1 originale -->
+                <line x1="70" y1="55" x2="300" y2="195" stroke="#4a90d9" stroke-width="2" stroke-dasharray="6,3"/>
+                <text x="302" y="200" fill="#4a90d9" font-size="13" font-family="Jost,sans-serif">IS₁</text>
+                <!-- IS2 déplacée -->
+                <line x1="160" y1="55" x2="385" y2="195" stroke="#4a90d9" stroke-width="2.5"/>
+                <text x="368" y="200" fill="#4a90d9" font-size="13" font-family="Jost,sans-serif">IS₂</text>
+                <!-- Taux d'intérêt constant i0 -->
+                <line x1="50" y1="130" x2="385" y2="130" stroke="#c9a84c" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="30" y="134" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">i₀</text>
+                <!-- Y1 et Y2 -->
+                <circle cx="195" cy="130" r="4" fill="#4a90d9" opacity="0.6"/>
+                <circle cx="285" cy="130" r="4" fill="#4a90d9"/>
+                <line x1="195" y1="130" x2="195" y2="220" stroke="#8aa8cc" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="285" y1="130" x2="285" y2="220" stroke="#8aa8cc" stroke-width="1" stroke-dasharray="3,3"/>
+                <text x="188" y="234" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">Y₁</text>
+                <text x="278" y="234" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">Y₂</text>
+                <!-- Flèche déplacement -->
+                <path d="M 220 105 L 260 105" stroke="#c9a84c" stroke-width="1.5" fill="none" marker-end="url(#arrowGold)"/>
+                <defs>
+                  <marker id="arrowGold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#c9a84c"/>
+                  </marker>
+                </defs>
+                <text x="225" y="100" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">ΔG/(1−c)</text>
+              </svg>
+              <p class="graph-note">Pour un taux d'intérêt i₀ fixé, une hausse de G déplace le revenu d'équilibre de Y₁ à Y₂ = Y₁ + ΔG/(1−c). Toute la courbe IS glisse vers la droite du même montant.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IS : Exemple numérique -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS.3 · Exemple résolu — Déterminer l'équation IS trisectorielle</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="example-block">
+              <span class="example-title">✏️ Énoncé (extrait du cours)</span>
+              <p>Déterminer l'équation IS du modèle trisectoriel dont les données sont :</p>
+              <p><strong>C = 40 + 0,80·Yd &nbsp;|&nbsp; I = 55 – 200i &nbsp;|&nbsp; G = 20 &nbsp;|&nbsp; T = 20</strong></p>
+              <p>Dans un modèle trisectoriel avec État, le revenu disponible est Yd = Y – T. On cherche IS sous la forme Y = f(i).</p>
+            </div>
+
+            <div class="correction-block">
+              <span class="correction-title">✅ Correction détaillée pas à pas</span>
+
+              <div class="step"><strong>Étape 1 — Exprimer C en fonction de Y</strong><br/>
+              Yd = Y – T = Y – 20<br/>
+              C = 40 + 0,80·(Y – 20) = 40 + 0,80Y – 16 = <strong>24 + 0,80Y</strong></div>
+
+              <div class="step"><strong>Étape 2 — Écrire la condition d'équilibre keynésienne</strong><br/>
+              Y = C + I + G<br/>
+              Y = (24 + 0,80Y) + (55 – 200i) + 20</div>
+
+              <div class="step"><strong>Étape 3 — Regrouper et isoler Y</strong><br/>
+              Y = 24 + 0,80Y + 55 – 200i + 20<br/>
+              Y – 0,80Y = 99 – 200i<br/>
+              0,20Y = 99 – 200i</div>
+
+              <div class="step"><strong>Étape 4 — Diviser par 0,20</strong><br/>
+              Y = 99/0,20 – (200/0,20)·i</div>
+
+              <p class="result">📌 Équation IS : <strong>Y = 495 – 1 000·i</strong></p>
+              <p style="color:#8aa8cc;font-size:0.88rem;">Interprétation : le multiplicateur est 1/(1–0,8) = 5. Chaque unité de dépense autonome génère 5 unités de revenu. Quand i augmente de 0,01 (1 point), Y baisse de 10.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retenir IS -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Courbe IS</div>
+        <ul class="retenir__list">
+          <li><strong>IS = Investment-Saving :</strong> ensemble des couples (Y, i) qui équilibrent le marché des biens. Pente <em>négative</em> car i ↑ → I ↓ → Y ↓.</li>
+          <li><strong>Équation IS bisectorielle :</strong> Y = (C₀ + I₀ – g·i) / (1–c). Le multiplicateur est 1/(1–c).</li>
+          <li><strong>Déplacements :</strong> IS se déplace vers la droite si G ↑, I₀ ↑ ou T ↓. L'amplitude est ΔG/(1–c) pour une hausse de dépenses publiques.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         SECTION LM
+    ══════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="sec-lm">
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">LM</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">La courbe LM — marché de la monnaie</h2>
+          <p class="chapter-header__desc">Liquidity preference = Money supply : tous les couples (i, Y) qui équilibrent le marché monétaire</p>
+        </div>
+      </div>
+
+      <!-- LM : demande de monnaie -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">LM.1 · Les 3 motifs de demande de monnaie selon Keynes</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>Keynes se demande : pourquoi les gens conservent de l'argent liquide alors qu'ils pourraient le placer et toucher des intérêts ? Il identifie deux grandes catégories de motifs :</p>
+
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span>
+                <strong>Motif de transaction :</strong> on garde de la monnaie pour faire ses courses, payer ses fournisseurs, etc. Ce besoin est proportionnel au revenu : si Y augmente, on dépense plus, donc on a besoin de plus de liquidités. <em>Mt = kY</em> avec k &gt; 0.
+              </span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span>
+                <strong>Motif de précaution :</strong> on garde une réserve pour faire face à des dépenses imprévues (maladie, panne…). Keynes le regroupe avec le motif de transaction.
+              </span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span>
+                <strong>Motif de spéculation :</strong> on peut garder de la monnaie pour acheter des actifs (actions, obligations, immobilier) quand leurs prix sont bas et les revendre plus cher. Ce motif est fonction <em>décroissante</em> du taux d'intérêt : si i est élevé, les obligations rapportent beaucoup → on préfère les obligations à la monnaie liquide → Ms baisse. <em>Ms = D – βi</em> avec β &gt; 0.
+              </span></div>
+            </div>
+
+            <div class="formula-box">
+              <span class="formula-label">Demande de monnaie totale (Keynes)</span>
+              M<sub>D</sub> = kY + D – β·i
+            </div>
+
+            <p><strong>Pourquoi la courbe de demande de monnaie est-elle à pente négative ?</strong> Parce que le motif de spéculation prédomine selon Keynes : quand le taux d'intérêt monte, les gens préfèrent placer leur argent en actifs financiers plutôt que de le garder liquide. La demande totale de monnaie baisse donc quand i augmente.</p>
+
+            <p><strong>Le paramètre k et la vitesse de circulation :</strong> k = 1/V, où V mesure combien de fois la masse monétaire a été utilisée pour acheter l'ensemble de la production. Cela donne l'équation quantitative de la monnaie : <strong>MV = Y</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LM : construction -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">LM.2 · Pourquoi LM a une pente positive — construction de la courbe</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>L'offre de monnaie Mo est fixée par la Banque Centrale. C'est une variable <strong>exogène</strong> : elle ne dépend pas du taux d'intérêt. Graphiquement, c'est une verticale dans le plan (M, i).</p>
+
+            <p>L'équilibre sur le marché monétaire est atteint quand <strong>Mo = MD</strong>, soit quand l'offre égale la demande. La courbe LM regroupe tous les couples (Y, i) pour lesquels cet équilibre est réalisé.</p>
+
+            <p><strong>La chaîne de causalité qui explique la pente positive de LM :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ revenu Y</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ demande de transaction Mt</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">Demande globale MD &gt; Mo fixée</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ taux d'intérêt i* pour rétablir l'équilibre</span>
+            </div>
+
+            <p>Donc : plus Y est élevé, plus i doit être élevé pour que le marché monétaire soit en équilibre → LM est croissante.</p>
+
+            <p><strong>Dérivation algébrique de l'équation LM :</strong> On pose Mo = MD :</p>
+            <p style="padding-left:1rem;">M = kY + D – β·i<br/>β·i = kY + D – M<br/>i = (kY + D – M) / β</p>
+
+            <div class="formula-box">
+              <span class="formula-label">Équation LM</span>
+              Y = (M – D) / k + (β / k)·i
+            </div>
+
+            <!-- Graphique LM -->
+            <div class="graph-container">
+              <div class="graph-title">📈 Graphique LM — pente positive dans le plan (Y, i)</div>
+              <svg viewBox="0 0 420 260" width="420" height="260" aria-label="Courbe LM à pente positive">
+                <line x1="50" y1="220" x2="390" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="220" stroke="#4a6080" stroke-width="1.5"/>
+                <polygon points="390,216 398,220 390,224" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <text x="400" y="224" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <text x="38" y="232" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- Courbe LM (croissante) -->
+                <line x1="80" y1="200" x2="360" y2="50" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="362" y="55" fill="#e74c3c" font-size="14" font-family="Jost,sans-serif" font-weight="600">LM</text>
+                <!-- Point i1, Y1 -->
+                <line x1="50" y1="160" x2="175" y2="160" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="175" y1="160" x2="175" y2="220" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <circle cx="175" cy="160" r="4" fill="#e74c3c"/>
+                <text x="34" y="164" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">i₁</text>
+                <text x="169" y="234" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">Y₁</text>
+                <!-- Point i2, Y2 -->
+                <line x1="50" y1="100" x2="280" y2="100" stroke="#f39c12" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="280" y1="100" x2="280" y2="220" stroke="#f39c12" stroke-width="1" stroke-dasharray="5,3"/>
+                <circle cx="280" cy="100" r="4" fill="#e74c3c"/>
+                <text x="34" y="104" fill="#f39c12" font-size="11" font-family="Jost,sans-serif">i₂</text>
+                <text x="274" y="234" fill="#f39c12" font-size="11" font-family="Jost,sans-serif">Y₂</text>
+                <!-- Annotation -->
+                <text x="290" y="145" fill="#8aa8cc" font-size="10" font-family="Jost,sans-serif">↑ Y → ↑ Mt</text>
+                <text x="290" y="158" fill="#8aa8cc" font-size="10" font-family="Jost,sans-serif">→ ↑ i*</text>
+              </svg>
+              <div class="graph-legend">
+                <span class="leg-lm">Courbe LM (pente positive)</span>
+              </div>
+              <p class="graph-note">Quand le revenu augmente de Y₁ à Y₂, la demande de monnaie pour transaction augmente. Pour que l'offre fixe Mo reste en équilibre avec cette demande plus forte, le taux d'intérêt doit monter de i₁ à i₂.</p>
+            </div>
+
+            <p><strong>Déplacement de LM :</strong> c'est la politique monétaire qui fait bouger LM. Une hausse de Mo (politique expansionniste) déplace LM vers la droite → le taux d'intérêt baisse pour tout niveau de revenu Y donné.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LM : Exemple numérique -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">LM.3 · Exemple résolu — Déterminer l'équation LM</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="example-block">
+              <span class="example-title">✏️ Énoncé (extrait du cours)</span>
+              <p>Données : <strong>Mo = 200 &nbsp;|&nbsp; Ms = 50 – 200i &nbsp;|&nbsp; Mt = 0,25Y</strong></p>
+              <p>Déterminer l'équation LM.</p>
+              <p><em>On identifie ici : k = 0,25 (coeff de transaction), D = 50 et β = 200 (pour la spéculation).</em></p>
+            </div>
+
+            <div class="correction-block">
+              <span class="correction-title">✅ Correction détaillée pas à pas</span>
+
+              <div class="step"><strong>Étape 1 — Écrire la demande totale de monnaie MD</strong><br/>
+              MD = Mt + Ms = 0,25Y + 50 – 200i</div>
+
+              <div class="step"><strong>Étape 2 — Poser la condition d'équilibre Mo = MD</strong><br/>
+              200 = 0,25Y + 50 – 200i</div>
+
+              <div class="step"><strong>Étape 3 — Isoler Y</strong><br/>
+              0,25Y = 200 – 50 + 200i<br/>
+              0,25Y = 150 + 200i</div>
+
+              <div class="step"><strong>Étape 4 — Diviser par 0,25</strong><br/>
+              Y = 150/0,25 + (200/0,25)·i</div>
+
+              <p class="result">📌 Équation LM : <strong>Y = 600 + 800·i</strong></p>
+              <p style="color:#8aa8cc;font-size:0.88rem;">Interprétation : pente positive (800 &gt; 0) ✓. Quand i augmente de 0,01, Y augmente de 8. Si i = 0 : Y = 600 (revenu minimum compatible avec l'équilibre monétaire).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retenir LM -->
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Courbe LM</div>
+        <ul class="retenir__list">
+          <li><strong>2 motifs de demande de monnaie :</strong> transaction (Mt = kY, ↑ avec Y) + spéculation (Ms = D – βi, ↓ avec i). Total : MD = kY + D – βi.</li>
+          <li><strong>Offre Mo :</strong> fixée exogènement par la Banque Centrale. Verticale dans le plan (M, i).</li>
+          <li><strong>LM a une pente positive :</strong> Y ↑ → Mt ↑ → déséquilibre monétaire → i doit monter pour rétablir l'équilibre.</li>
+          <li><strong>Équation LM :</strong> Y = (M–D)/k + (β/k)·i. LM se déplace vers la droite si Mo ↑ (politique monétaire expansionniste).</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         SECTION IS-LM CONJOINT
+    ══════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="sec-islm">
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">≡</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Équilibre conjoint IS-LM et politiques économiques</h2>
+          <p class="chapter-header__desc">Intersection IS-LM = équilibre simultané sur les deux marchés</p>
+        </div>
+      </div>
+
+      <!-- IS-LM : équilibre -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS-LM.1 · L'équilibre simultané — trouver Y* et i* à l'intersection</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>L'économie est en équilibre quand <strong>les deux marchés sont simultanément en équilibre</strong> : le marché des biens (IS) ET le marché de la monnaie (LM). Ce point unique est l'intersection des deux courbes dans le plan (Y, i).</p>
+
+            <div class="def-box">
+              À l'intersection IS = LM : la dépense effective = dépense prévue (équilibre biens) ET demande d'encaisses = offre d'encaisses (équilibre monétaire). On y trouve Y* et i* simultanément.
+            </div>
+
+            <!-- Graphique IS-LM -->
+            <div class="graph-container">
+              <div class="graph-title">📈 Équilibre IS-LM — intersection des deux courbes</div>
+              <svg viewBox="0 0 420 280" width="420" height="280" aria-label="Équilibre IS-LM">
+                <line x1="50" y1="240" x2="390" y2="240" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="240" stroke="#4a6080" stroke-width="1.5"/>
+                <polygon points="390,236 398,240 390,244" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <text x="400" y="244" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <text x="38" y="252" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- IS : du haut gauche au bas droite -->
+                <line x1="80" y1="60" x2="370" y2="215" stroke="#4a90d9" stroke-width="2.5"/>
+                <text x="372" y="220" fill="#4a90d9" font-size="14" font-family="Jost,sans-serif" font-weight="600">IS</text>
+                <!-- LM : du bas gauche au haut droite -->
+                <line x1="80" y1="215" x2="370" y2="60" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="372" y="65" fill="#e74c3c" font-size="14" font-family="Jost,sans-serif" font-weight="600">LM</text>
+                <!-- Point d'équilibre E = intersection (approximatif : milieu des deux diagonales) -->
+                <circle cx="225" cy="137" r="6" fill="#c9a84c"/>
+                <text x="232" y="132" fill="#c9a84c" font-size="12" font-family="Jost,sans-serif" font-weight="600">E</text>
+                <!-- Pointillés vers les axes -->
+                <line x1="50" y1="137" x2="225" y2="137" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="225" y1="137" x2="225" y2="240" stroke="#c9a84c" stroke-width="1" stroke-dasharray="5,3"/>
+                <text x="30" y="141" fill="#c9a84c" font-size="12" font-family="Jost,sans-serif">i*</text>
+                <text x="218" y="254" fill="#c9a84c" font-size="12" font-family="Jost,sans-serif">Y*</text>
+              </svg>
+              <div class="graph-legend">
+                <span class="leg-is">Courbe IS</span>
+                <span class="leg-lm">Courbe LM</span>
+              </div>
+              <p class="graph-note">Le point E est l'unique point où les deux marchés sont simultanément en équilibre. Il donne le revenu d'équilibre Y* et le taux d'intérêt d'équilibre i*.</p>
+            </div>
+
+            <p><strong>Méthode algébrique :</strong> on résout le système d'équations IS = LM en égalisant les deux expressions de Y (ou de i), puis on substitue pour trouver l'autre variable.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- IS-LM : Exemple numérique -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS-LM.2 · Exemple résolu — Trouver Y* et i* à l'intersection IS-LM</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <div class="example-block">
+              <span class="example-title">✏️ Énoncé</span>
+              <p>On reprend les résultats des deux exemples précédents :</p>
+              <p><strong>IS : Y = 495 – 1 000·i</strong> (modèle trisectoriel, c = 0,8, T = G = 20)</p>
+              <p><strong>LM : Y = 600 + 800·i</strong> (Mo = 200, Mt = 0,25Y, Ms = 50 – 200i)</p>
+              <p>Déterminer le revenu d'équilibre Y* et le taux d'intérêt d'équilibre i*.</p>
+            </div>
+
+            <div class="correction-block">
+              <span class="correction-title">✅ Correction détaillée pas à pas</span>
+
+              <div class="step"><strong>Étape 1 — Poser IS = LM (même Y des deux côtés)</strong><br/>
+              495 – 1 000·i = 600 + 800·i</div>
+
+              <div class="step"><strong>Étape 2 — Regrouper les i et les constantes</strong><br/>
+              495 – 600 = 800·i + 1 000·i<br/>
+              –105 = 1 800·i</div>
+
+              <div class="step"><strong>Étape 3 — Résoudre pour i</strong><br/>
+              i* = –105 / 1 800 ≈ –0,0583<br/>
+              <em>Attention : un taux négatif est économiquement inhabituel. Dans un exercice réel, vérifier les données. Ici c'est le résultat mécanique du cours — on continue pour illustrer la méthode.</em></div>
+
+              <div class="step"><strong>Étape 4 — Substituer i* dans IS (ou LM) pour trouver Y*</strong><br/>
+              Dans IS : Y* = 495 – 1 000 × (–0,0583) = 495 + 58,3 = <strong>553,3</strong><br/>
+              Vérification dans LM : Y* = 600 + 800 × (–0,0583) = 600 – 46,67 = 553,3 ✓</div>
+
+              <p class="result">📌 Équilibre IS-LM : <strong>Y* ≈ 553,3 &nbsp;&nbsp;|&nbsp;&nbsp; i* ≈ –5,83%</strong></p>
+              <p style="color:#8aa8cc;font-size:0.88rem;"><strong>La méthode à retenir :</strong> (1) égaliser IS et LM, (2) isoler i, (3) substituer dans l'une des équations pour Y. Toujours vérifier en substituant dans l'autre équation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IS-LM : Politiques -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">IS-LM.3 · Efficacité des politiques budgétaire et monétaire</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+
+            <p><strong>Politique budgétaire expansionniste (hausse de G) :</strong> IS se déplace vers la droite, LM reste fixe. L'équilibre passe de A à B. Y augmente ET i augmente. Mais attention : la hausse de i réduit l'investissement privé (effet d'éviction). Le revenu augmente moins que le multiplicateur seul ne le laisserait penser (Y₂ &lt; Y₃).</p>
+
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ G</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">IS → droite</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ Y et ↑ i</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ i freine I</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">Y &lt; ΔG/(1-c)</span>
+            </div>
+
+            <p><strong>Politique monétaire expansionniste (hausse de Mo) :</strong> LM se déplace vers la droite (ou le bas), IS reste fixe. L'équilibre passe de A à B. Y augmente ET i diminue. La baisse de i stimule l'investissement → mécanisme de transmission monétaire.</p>
+
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ Mo</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">LM → droite</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ i</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ I (investissement)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ Y</span>
+            </div>
+
+            <p><strong>Interaction entre les deux politiques — cas hausse des impôts T :</strong></p>
+            <table class="data-table">
+              <thead><tr><th>Objectif de la Banque Centrale</th><th>Action de la BC</th><th>Effet sur i</th><th>Effet sur Y</th></tr></thead>
+              <tbody>
+                <tr><td>Maintenir Mo constant</td><td>Ne fait rien → LM fixe</td><td>↓ i</td><td>↓ Y (récession)</td></tr>
+                <tr><td>Maintenir i constant</td><td>Réduit Mo → LM ↑ gauche</td><td>Stable</td><td>↓↓ Y (forte récession)</td></tr>
+                <tr><td>Maintenir Y constant</td><td>Hausse Mo → LM → droite</td><td>↓↓ i (forte baisse)</td><td>Stable</td></tr>
+              </tbody>
+            </table>
+            <p style="color:#8aa8cc;font-size:0.85rem;">Leçon : l'impact d'une politique budgétaire dépend de la réaction de la Banque Centrale. Les deux politiques interagissent — leur combinaison détermine le résultat final.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz IS-LM -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre I — IS-LM</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. La courbe IS a une pente négative parce que :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Quand le revenu augmente, le taux d'intérêt doit baisser pour maintenir l'équilibre monétaire.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Quand le taux d'intérêt augmente, l'investissement diminue, ce qui réduit la demande et donc le revenu d'équilibre.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> La consommation est une fonction décroissante du taux d'intérêt.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. Avec C = 20 + 0,75Y et I = 80 – 100i, l'équation IS bisectorielle est :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Y = 400 – 200i</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Y = 400 – 400i</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Y = 300 – 100i</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. La courbe LM a une pente positive parce que :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Quand le taux d'intérêt monte, l'offre de monnaie augmente automatiquement.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Quand le revenu augmente, la demande de monnaie pour transaction augmente, ce qui nécessite un taux d'intérêt plus élevé pour maintenir l'équilibre entre une offre fixe et une demande croissante.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> La demande de spéculation est une fonction croissante du revenu.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. Qu'est-ce qui fait déplacer la courbe LM vers la droite ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Une hausse des dépenses publiques G.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Une hausse de l'offre de monnaie Mo décidée par la Banque Centrale (politique monétaire expansionniste).</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Une baisse du taux d'intérêt i.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. Lors d'une politique budgétaire expansionniste (hausse de G) en modèle IS-LM, pourquoi le revenu augmente-t-il moins que ΔG/(1–c) ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Parce que la Banque Centrale réduit Mo en réponse à la politique budgétaire.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Parce que la hausse de G pousse i à la hausse, ce qui réduit l'investissement privé — un effet d'éviction partiel qui atténue l'impact total sur Y.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Parce que les ménages épargnent toute la hausse de revenu sans la consommer.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — IS-LM conjoint</div>
+        <ul class="retenir__list">
+          <li><strong>Équilibre IS-LM :</strong> point d'intersection des deux courbes → Y* et i* d'équilibre simultané sur les deux marchés. Méthode : égaliser IS = LM algébriquement.</li>
+          <li><strong>Politique budgétaire :</strong> déplace IS → Y ↑ ET i ↑. L'effet d'éviction sur I atténue la hausse de Y (Y₂ &lt; Y₃ = ΔG/(1–c)).</li>
+          <li><strong>Politique monétaire :</strong> déplace LM → i ↓ ET Y ↑. Mécanisme de transmission : ↓i → ↑I → ↑Y.</li>
+          <li><strong>Interaction :</strong> l'effet d'une politique budgétaire dépend de la réaction de la Banque Centrale (objectif : Mo fixe, i fixe, ou Y fixe).</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════
+         CHAPITRE II — ÉCONOMIE OUVERTE
+    ══════════════════════════════════════════ -->
+    <section class="chapter-section fade-up" id="chap2">
+      <div class="chapter-header">
+        <div class="chapter-header__num" aria-hidden="true">II</div>
+        <div class="chapter-header__text">
+          <h2 class="chapter-header__title">Équilibre en économie ouverte — Mundell-Fleming</h2>
+          <p class="chapter-header__desc">Modèle IS-LM-BP : Mundell (1963) &amp; Fleming (1962) — court terme, prix fixes</p>
+        </div>
+      </div>
+
+      <!-- BP : construction -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.1 · Le cadre comptable — BC, MC et Balance des Paiements</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>En économie ouverte, l'équilibre ne se résume plus au marché des biens et à la monnaie. Il faut aussi tenir compte des échanges avec l'extérieur. On introduit trois notions clés :</p>
+
+            <div class="formula-box">
+              <span class="formula-label">Équilibre des biens en économie ouverte</span>
+              Y = C + I + G + (X – M) = C + I + G + BC
+            </div>
+
+            <table class="data-table">
+              <thead><tr><th>Concept</th><th>Formule</th><th>Signification</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Balance Commerciale (BC)</strong></td><td>BC = X – M</td><td>BC &gt; 0 : excédent (X &gt; M) · BC &lt; 0 : déficit (X &lt; M)</td></tr>
+                <tr><td><strong>Mouvements de Capitaux (MC)</strong></td><td>MC = Ep – Pp</td><td>MC &gt; 0 : entrée nette de capitaux (Ep &gt; Pp) · MC &lt; 0 : sortie nette</td></tr>
+                <tr><td><strong>Balance des Paiements (BP)</strong></td><td>BP = BC + MC</td><td>BP = 0 à l'équilibre macroéconomique externe (ΔR = 0)</td></tr>
+                <tr><td><strong>Réserves officielles (R)</strong></td><td>ΔR = Pb – Eb</td><td>ΔR = BC + MC (variation des réserves de change)</td></tr>
+                <tr><td><strong>Masse monétaire (M)</strong></td><td>M = D + R</td><td>D = crédit interne (BC) · R = réserves de change</td></tr>
+              </tbody>
+            </table>
+
+            <p><strong>Ce qui change avec l'ouverture :</strong> la masse monétaire M n'est plus seulement contrôlée par la BC via D. Elle dépend aussi des réserves R, elles-mêmes déterminées par l'état de la BP. C'est pourquoi la politique monétaire perd de son autonomie en change fixe.</p>
+
+            <p><strong>Les 3 facteurs qui déterminent la BC :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Le taux de change réel RER = e·(p*/p) :</strong> mesure la compétitivité. RER ↑ (dépréciation) → les biens domestiques moins chers → X ↑ et M ↓ → BC ↑.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Le revenu intérieur Y :</strong> M = M(Y), M'(Y) &gt; 0. Si Y augmente, les importations augmentent → BC se dégrade.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>Le revenu étranger Y* :</strong> X = X(Y*), X'(Y*) &gt; 0. Si Y* augmente, les étrangers achètent plus de nos produits → X ↑ → BC s'améliore.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BP : courbe -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.2 · La courbe BP — pente positive et mobilité des capitaux</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>La courbe BP représente tous les couples (Y, i) pour lesquels la Balance des Paiements est en équilibre, soit BC + MC = 0.</p>
+
+            <div class="formula-box">
+              <span class="formula-label">Condition d'équilibre externe</span>
+              B(e, Y, Y*) + K(i – i*) = 0 &nbsp; avec K' &gt; 0
+            </div>
+
+            <p>Ici, K mesure la sensibilité des mouvements de capitaux au différentiel de taux d'intérêt (i – i*). MC = K(i – i*) : si notre taux i est supérieur au taux étranger i*, des capitaux entrent dans le pays.</p>
+
+            <p><strong>Pourquoi BP a une pente positive ?</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ Y</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ M (importations)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ BC (déficit commercial)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">Pour maintenir BP = 0, il faut ↑ MC</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ i pour attirer capitaux</span>
+            </div>
+
+            <!-- Graphique BP avec zones -->
+            <div class="graph-container">
+              <div class="graph-title">📈 Courbe BP et mobilité des capitaux</div>
+              <svg viewBox="0 0 420 280" width="420" height="280" aria-label="Courbe BP et mobilité des capitaux">
+                <line x1="50" y1="250" x2="390" y2="250" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="250" stroke="#4a6080" stroke-width="1.5"/>
+                <polygon points="390,246 398,250 390,254" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <text x="400" y="254" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <text x="38" y="262" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- Zones colorées -->
+                <polygon points="50,20 230,160 50,160" fill="rgba(46,204,113,0.07)"/>
+                <polygon points="230,160 390,250 390,160" fill="rgba(231,76,60,0.07)"/>
+                <!-- BP normale (pente modérée) -->
+                <line x1="80" y1="220" x2="370" y2="40" stroke="#2ecc71" stroke-width="2.5"/>
+                <text x="372" y="45" fill="#2ecc71" font-size="13" font-family="Jost,sans-serif" font-weight="600">BP</text>
+                <!-- BP parfaite mobilité (horizontale) -->
+                <line x1="50" y1="150" x2="390" y2="150" stroke="#2ecc71" stroke-width="1.5" stroke-dasharray="8,4"/>
+                <text x="370" y="145" fill="#2ecc71" font-size="12" font-family="Jost,sans-serif">BP' (K→∞)</text>
+                <text x="30" y="154" fill="#2ecc71" font-size="11" font-family="Jost,sans-serif">i*</text>
+                <!-- Labels zones -->
+                <text x="70" y="110" fill="#2ecc71" font-size="11" font-family="Jost,sans-serif">BC+MC &gt; 0</text>
+                <text x="70" y="125" fill="#2ecc71" font-size="10" font-family="Jost,sans-serif">(BP excédent)</text>
+                <text x="270" y="210" fill="#e74c3c" font-size="11" font-family="Jost,sans-serif">BC+MC &lt; 0</text>
+                <text x="270" y="225" fill="#e74c3c" font-size="10" font-family="Jost,sans-serif">(BP déficit)</text>
+              </svg>
+              <div class="graph-legend">
+                <span class="leg-bp">BP normale (mobilité imparfaite)</span>
+                <span style="color:#2ecc71;font-size:0.78rem;">- - - BP' parfaite mobilité (horizontale)</span>
+              </div>
+              <p class="graph-note">À gauche de BP : i élevé et Y faible → BC+MC &gt; 0 (excédent). À droite de BP : i bas et Y fort → BC+MC &lt; 0 (déficit). Si K→∞ (parfaite mobilité), BP devient horizontale à i = i*.</p>
+            </div>
+
+            <p><strong>Déplacements de BP :</strong></p>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>↑ e (dépréciation de la monnaie) :</strong> améliore la compétitivité → BC ↑ → BP se déplace vers la droite.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>↑ Y* (hausse du revenu étranger) :</strong> X ↑ → BC ↑ → BP vers la droite.</span></div>
+              <div class="key-point"><div class="key-point__dot"></div><span><strong>↓ i* (baisse du taux étranger) :</strong> entrée nette de capitaux → MC ↑ → BP vers la droite.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Politiques en change fixe -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.3 · Politiques en régime de change fixe — IS-LM-BP</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>En change fixe, la Banque Centrale s'engage à maintenir la parité du taux de change. Pour cela, elle intervient sur le marché des changes en achetant ou vendant des devises. Cette contrainte rend la masse monétaire <strong>endogène</strong> (elle suit les réserves, pas les décisions de la BC).</p>
+
+            <p><strong>a) Politique monétaire expansionniste — INEFFICACE :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ Mo (open market)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">LM → droite (équilibre B)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ i, B à droite de BP</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">BP déficitaire → pression ↓ sur e</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">BC vend devises → ↓ R → ↓ Mo</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">LM revient à gauche (A)</span>
+            </div>
+            <p>Résultat : on revient au point de départ A. La politique monétaire est <strong>neutralisée</strong> par la contrainte de change.</p>
+
+            <p><strong>b) Politique budgétaire expansionniste — EFFICACE :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ G</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">IS → droite (équilibre B)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ i, B à gauche de BP</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">BP excédentaire → ↑ e</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">BC achète devises → ↑ R → ↑ Mo</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">LM → droite (équilibre C)</span>
+            </div>
+            <p>Résultat : C est un nouvel équilibre avec Y plus élevé. L'afflux de capitaux stimule la masse monétaire automatiquement, amplifiant l'effet budgétaire.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Politiques en change flexible -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.4 · Politiques en régime de change flexible — IS-LM-BP</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>En change flexible, la BC n'intervient pas → ΔR = 0 → BP s'ajuste par les variations du taux de change e. On suppose ici la parfaite mobilité des capitaux (BP horizontale à i = i*).</p>
+
+            <p><strong>a) Politique monétaire — EFFICACE :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ Mo</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">LM → droite (B)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ i &lt; i*</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">Sortie capitaux → ↑ e (dépréciation)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↑ compétitivité → ↑ BC</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">IS → droite (C) → ↑ Y</span>
+            </div>
+
+            <p><strong>b) Politique budgétaire — INEFFICACE (parfaite mobilité) :</strong></p>
+            <div class="mecanism-chain">
+              <span class="mec-item">↑ G</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">IS → droite (B) avec i &gt; i*</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">Entrée capitaux → ↓ e (appréciation)</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">↓ compétitivité → ↓ BC</span>
+              <span class="mec-arrow">→</span>
+              <span class="mec-item">IS revient à gauche (A)</span>
+            </div>
+            <p>L'appréciation de la monnaie annule exactement l'effet de la hausse de G via la perte de compétitivité. On revient au point A. C'est l'<strong>effet d'éviction par le taux de change</strong>.</p>
+
+            <!-- Graphique IS-LM-BP change flexible -->
+            <div class="graph-container">
+              <div class="graph-title">📈 IS-LM-BP en change flexible — parfaite mobilité (BP horizontale)</div>
+              <svg viewBox="0 0 420 280" width="420" height="280" aria-label="IS-LM-BP change flexible">
+                <line x1="50" y1="250" x2="390" y2="250" stroke="#4a6080" stroke-width="1.5"/>
+                <line x1="50" y1="20" x2="50" y2="250" stroke="#4a6080" stroke-width="1.5"/>
+                <polygon points="390,246 398,250 390,254" fill="#4a6080"/>
+                <polygon points="46,20 50,12 54,20" fill="#4a6080"/>
+                <text x="400" y="254" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">Y</text>
+                <text x="36" y="16" fill="#8aa8cc" font-size="13" font-family="Jost,sans-serif">i</text>
+                <text x="38" y="262" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">0</text>
+                <!-- BP horizontale à i* -->
+                <line x1="50" y1="140" x2="390" y2="140" stroke="#2ecc71" stroke-width="2" stroke-dasharray="8,4"/>
+                <text x="370" y="135" fill="#2ecc71" font-size="13" font-family="Jost,sans-serif">BP (i=i*)</text>
+                <text x="30" y="144" fill="#2ecc71" font-size="11" font-family="Jost,sans-serif">i*</text>
+                <!-- IS originale -->
+                <line x1="80" y1="60" x2="300" y2="210" stroke="#4a90d9" stroke-width="2" stroke-dasharray="5,3"/>
+                <text x="302" y="215" fill="#4a90d9" font-size="12" font-family="Jost,sans-serif">IS</text>
+                <!-- IS' (PM expansionniste) -->
+                <line x1="180" y1="60" x2="390" y2="195" stroke="#4a90d9" stroke-width="2.5"/>
+                <text x="368" y="195" fill="#4a90d9" font-size="12" font-family="Jost,sans-serif">IS'</text>
+                <!-- LM originale -->
+                <line x1="80" y1="210" x2="300" y2="60" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,3"/>
+                <text x="302" y="65" fill="#e74c3c" font-size="12" font-family="Jost,sans-serif">LM</text>
+                <!-- LM' (après PM) -->
+                <line x1="160" y1="210" x2="380" y2="60" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="360" y="65" fill="#e74c3c" font-size="12" font-family="Jost,sans-serif">LM'</text>
+                <!-- Point A (intersection IS, LM, BP) -->
+                <circle cx="185" cy="140" r="6" fill="#c9a84c"/>
+                <text x="170" y="132" fill="#c9a84c" font-size="12" font-family="Jost,sans-serif" font-weight="600">A</text>
+                <!-- Point B (intersection IS', LM → bas) -->
+                <circle cx="270" cy="116" r="5" fill="#f39c12" opacity="0.8"/>
+                <text x="274" y="113" fill="#f39c12" font-size="11" font-family="Jost,sans-serif">B</text>
+                <!-- Point C (intersection IS', LM', BP) -->
+                <circle cx="290" cy="140" r="6" fill="#c9a84c"/>
+                <text x="295" y="133" fill="#c9a84c" font-size="12" font-family="Jost,sans-serif" font-weight="600">C</text>
+                <!-- YPE -->
+                <line x1="290" y1="140" x2="290" y2="250" stroke="#c9a84c" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="283" y="264" fill="#c9a84c" font-size="11" font-family="Jost,sans-serif">Y<tspan font-size="9" dy="2">PE</tspan></text>
+                <line x1="185" y1="140" x2="185" y2="250" stroke="#8aa8cc" stroke-width="1" stroke-dasharray="3,3"/>
+                <text x="178" y="264" fill="#8aa8cc" font-size="11" font-family="Jost,sans-serif">Y<tspan font-size="9" dy="2">A</tspan></text>
+                <!-- Flèche (1) PM expansionniste -->
+                <text x="60" y="185" fill="#c9a84c" font-size="10" font-family="Jost,sans-serif">(1) ↑Mo → LM'</text>
+                <!-- Flèche (2) dépréciation → IS' -->
+                <text x="300" y="235" fill="#c9a84c" font-size="10" font-family="Jost,sans-serif">(2) ↓e → IS'</text>
+              </svg>
+              <div class="graph-legend">
+                <span class="leg-is">IS / IS'</span>
+                <span class="leg-lm">LM / LM'</span>
+                <span class="leg-bp">BP = i*</span>
+              </div>
+              <p class="graph-note">PM expansionniste en change flexible : (1) LM se déplace vers LM' → i &lt; i* → sorties de capitaux → dépréciation e ↑. (2) La dépréciation améliore la compétitivité → IS se déplace vers IS'. Nouvel équilibre en C avec Y plus élevé que A.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tableau de synthèse -->
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+          <span class="accordion__title">II.5 · Tableau de synthèse — efficacité des politiques selon le régime de change</span>
+          <span class="accordion__icon" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M5 1v8M1 5h8"/></svg></span>
+        </button>
+        <div class="accordion__body">
+          <div class="content-block">
+            <p>Ce tableau résume l'ensemble des résultats du modèle Mundell-Fleming :</p>
+
+            <table class="policy-table">
+              <thead>
+                <tr><th>Politique</th><th>Change fixe</th><th>Change flexible<br/>(imparfaite mobilité)</th><th>Change flexible<br/>(parfaite mobilité)</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Relance monétaire (↑ Mo)</strong></td>
+                  <td class="inefficace">❌ Inefficace<br/><small>LM revient à A via ↓R</small></td>
+                  <td class="efficace">✅ Efficace<br/><small>↓i → ↑e → ↑BC → ↑Y</small></td>
+                  <td class="efficace">✅ Efficace<br/><small>Même mécanisme, amplifié</small></td>
+                </tr>
+                <tr>
+                  <td><strong>Relance budgétaire (↑ G)</strong></td>
+                  <td class="efficace">✅ Efficace<br/><small>↑i → BP excédent → ↑R → ↑Mo → LM droite</small></td>
+                  <td class="nuancee">⚠️ Nuancée<br/><small>Efficace mais atténuée par ↓e</small></td>
+                  <td class="inefficace">❌ Inefficace<br/><small>↑i → entrée K → ↓e → ↓BC annule ↑G</small></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="def-box">
+              <strong>La règle de Mundell :</strong> en change fixe, la politique budgétaire est efficace, la politique monétaire est inefficace. En change flexible avec parfaite mobilité, c'est l'inverse. L'efficacité des politiques dépend du régime de change ET du degré de mobilité des capitaux.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Chap II -->
+      <div class="quiz">
+        <div class="quiz__header">
+          <div class="quiz__header-icon" aria-hidden="true">?</div>
+          <span class="quiz__header-label">Quiz de vérification · Chapitre II — Économie ouverte</span>
+        </div>
+        <div class="quiz__questions">
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">1. Au Burkina Faso (zone FCFA), si 1$ = 600 FCFA aujourd'hui contre 550 FCFA il y a 6 mois, cela signifie que le FCFA s'est :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Apprécié — il faut moins de FCFA pour un dollar.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Déprécié — il faut plus de FCFA pour un dollar, ce qui signifie une hausse du taux de change nominal e.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Stabilisé — une variation de 50 FCFA n'est pas significative.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">2. La Balance des Paiements est définie dans le cours comme :</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> La différence entre les exportations et les importations uniquement.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> BP = BC + MC, la somme de la balance commerciale et des mouvements nets de capitaux. Elle est toujours en équilibre comptable ; l'écart est comblé par les réserves officielles de change ΔR.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> L'ensemble des dépenses publiques du gouvernement au niveau international.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">3. Pourquoi la courbe BP a-t-elle une pente positive dans le plan (Y, i) ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Parce que plus le revenu est élevé, moins la BC importe de biens étrangers.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Parce que la hausse de Y détériore la BC (↑ importations). Pour que BP = 0, les MC doivent compenser, ce qui nécessite un i plus élevé pour attirer des capitaux étrangers.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Parce que la Banque Centrale fixe i proportionnellement au revenu national.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">4. En change fixe, pourquoi la politique monétaire expansionniste est-elle inefficace ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Parce que les ménages n'utilisent pas la monnaie supplémentaire pour consommer.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Parce que la hausse de Mo fait baisser i, ce qui crée un déficit de BP (sorties de capitaux). La BC doit alors céder des devises pour maintenir la parité → les réserves R baissent → Mo baisse à nouveau, annulant l'expansion initiale.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Parce que IS se déplace vers la gauche en réponse à la politique monétaire.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">5. En change flexible avec parfaite mobilité des capitaux, pourquoi la politique budgétaire expansionniste est-elle inefficace ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> Parce que la Banque Centrale neutralise automatiquement la politique budgétaire.</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> Parce que la hausse de G fait monter i au-dessus de i*, ce qui attire des capitaux étrangers, apprécie la monnaie (↓e), détériore la compétitivité et la BC. IS revient à sa position initiale — c'est l'effet d'éviction par le taux de change.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> Parce que les importations augmentent directement avec les dépenses publiques.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+          <div class="quiz__question">
+            <div class="quiz__question-text">6. Quel est le mécanisme de transmission de la politique monétaire en change flexible (parfaite mobilité) ?</div>
+            <div class="quiz__options">
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">A</span> ↑ Mo → ↑ i → ↑ I → ↑ Y (même mécanisme qu'en économie fermée).</div>
+              <div class="quiz__option" onclick="repondre(this, true)"><span class="quiz__option-circle">B</span> ↑ Mo → ↓ i → sortie capitaux → dépréciation (↑ e) → ↑ compétitivité → ↑ BC → IS se déplace → ↑ Y.</div>
+              <div class="quiz__option" onclick="repondre(this, false)"><span class="quiz__option-circle">C</span> ↑ Mo → ↓ i → entrée capitaux → appréciation → ↑ importations → ↑ Y.</div>
+            </div>
+            <div class="quiz__feedback"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="retenir">
+        <div class="retenir__title">Retenir l'essentiel — Chapitre II (Mundell-Fleming)</div>
+        <ul class="retenir__list">
+          <li><strong>Cadre :</strong> modèle néo-keynésien Mundell-Fleming (1962-1963), court terme, prix fixes. Y = C+I+G+(X–M). BP = BC + MC. M = D + R.</li>
+          <li><strong>3 facteurs de BC :</strong> RER = e·(p*/p) (compétitivité), Y (revenu intérieur, ↑Y → ↑M → ↓BC), Y* (revenu étranger, ↑Y* → ↑X → ↑BC).</li>
+          <li><strong>Courbe BP :</strong> pente positive. À droite : BP déficitaire. À gauche : excédentaire. Si K→∞ : BP horizontale à i = i*.</li>
+          <li><strong>Change fixe :</strong> PM inefficace (Mo endogène), PB efficace (flux de capitaux amplifient l'effet).</li>
+          <li><strong>Change flexible :</strong> PM efficace (dépréciation → ↑compétitivité → ↑IS), PB nuancée voire inefficace (appréciation → éviction par le taux de change).</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer__logo">Klaro</div>
+    <p>
+      Fiche proposée par <strong>WindJos Digital</strong> ·
+      CEO : <strong>Josué ILBOUDO</strong>
+    </p>
+    <p>
+      Contenu extrait du cours Macroéconomie 2 ·
+      IBAM · Dr TRAORE INOUSSA · 2025–2026
+    </p>
+  </footer>
+
+  <script src="../assets/lib/supabase.min.js"></script>
+  <script src="../assets/js/supabase-client.js"></script>
+  <script src="../assets/js/fiche.js"></script>
+
+</body>
+</html>
